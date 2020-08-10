@@ -1,0 +1,79 @@
+{
+  "id": "1859766",
+  "name": "球冠",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1637117",
+      "name": "换入",
+      "font_class": "huanru",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "1637120",
+      "name": "换出",
+      "font_class": "huanchu",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "2230480",
+      "name": "两黄变红",
+      "font_class": "lianghuangbianhong",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "2996553",
+      "name": "点球",
+      "font_class": "dianqiu",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "7628175",
+      "name": "红牌",
+      "font_class": "hongpai",
+      "unicode": "e757",
+      "unicode_decimal": 59223
+    },
+    {
+      "icon_id": "7628177",
+      "name": "黄牌",
+      "font_class": "huangpai",
+      "unicode": "e758",
+      "unicode_decimal": 59224
+    },
+    {
+      "icon_id": "11649549",
+      "name": "两黄变红",
+      "font_class": "lianghuangbianhong1",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "11791050",
+      "name": "足球 乌龙球",
+      "font_class": "zuqiuwulongqiu",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "12482540",
+      "name": "进球",
+      "font_class": "jinqiu",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "13776708",
+      "name": "两黄变红",
+      "font_class": "lianghuangbianhong2",
+      "unicode": "e68d",
+      "unicode_decimal": 59021
+    }
+  ]
+}
