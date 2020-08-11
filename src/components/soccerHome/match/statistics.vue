@@ -120,7 +120,7 @@
           <div class="bottom_tJ">
             <!-- 主队统计 -->
             <div class="bottom_tJ_left bottom_tJ_box">
-              <h3>主队：</h3>
+              <h3>主队</h3>
               <h6>进球:</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"
@@ -208,7 +208,7 @@
             </div>
             <!-- 客队统计 -->
             <div class="bottom_tJ_right bottom_tJ_box">
-              <h3>客队：</h3>
+              <h3>客队</h3>
               <h6>进球:</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"

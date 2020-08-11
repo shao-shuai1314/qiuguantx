@@ -12,7 +12,9 @@
     <el-card class="league_box_right fr">
       <div class="top">
         <!-- 标题 -->
-        <h2>{{sclassName}}</h2>
+        <h2>
+          <b>{{sclassName}}</b>
+        </h2>
         <!-- 赛季选择 -->
         <el-select v-model="seasonListValue"
                    style="margin:10px"
@@ -79,10 +81,18 @@
                  class="table_NeiRong">
             <tr align="center"
                 class="table_NeiRong_one">
-              <td width="15%">时间</td>
-              <td width="20%">主队</td>
-              <td width="10%">比分</td>
-              <td width="20%">客队</td>
+              <td width="15%">
+                <b>时间</b>
+              </td>
+              <td width="20%">
+                <b>主队</b>
+              </td>
+              <td width="10%">
+                <b>比分</b>
+              </td>
+              <td width="20%">
+                <b>客队</b>
+              </td>
               <td colspan="3"
                   width="25%">
                 <div class="peilv">
@@ -107,7 +117,9 @@
 
                 </div>
               </td>
-              <td width="5%">分析</td>
+              <td width="5%">
+                <b>分析</b>
+              </td>
             </tr>
             <tr align="center"
                 class="table_NeiRong_two"
@@ -167,7 +179,9 @@
 
               <td>
                 <router-link target="_blank"
-                             :to="{name:'odds',params:{scheduleID:item.scheduleID}}">欧/析</router-link>
+                             :to="{name:'odds',params:{scheduleID:item.scheduleID}}">欧</router-link>/
+                <router-link target="_blank"
+                             :to="{name:'history',params:{scheduleID:item.scheduleID}}">析</router-link>
               </td>
             </tr>
           </table>
@@ -179,7 +193,9 @@
            v-if="LeagueList.length">
         <el-divider></el-divider>
         <!-- 标题 -->
-        <h2>积分榜</h2>
+        <h2>
+          <b>积分榜</b>
+        </h2>
         <!-- 赛季选择 -->
         <!-- 积分榜近期状态 -->
         <el-select v-model="
@@ -246,43 +262,70 @@
               class="table_NeiRong_one
            ">
             <td width="8%
-           ">排名</td>
+           ">
+              <b>排名</b>
+            </td>
             <td width="
-           ">球队</td>
-            <td width="6%
-           ">场次</td>
-            <td width="6%
-           ">胜</td>
-            <td width="6%
-           ">平
+           ">
+              <b>球队</b>
             </td>
             <td width="6%
-           ">负
+           ">
+              <b>场次</b>
             </td>
             <td width="6%
-           ">进球
+           ">
+              <b>胜</b>
             </td>
             <td width="6%
-           ">失球</td>
+           ">
+              <b>平</b>
+            </td>
+            <td width="6%
+           ">
+              <b>负</b>
+            </td>
+            <td width="6%
+           ">
+              <b>进球</b>
+            </td>
+            <td width="6%
+           ">
+              <b>失球</b>
+            </td>
             <td width="7%
-           ">净胜球</td>
+           ">
+              <b>净胜球</b>
+            </td>
             <td v-if="kind == 1"
                 width="6%
-           ">胜率</td>
+           ">
+              <b>胜率</b>
+            </td>
             <td v-if="kind == 1"
                 width="6%
-           ">平率</td>
+           ">
+              <b>平率</b>
+            </td>
             <td v-if="kind == 1"
                 width="6%
-           ">负率</td>
+           ">
+              <b>负率</b>
+            </td>
             <td v-if="kind == 1"
                 width="6%
-           ">均得</td>
+           ">
+              <b>均进</b>
+            </td>
             <td v-if="kind == 1"
                 width="6%
-           ">均失</td>
+           ">
+              <b>均失</b>
+            </td>
             <td width="6%
-           ">积分</td>
+           ">
+              <b>积分</b>
+            </td>
 
           </tr>
           <tr align="center
@@ -300,6 +343,7 @@
             </td>
             <td width="">
               <router-link target="_blank"
+                           :style="{'color':item.color}"
                            :to="{name:'information',params:{teamID:item.teamID}}">{{item.teamName}}</router-link>
             </td>
             <td>{{item.count}}</td>
@@ -313,15 +357,50 @@
             <td width="">{{item.totalGutstScore}}</td>
             <td width="">{{item.goalDifference}}</td>
             <td v-if="kind == 1"
-                width="">{{(item.win_score/item.count*100).toFixed(2)}}%</td>
+                width="">
+              <span v-if="isNaN((item.win_score/item.count*100).toFixed(2))">
+                0
+              </span>
+              <span v-else>
+                {{(item.win_score/item.count*100).toFixed(2)}}%
+              </span>
+            </td>
             <td v-if="kind == 1"
-                width="">{{(item.flat_score/item.count*100).toFixed(2)}}%</td>
+                width="">
+              <span v-if="isNaN((item.flat_score/item.count*100).toFixed(2))">
+                0
+              </span>
+              <span v-else>
+                {{(item.flat_score/item.count*100).toFixed(2)}}%
+              </span>
+            </td>
             <td v-if="kind == 1"
-                width="">{{(item.fail_score/item.count*100).toFixed(2)}}%</td>
+                width="">
+              <span v-if="isNaN((item.fail_score/item.count*100).toFixed(2))">
+                0
+              </span>
+              <span v-else>
+                {{(item.fail_score/item.count*100).toFixed(2)}}%
+              </span>
+            </td>
             <td v-if="kind == 1"
-                width="">{{(item.totalHomeScore/item.count).toFixed(1)}}</td>
+                width="">
+              <span v-if="isNaN((item.totalHomeScore/item.count).toFixed(1))">
+                0
+              </span>
+              <span v-else>
+                {{(item.totalHomeScore/item.count).toFixed(1)}}
+              </span>
+            </td>
             <td v-if="kind == 1"
-                width="">{{(item.totalGutstScore/item.count).toFixed(1)}}</td>
+                width="">
+              <span v-if="isNaN((item.totalGutstScore/item.count).toFixed(1))">
+                0
+              </span>
+              <span v-else>
+                {{(item.totalGutstScore/item.count).toFixed(1)}}
+              </span>
+            </td>
 
             <td width="">{{item.score}}</td>
 
@@ -329,7 +408,8 @@
 
         </table>
         <div class="jianj">
-          <div class="icon_tit">
+          <div class="icon_tit"
+               v-if="color_data">
             <div v-for="(item,i) in color_data"
                  :key="i">
               <i :style="{'background':item.color}"></i>{{item.qualify}}</div>
@@ -347,6 +427,7 @@
               <router-link target="_blank"
                            :to="{name:'information',params:{teamID:item.teamID}}">"{{item.teamName}}"</router-link>{{item.cause}}</p>
           </div>
+          <div v-if="violationsLists">{{violationsLists}}</div>
 
         </div>
 
@@ -440,8 +521,6 @@ export default {
       OddsList1: [],
       OddsList2: [],
       OddsList0: [],
-
-
       // 赔率公司id
       OddsValue: 1,
       // 多个比赛id(1552513,1552514,1552517)
@@ -449,7 +528,8 @@ export default {
       // 赔率加工后的数组
       oddsLists: [],
       // 判断字段
-      zd_stype: {}
+      zd_stype: {},
+      violationsLists: ''
     };
   },
 
@@ -503,34 +583,25 @@ export default {
       this.sclassName = res.data.sclass_data.sclassName
       // 赛季时间数组
       this.seasonList = res.data.sclass_data.seasonList
-
       // 赛程数组
       this.match_list = res.data.match_list
-
       // 联赛杯赛
       this.kind = res.data.sclass_data.kind
-
       // 积分榜
       this.leagues_data = res.data.sclass_data.leagues_data
-
       // 升降级颜色
       this.color_data = res.data.sclass_data.leagues_data.color_data
-
-
-
 
       // 浏览器储存
       sessionStorage.setItem('sclassID', this.$route.params.sclassID)
       sessionStorage.setItem('sclassName', this.sclassName)
       sessionStorage.setItem('sclass_rule', this.sclass_rule)
-
       // 26 个英文字母
       let A_Z = [];
       for (var i = 65; i < 91; i++) {
         A_Z.push(String.fromCharCode(i) + "");
       }
       this.A_Z = A_Z
-
       // 判断二级联赛
       if (res.data.sclass_data.subsclass_data.length) {
         // 二级联赛数组
@@ -543,8 +614,6 @@ export default {
         // 最新一轮
         this.paginAtv = round_ej.curr_round;
         this.subSclassName = round_ej.subSclassName
-
-
         //  联赛杯赛初始
         if (this.kind == 1) {
           this.MatchList = this.match_list.filter(item => item.subSclassName == round_ej.subSclassName)
@@ -558,7 +627,6 @@ export default {
               this.color_data = item.leagues_list.color_data
             }
           })
-
           //  升降级颜色
           function colors (list1, list2) {
             list1.forEach(items => {
@@ -578,7 +646,6 @@ export default {
           } catch (err) {
           }
         } else {
-
           var round_ej = this.subsClassList.find(item => {
             return item.subsclassId == this.subsClassList[this.subsClassList.length - 1].subsclassId
           })
@@ -592,9 +659,28 @@ export default {
             this.subSclassName = round_ej.subSclassName
             this.MatchList = this.match_list.filter(item => item.grouping == round_ej.subSclassName)
           }
+          // 积分榜
+          this.fzdata = this.leagues_data.find(item => item.subclassId == round_ej.subsclassId)
+          if (this.fzdata) {
+            this.fzdata.leagues_list.forEach((items, index) => {
+              items.LeagueList = []
+              items.league.forEach((item, i) => {
+                items.LeagueList.push({ rank: item[0], teamID: item[1], teamName: item[2], count: item[3], win_score: item[4], flat_score: item[5], fail_score: item[6], totalHomeScore: item[7], totalGutstScore: item[8], goalDifference: item[9], score: item[10] })
+              })
+            })
+            this.LeagueList = this.fzdata.leagues_list[0].LeagueList
+            this.linecount = this.fzdata.leagues_list[0].linecount
+            // 文字说明
+            this.violationsLists = '备注：有颜色球队表示已出线球队'
+            if (this.fzdata.leagues_list[0].linecount) {
+              for (let i = 0; i < this.fzdata.leagues_list[0].linecount; i++) {
+                this.LeagueList[i].color = 'red'
+              }
+            }
+          }
+          // 获取赔率id
+          this.peilv()
         }
-        // 获取赔率id
-        this.peilv()
         // 文字说明
         if (this.LeagueLists) {
           this.violationsList.push([...Object.values(this.LeagueLists.koufen)])
@@ -610,7 +696,6 @@ export default {
         // 获取赔率id
         // 获取赔率id
         this.peilv()
-
         // 积分榜
         this.LeagueList = this.leagues_data.all_score
         // console.log(this.LeagueList, 111)
@@ -630,11 +715,7 @@ export default {
         colors(this.color_data, this.leagues_data.guest_score)
         colors(this.color_data, this.leagues_data.home_score)
       }
-      // console.log(this.violationsList)
-
-
     },
-
     // 二级联赛
     handleClick (tab, event) {
       // 找到对应的联赛数组
@@ -675,8 +756,6 @@ export default {
             })
           })
         }
-
-
         try {
           colors(this.color_data, this.LeagueLists.all_score)
           colors(this.color_data, this.LeagueLists.guest_score)
@@ -692,10 +771,14 @@ export default {
           this.groupList = this.A_Z.slice(0, round_ej.groupnum)
           this.xiaozuItemType = 'A'
           this.MatchList = this.match_list.filter(item => item.grouping2 == this.xiaozuItemType)
+          // 文字说明
+          this.violationsLists = '备注：有颜色球队表示已出线球队'
         } else {
           this.groupList = []
           this.subSclassName = round_ej.subSclassName
           this.MatchList = this.match_list.filter(item => item.grouping == round_ej.subSclassName)
+          // 文字说明
+          this.violationsLists = ''
         }
 
         // 积分榜
@@ -708,12 +791,19 @@ export default {
             })
           })
           this.LeagueList = this.fzdata.leagues_list[0].LeagueList
-        }
+          this.linecount = this.fzdata.leagues_list[0].linecount
+          if (this.fzdata.leagues_list[0].linecount) {
+            for (let i = 0; i < this.fzdata.leagues_list[0].linecount; i++) {
+              console.log(i)
+              this.LeagueList[i].color = 'red'
+            }
+          }
 
+        }
+        // 获取赔率id
+        this.peilv()
 
       }
-      // 获取赔率id
-      this.peilv()
     },
     // 小组赛
     Onxiaoz (index) {
@@ -722,9 +812,14 @@ export default {
       // 获取赔率id
       this.peilv()
       this.LeagueList = this.fzdata.leagues_list.find(item => item.grouping == index).LeagueList
+      if (this.fzdata.leagues_list.find(item => item.grouping == index).linecount) {
+        for (let i = 0; i < this.fzdata.leagues_list.find(item => item.grouping == index).linecount; i++) {
+          this.LeagueList[i].color = 'red'
+        }
+      }
+
 
     },
-
 
 
     // 赛程数据
@@ -748,7 +843,6 @@ export default {
         this.paginAtv = curr_round;
       }
     },
-
 
     // 轮次选择
     OnPaging (index) {
@@ -777,7 +871,6 @@ export default {
     },
 
 
-
     peilv () {
       // 获取赔率id
       let scheduleIDlist = []
@@ -789,9 +882,6 @@ export default {
       // 赔率类型
       this.radioOdds = 1
     },
-
-
-
 
     // 赔率
     async OnOddsList () {

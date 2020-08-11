@@ -1,6 +1,12 @@
 <template>
-  <div class="gWidth">
+  <div class="gWidth lineup_boxss">
     <el-table :data="dataList"
+              size="mini"
+              :header-cell-style="{
+    'color': '#303133',
+    'border-bottom': '1px rgb(103, 194, 58) solid',
+    'font-size':'14px'
+}"
               stripe
               style="width: 1160px">
       <el-table-column prop="number"
@@ -12,6 +18,10 @@
                        align="center"
                        width="80"
                        label="位置">
+        <template slot-scope="scope">
+          <span style="width:100%;height:100%;display:block;"
+                :style="{'background':scope.row.colors}">{{scope.row.place}}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="playerName"
                        align="center"
@@ -29,10 +39,6 @@
 
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="sclassName"
-                       align="center"
-                       label="年龄">
-      </el-table-column> -->
       <el-table-column align="center"
                        width="80"
                        label="身高">
@@ -94,6 +100,12 @@ export default {
     async OnListG () {
       const res = await this.$http.get('teamInfo/' + this.scheduleID + '/lineup/');
       if (res.status !== 200) return console.log('球队阵容信息取失败');
+      var Coachcolors = { '前锋': 'rgba(190,76,89,0.5)', '中场': 'rgba(100,76,89,0.5)', '后卫': 'rgba(180,16,89,0.5)', '守门员': 'rgba(110,106,89,0.5)', '替补': 'rgba(170,76,29,0.5)' }
+      // 颜色
+      res.data.forEach((item) => {
+        item.colors = Coachcolors[item.place]
+      })
+
       this.dataList = res.data
 
 
@@ -101,13 +113,24 @@ export default {
   }
 }
 </script>
-<style lang = 'less' scoped >
-a {
+<style lang = 'less'  >
+.lineup_boxss a {
   display: block;
   width: 100%;
   height: 100%;
   &:hover {
     color: #409eff;
   }
+}
+.lineup_boxss .el-table--mini td,
+.el-table--mini th {
+  padding: 0 !important;
+}
+.lineup_boxss .el-table .cell {
+  height: 100%;
+  line-height: 38px !important;
+}
+.lineup_boxss .cell span {
+  display: block;
 }
 </style>

@@ -14,19 +14,32 @@
            :key="indexs">
       <tr>
         <td :colspan="items.match_data.length+1"
-            style="font-weight: 600;">
-          <h2 style="font-weight: 600;"
-              class="">{{items.matchSeason}}{{itemTeamName}}</h2>
+            style="font-weight: 600;background-color: #83A2CA;">
+          <!-- <h2 class="">{{items.matchSeason}}{{items.sclassName}}
+            <span style="color: #409EFF">{{itemTeamName}}</span>
+          </h2>
           <span class="fr"
                 style="display:flex;align-items:center;color: #f00;margin-right:10px">
             说明：
             <el-image src="../../static/sj.png"></el-image>表示主场
             <el-image src="../../static/yuan.png"></el-image>表示客场
-          </span>
+          </span> -->
+          <h1 style="line-height:40px">
+            <b class="fl"
+               style="margin-left:10px">{{items.matchSeason}}{{items.sclassName}}
+              <span style="color:#fff">({{itemTeamName}})</span>
+            </b>
+            <span class="fr"
+                  style="font-size:14px;color: #f00;margin-right:10px">
+              <b>说明：所分析的球队比分在前，▲表示主场，●表示客场</b>
+            </span>
+          </h1>
         </td>
       </tr>
       <tr align="center">
-        <td style="white-space:nowrap;padding:0 6px">全</td>
+        <td style="white-space:nowrap;padding:0 6px">
+          <b>全</b>
+        </td>
         <td style="white-space:nowrap;"
             v-for="(item,i) in items.match_data"
             :key="i">
@@ -53,7 +66,9 @@
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">对手</div>
+          <div class="teamtxt">
+            <b>对手</b>
+          </div>
         </td>
         <td v-for="(item,i) in items.match_data"
             :key="i">
@@ -75,17 +90,18 @@
 
       </tr>
       <tr align="center">
-        <td>轮</td>
+        <td>
+          <b>轮</b>
+        </td>
         <td v-for="(item,i) in items.match_data"
             :key="i">{{i+1}}</td>
-
       </tr>
 
       <tr>
         <td class="spf">
-          <span>胜</span>
-          <span>平</span>
-          <span>负</span>
+          <b>胜</b>
+          <b>平</b>
+          <b>负</b>
         </td>
         <td :colspan="items.match_data.length"
             class="zk_td">
@@ -425,6 +441,7 @@ td div {
 }
 .active_jl_dd {
   position: relative;
+  z-index: 99;
   &:hover .active_jl {
     display: block;
   }
@@ -432,7 +449,6 @@ td div {
 a {
   display: block;
   width: 100%;
-  height: 100%;
   &:hover {
     color: #409eff;
   }

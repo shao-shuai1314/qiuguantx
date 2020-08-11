@@ -2,6 +2,11 @@
   <div class="gWidth">
     <el-table :data="dataList"
               stripe
+              :header-cell-style="{
+    'color': '#303133',
+    'border-bottom': '1px rgb(103, 194, 58) solid',
+    'font-size':'14px'
+}"
               style="width: 1160px">
       <el-table-column prop="sclassName"
                        align="center"
@@ -101,11 +106,11 @@
                        label="资料">
         <template slot-scope="scope">
           <router-link target="_blank"
-                       :to="{}">
+                       :to="{name:'history',params:{scheduleID:scope.row.scheduleID}}">
             析
           </router-link>
           <router-link target="_blank"
-                       :to="{}">
+                       :to="{name:'odds',params:{scheduleID:scope.row.scheduleID}}">
             欧
           </router-link>
         </template>

@@ -1,5 +1,4 @@
 <template>
-
   <!-- 球路-->
   <div class="qiululist"
        style="overflow:auto">
@@ -14,11 +13,11 @@
            :key="indexs">
       <tr>
         <td :colspan="items.qiulu.length+1"
-            style="font-weight: 600;">
+            style="font-weight: 600;background-color: #83A2CA;">
           <h2 style="font-weight: 600;padding:10px 0">{{matchSeason}}赛季
-            <span style="color: #409EFF">({{items.teamName}})</span>球路走势图</h2>
-          <span>
-            排名:{{items.rank}} &nbsp;&nbsp; 总分:{{items.allScore}} &nbsp;&nbsp;比赛次数:{{items.allCount}}&nbsp;&nbsp;进球:{{items.totalHomeScore}}&nbsp;&nbsp; 失球:{{items.totalGutstScore}} &nbsp;&nbsp;&nbsp;&nbsp;{{items.win_score}}胜 {{items.flat_score}}平 {{items.fail_score}}负 </span>
+            <span style="color: #fff">({{items.teamName}})</span>球路走势图</h2>
+          <span style="margin-right:-170px">
+            排名:{{items.rank}} &nbsp;&nbsp;&nbsp;&nbsp; 总分:{{items.allScore}} &nbsp;&nbsp;&nbsp;&nbsp;比赛次数:{{items.allCount}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;进球:{{items.totalHomeScore}}&nbsp;&nbsp;&nbsp;&nbsp; 失球:{{items.totalGutstScore}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{items.win_score}}胜&nbsp;&nbsp;&nbsp; {{items.flat_score}}平&nbsp;&nbsp;&nbsp; {{items.fail_score}}负 </span>
           <span class="fr"
                 style="display:flex;align-items:center;color: #f00;margin-right:10px">
             说明：
@@ -28,7 +27,9 @@
         </td>
       </tr>
       <tr align="center">
-        <td style="white-space:nowrap;padding:0 6px">全</td>
+        <td style="white-space:nowrap;padding:0 6px">
+          <b>全</b>
+        </td>
         <td style="white-space:nowrap;"
             v-for="(item,i) in items.qiulu"
             :key="i">
@@ -50,7 +51,9 @@
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">对手</div>
+          <div class="teamtxt">
+            <b>对手</b>
+          </div>
         </td>
         <td v-for="(item,i) in items.qiulu"
             :key="i">
@@ -73,7 +76,9 @@
 
       </tr>
       <tr align="center">
-        <td>轮</td>
+        <td>
+          <b>轮</b>
+        </td>
         <td v-for="(item,i) in items.qiulu"
             :key="i">{{i+1}}</td>
 
@@ -81,9 +86,9 @@
 
       <tr>
         <td class="spf">
-          <span>胜</span>
-          <span>平</span>
-          <span>负</span>
+          <b>胜</b>
+          <b>平</b>
+          <b>负</b>
         </td>
         <td :colspan="items.qiulu.length"
             class="zk_td">

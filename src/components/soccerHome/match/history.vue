@@ -4,7 +4,7 @@
     <div class="history_left">
       <div class="history_table1">
         <div class="history_table1_header">
-          <span>{{hometeamName}}</span>
+          <span class="fsing">{{hometeamName}}</span>
           <!-- 全赛事 -->
           <el-select v-model="homeMatchVelue"
                      size="mini"
@@ -38,7 +38,7 @@
                        :value="item.value">
             </el-option>
           </el-select>
-          <span>{{HomeSPF.Hs}}胜{{HomeSPF.Hp}}平{{HomeSPF.Hf}}负， 其中主场{{HomeSPF.onHs}}胜{{HomeSPF.onHp}}平{{HomeSPF.onHf}}负</span>
+          <span class="fsing">{{HomeSPF.Hs}}胜{{HomeSPF.Hp}}平{{HomeSPF.Hf}}负， 其中主场{{HomeSPF.onHs}}胜{{HomeSPF.onHp}}平{{HomeSPF.onHf}}负</span>
         </div>
         <!-- 主场 -->
         <table width="100%"
@@ -49,15 +49,25 @@
                class="table1">
           <tr align="center"
               class="tr_tit">
-            <td width="8%">联赛</td>
-            <td>时间</td>
+            <td width="8%">
+              <b>联赛</b>
+            </td>
+            <td>
+              <b>时间</b>
+            </td>
             <td width="12%"
-                class="borderL">主队</td>
-            <td width="6%">比分</td>
-            <td width="12%">客队
+                class="borderL">
+              <b>主队</b>
+            </td>
+            <td width="6%">
+              <b>比分</b>
+            </td>
+            <td width="12%">
+              <b>客队</b>
             </td>
             <td width="6%"
-                class="borderL borderR">半场
+                class="borderL borderR">
+              <b>半场</b>
             </td>
             <td colspan="3">
               <el-select v-model="OddsList.homevalue1"
@@ -85,7 +95,9 @@
                 </el-option>
               </el-select>
             </td>
-            <td width="4%">盘路</td>
+            <td width="4%">
+              <b>盘路</b>
+            </td>
 
           </tr>
 
@@ -93,7 +105,7 @@
               v-for="item in homeHistoryList.slice(0,this.homeNum)"
               :key="item.scheduleID">
             <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
             </td>
 
             <td :style="{'background':item.coachID!='未知'?item.Coachcolors:''}">
@@ -193,7 +205,7 @@
       <!-- 客场 -->
       <div class="history_table1">
         <div class="history_table1_header">
-          <span>{{guestteamName}}</span>
+          <span class="fsing">{{guestteamName}}</span>
           <!-- 全赛事 -->
           <el-select v-model="guestMatchVelue"
                      size="mini"
@@ -227,7 +239,7 @@
                        :value="item.value">
             </el-option>
           </el-select>
-          <span>{{GuestSPF.Ks}}胜{{GuestSPF.Kp}}平{{GuestSPF.Kf}}负 其中客场{{GuestSPF.onKs}}胜{{GuestSPF.onKp}}平{{GuestSPF.onKf}}负</span>
+          <span class="fsing">{{GuestSPF.Ks}}胜{{GuestSPF.Kp}}平{{GuestSPF.Kf}}负 其中客场{{GuestSPF.onKs}}胜{{GuestSPF.onKp}}平{{GuestSPF.onKf}}负</span>
         </div>
         <!-- 客场 -->
         <table width="100%"
@@ -238,15 +250,25 @@
                class="table1">
           <tr align="center"
               class="tr_tit">
-            <td width="8%">联赛</td>
-            <td>时间</td>
+            <td width="8%">
+              <b>联赛</b>
+            </td>
+            <td>
+              <b>时间</b>
+            </td>
             <td width="12%"
-                class="borderL">主队</td>
-            <td width="6%">比分</td>
-            <td width="12%">客队
+                class="borderL">
+              <b>主队</b>
+            </td>
+            <td width="6%">
+              <b>比分</b>
+            </td>
+            <td width="12%">
+              <b>客队</b>
             </td>
             <td width="6%"
-                class="borderL borderR">半场
+                class="borderL borderR">
+              <b>半场</b>
             </td>
             <td colspan="3">
               <el-select v-model="OddsList.guestvalue1"
@@ -274,7 +296,9 @@
                 </el-option>
               </el-select>
             </td>
-            <td width="4%">盘路</td>
+            <td width="4%">
+              <b>盘路</b>
+            </td>
 
           </tr>
 
@@ -282,7 +306,7 @@
               v-for="item in guestHistoryList.slice(0,this.guestNum)"
               :key="item.scheduleID">
             <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
             </td>
             <td :style="{'background':item.coachID!='未知'?item.Coachcolors:''}">
               {{item.matchtime.replace('T',' ')}}
@@ -390,16 +414,29 @@
                class="table1 fl">
           <tr align="center"
               class="tit">
-            <td colspan="6">{{hometeamName}}未来5场比赛</td>
+            <td class="fsing"
+                colspan="6">{{hometeamName}}未来5场比赛</td>
           </tr>
           <tr align="center"
               class="tr_tit">
-            <td>联赛</td>
-            <td>时间</td>
-            <td class="borderL">主队</td>
-            <td>比分</td>
-            <td>客队</td>
-            <td class="borderL borderR">半场</td>
+            <td>
+              <b>联赛</b>
+            </td>
+            <td>
+              <b>时间</b>
+            </td>
+            <td class="borderL">
+              <b>主队</b>
+            </td>
+            <td>
+              <b>比分</b>
+            </td>
+            <td>
+              <b>客队</b>
+            </td>
+            <td class="borderL borderR">
+              <b>半场</b>
+            </td>
 
           </tr>
 
@@ -438,16 +475,29 @@
                class="table1 fr">
           <tr align="center"
               class="tit">
-            <td colspan="6">{{guestteamName}}未来5场比赛</td>
+            <td class="fsing"
+                colspan="7">{{guestteamName}}未来5场比赛</td>
           </tr>
           <tr align="center"
               class="tr_tit">
-            <td>联赛</td>
-            <td>时间</td>
-            <td class="borderL">主队</td>
-            <td>比分</td>
-            <td>客队</td>
-            <td class="borderL borderR">半场</td>
+            <td>
+              <b>联赛</b>
+            </td>
+            <td>
+              <b>时间</b>
+            </td>
+            <td class="borderL">
+              <b>主队</b>
+            </td>
+            <td>
+              <b>比分</b>
+            </td>
+            <td>
+              <b>客队</b>
+            </td>
+            <td class="borderL borderR">
+              <b>半场</b>
+            </td>
 
           </tr>
 
@@ -482,7 +532,7 @@
       <!-- 两队交锋 -->
       <div class="history_table1">
         <div class="history_table1_header">
-          <span>两队交锋</span>
+          <span class="fsing">两队交锋</span>
           <!-- 全赛事 -->
           <el-select v-model="clashMatchVelue"
                      size="mini"
@@ -516,7 +566,7 @@
                        :value="item.value">
             </el-option>
           </el-select>
-          <span>{{hometeamName}}&nbsp;&nbsp;&nbsp;{{ClashSPF.Js}}胜{{ClashSPF.Jp}}平{{ClashSPF.Jf}}负 其中主场{{ClashSPF.onJs}}胜{{ClashSPF.onJp}}平{{ClashSPF.onJf}}负</span>
+          <span class="fsing">{{hometeamName}}&nbsp;&nbsp;&nbsp;{{ClashSPF.Js}}胜{{ClashSPF.Jp}}平{{ClashSPF.Jf}}负 其中主场{{ClashSPF.onJs}}胜{{ClashSPF.onJp}}平{{ClashSPF.onJf}}负</span>
         </div>
         <!-- 交锋 -->
         <table width="100%"
@@ -527,13 +577,24 @@
                class="table1">
           <tr align="center"
               class="tr_tit">
-            <td width="8%">联赛</td>
-            <td>时间</td>
-            <td class="borderL">主队</td>
-            <td width="6%">比分</td>
-            <td>客队</td>
+            <td width="8%">
+              <b>联赛</b>
+            </td>
+            <td>
+              <b>时间</b>
+            </td>
+            <td class="borderL">
+              <b>主队</b>
+            </td>
+            <td width="6%">
+              <b>比分</b>
+            </td>
+            <td>
+              <b>客队</b>
+            </td>
             <td width="6%"
-                class="borderL borderR">半场
+                class="borderL borderR">
+              <b>半场</b>
             </td>
             <td colspan="3">
               <el-select v-model="OddsList.clashvalue1"
@@ -561,7 +622,9 @@
                 </el-option>
               </el-select>
             </td>
-            <td width="4%">盘路</td>
+            <td width="4%">
+              <b>盘路</b>
+            </td>
 
           </tr>
 
@@ -569,7 +632,7 @@
               v-for="item in mutualHistoryList.slice(0,clashNum)"
               :key="item.scheduleID">
             <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
             </td>
             <td>{{item.matchtime.replace('T',' ')}}</td>
 
@@ -929,11 +992,12 @@ export default {
     // 教练添加
     coachFn (coacList, Zklist) {
       // 教练颜色
-      var Coachcolors = ['rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)', 'rgba(110,106,89,0.5)', 'rgba(170,76,29,0.5)']
+      // var Coachcolors = ['rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)', 'rgba(110,106,89,0.5)', 'rgba(170,76,29,0.5)']
 
-
+      var Coachcolors = []
       var cor = {}
       for (let i = 0; i < coacList.length; i++) {
+        Coachcolors[i] = `rgba(${Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256)},0.5)`
         cor[coacList[i].playerId] = Coachcolors[i]
       }
       Zklist.forEach(item => {
@@ -1728,5 +1792,9 @@ td {
       padding: 20px 10px;
     }
   }
+}
+
+.fsing {
+  font-size: 16px;
 }
 </style>

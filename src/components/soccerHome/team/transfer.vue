@@ -22,6 +22,11 @@
           <!-- 转入 -->
           <el-table :data="ZRteam"
                     @sort-change="sortChange1"
+                    ref="multipleSelection"
+                    :header-cell-style="{
+    'color': '#303133',
+    'font-size':'14px'
+}"
                     border>
             <el-table-column label="转入球员"
                              align="center">
@@ -61,9 +66,12 @@
                                align="center"
                                label="转出球队">
                 <template slot-scope="scope">
-                  <router-link target="_blank"
-                               v-if="scope.row.fromTeamId"
-                               :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link>
+                  <span v-if="scope.row.toTeamName == '自由球员'">自由球员</span>
+                  <span v-else>
+                    <router-link target="_blank"
+                                 v-if="scope.row.toTeamId"
+                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  </span>
                 </template>
               </el-table-column>
               <el-table-column prop="money"
@@ -82,6 +90,11 @@
           <!-- 转出 -->
           <el-table :data="ZCteam"
                     @sort-change="sortChange3"
+                    ref="multipleSelection1"
+                    :header-cell-style="{
+    'color': '#303133',
+    'font-size':'14px'
+}"
                     border>
             <el-table-column label="转出球员"
                              align="center">
@@ -121,9 +134,13 @@
                                align="center"
                                label="转入球队">
                 <template slot-scope="scope">
-                  <router-link target="_blank"
-                               v-if="scope.row.toTeamId"
-                               :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  <span v-if="scope.row.toTeamName == '自由球员'">自由球员</span>
+                  <span v-else>
+                    <router-link target="_blank"
+                                 v-if="scope.row.toTeamId"
+                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  </span>
+
                 </template>
               </el-table-column>
               <el-table-column prop="money"
@@ -144,6 +161,11 @@
              style="width: 50%">
           <!-- 转入 -->
           <el-table :data="ZJteam"
+                    ref="multipleSelection2"
+                    :header-cell-style="{
+    'color': '#303133',
+    'font-size':'14px'
+}"
                     border>
             <el-table-column label="租借球员"
                              @sort-change="sortChange2"
@@ -184,9 +206,12 @@
                                align="center"
                                label="出租球队">
                 <template slot-scope="scope">
-                  <router-link target="_blank"
-                               v-if="scope.row.fromTeamId"
-                               :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link>
+                  <span v-if="scope.row.toTeamName == '自由球员'">自由球员</span>
+                  <span v-else>
+                    <router-link target="_blank"
+                                 v-if="scope.row.toTeamId"
+                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  </span>
                 </template>
               </el-table-column>
               <el-table-column prop="money"
@@ -205,6 +230,11 @@
              style="width: 50%">
           <!-- 外租球员 -->
           <el-table :data="WZteam"
+                    ref="multipleSelection3"
+                    :header-cell-style="{
+    'color': '#303133',
+    'font-size':'14px'
+}"
                     @sort-change="sortChange4"
                     border>
             <el-table-column label="外租球员"
@@ -245,9 +275,12 @@
                                align="center"
                                label="外租球队">
                 <template slot-scope="scope">
-                  <router-link target="_blank"
-                               v-if="scope.row.toTeamId"
-                               :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  <span v-if="scope.row.toTeamName == '自由球员'">自由球员</span>
+                  <span v-else>
+                    <router-link target="_blank"
+                                 v-if="scope.row.toTeamId"
+                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  </span>
                 </template>
               </el-table-column>
               <el-table-column prop="money"
@@ -268,6 +301,10 @@
              style="width: 50%">
           <!-- 租借期满归队球员 -->
           <el-table :data="ZJQMteam"
+                    :header-cell-style="{
+    'color': '#303133',
+    'font-size':'14px'
+}"
                     border>
             <el-table-column label="租借期满归队球员"
                              align="center">
@@ -307,9 +344,12 @@
                                align="center"
                                label="外租球队">
                 <template slot-scope="scope">
-                  <router-link target="_blank"
-                               v-if="scope.row.fromTeamId"
-                               :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link>
+                  <span v-if="scope.row.toTeamName == '自由球员'">自由球员</span>
+                  <span v-else>
+                    <router-link target="_blank"
+                                 v-if="scope.row.toTeamId"
+                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  </span>
                 </template>
               </el-table-column>
               <el-table-column prop="money"
@@ -327,6 +367,10 @@
              style="width: 50%">
           <!-- 其他 -->
           <el-table :data="QTQKteam"
+                    :header-cell-style="{
+    'color': '#303133',
+    'font-size':'14px'
+}"
                     border>
             <el-table-column label="租借期满归队球员"
                              align="center">
@@ -366,9 +410,12 @@
                                align="center"
                                label="外租球队">
                 <template slot-scope="scope">
-                  <router-link target="_blank"
-                               v-if="scope.row.toTeamId"
-                               :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  <span v-if="scope.row.toTeamName == '自由球员'">自由球员</span>
+                  <span v-else>
+                    <router-link target="_blank"
+                                 v-if="scope.row.toTeamId"
+                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                  </span>
                 </template>
               </el-table-column>
               <el-table-column prop="money"
@@ -419,7 +466,6 @@ export default {
   methods: {
     // 重新排序
     sortChange1 (obj) {
-      console.log(obj, 111)
       if (obj.order == "ascending") {
         this.ZRteam.sort(this.compare('money'))
       } else if (obj.order == "descending") {
@@ -427,7 +473,6 @@ export default {
       }
     },
     sortChange2 (obj) {
-      console.log(obj, 22222)
       if (obj.order == "ascending") {
         this.ZJteam.sort(this.compare('money'))
       } else if (obj.order == "descending") {
@@ -528,6 +573,10 @@ export default {
       this.onOut_list(out_list)
       this.sortChange1('1')
 
+      this.$refs.multipleSelection.clearSort()
+      this.$refs.multipleSelection1.clearSort()
+      this.$refs.multipleSelection2.clearSort()
+      this.$refs.multipleSelection3.clearSort()
     },
 
   },
@@ -536,6 +585,11 @@ export default {
 <style lang = 'less' scoped >
 .a {
   text-align: right;
+}
+a {
+  &:hover {
+    color: #409eff;
+  }
 }
 .box_x {
   display: flex;

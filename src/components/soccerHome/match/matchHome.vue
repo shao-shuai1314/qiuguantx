@@ -14,17 +14,16 @@
           <div class="left">
             <h2>
               <router-link target="_blank"
-                           v-if="headerList.hometeamID"
-                           :to="{name:'information',params:{teamID:headerList.hometeamID}}">{{headerList.homeTeamName}}</router-link>
+                           v-if="headerList.homeTeamInfo"
+                           :to="{name:'information',params:{teamID:headerList.homeTeamInfo.hometeamID}}">{{headerList.homeTeamInfo.homeTeamName}}</router-link>
             </h2>
-            <p>{{headerList.homeTeamName_E}}</p>
+            <p v-if="headerList.homeTeamInfo">{{headerList.homeTeamInfo.homeTeamName_E}}</p>
             <div class="img_tit"
-                 v-if="headerList.homeTeamFlag">
-              <el-image :src="`http://qiuguantx.com/img/team/${headerList.homeTeamFlag}`"></el-image>
+                 v-if="headerList.homeTeamInfo">
+              <el-image :src="`http://qiuguantx.com/img/team/${headerList.homeTeamInfo.homeTeamFlag}`"></el-image>
               <p>
                 <router-link target="_blank"
-                             v-if="headerList.homeTeamCoachID"
-                             :to="{name:'playerDetails',params:{playerID:headerList.homeTeamCoachID}}">{{headerList.homeTeamCoachName}}</router-link>
+                             :to="{name:'playerDetails',params:{playerID:headerList.homeTeamCoachInfo.homeTeamCoachID}}">{{headerList.homeTeamCoachInfo.homeTeamCoachName}}</router-link>
               </p>
             </div>
           </div>
@@ -33,25 +32,24 @@
             <h2 v-if="headerList.matchState"
                 style="color:#ed5565">{{headerList.homeScore}}-{{headerList.guestScore}}</h2>
             <h2 v-else>vs</h2>
-            <p>开赛事件：{{`${headerList.matchtime}`.replace('T',' &nbsp;')}}</p>
-            <p>场地：{{headerList.location}} </p>
+            <p>开赛时间：{{`${headerList.matchtime}`.replace('T',' &nbsp;')}}</p>
+            <p v-if="headerList.venueInfo">场地：{{headerList.venueInfo.venue_name}} </p>
             <p>天气：{{headerList.weather}}&nbsp;&nbsp; 温度：{{headerList.temperature}}</p>
           </div>
 
           <div class="right">
             <h2>
               <router-link target="_blank"
-                           v-if="headerList.guestteamID"
-                           :to="{name:'information',params:{teamID:headerList.guestteamID}}">{{headerList.guestTeamName}}</router-link>
+                           v-if="headerList.guestTeamInfo"
+                           :to="{name:'information',params:{teamID:headerList.guestTeamInfo.hometeamID}}">{{headerList.guestTeamInfo.homeTeamName}}</router-link>
             </h2>
-            <p>{{headerList.guestTeamName_E}}</p>
+            <p v-if="headerList.guestTeamInfo">{{headerList.guestTeamInfo.homeTeamName_E}}</p>
             <div class="img_tit"
-                 v-if="headerList.guestTeamFlag">
-              <el-image :src="`http://qiuguantx.com/img/team/${headerList.guestTeamFlag}`"></el-image>
+                 v-if="headerList.guestTeamInfo">
+              <el-image :src="`http://qiuguantx.com/img/team/${headerList.guestTeamInfo.homeTeamFlag}`"></el-image>
               <p>
                 <router-link target="_blank"
-                             v-if="headerList.guestTeamCoachID"
-                             :to="{name:'playerDetails',params:{playerID:headerList.guestTeamCoachID}}">{{headerList.guestTeamCoachName}}</router-link>
+                             :to="{name:'playerDetails',params:{playerID:headerList.guestTeamCoachInfo.guestTeamCoachID}}">{{headerList.guestTeamCoachInfo.guestTeamCoachName}}</router-link>
               </p>
             </div>
           </div>
@@ -203,9 +201,14 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     h2 {
       font-size: 72px;
       font-weight: bold;
+      margin-top: -20px;
+    }
+    p {
+      line-height: 30px;
     }
   }
 }

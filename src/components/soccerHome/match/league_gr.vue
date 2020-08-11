@@ -1,58 +1,90 @@
 <template>
-  <div class="history_right"
-       @click="onClock">
-    <!-- 主场积分榜 -->
-    <table width="100%"
-           v-for="(item,index) in leagueList"
-           :key="index"
-           border="0"
-           cellpadding="0"
-           cellspacing="0"
-           align="center"
-           class="table1">
-      <tr align="center"
-          class="tit">
-        <td :colspan="Clock?12:7">
-          {{item.style}}积分榜
-        </td>
+  <div class="history_right">
+    <div class="history_right_box"
+         v-for="(item,index) in leagueList"
+         :key="index">
+      <el-button type="success"
+                 class="el-button_icon"
+                 @click="onClock"
+                 size="mini"
+                 icon="el-icon-eleme"
+                 circle></el-button>
+      <table width="100%"
+             border="0"
+             cellpadding="0"
+             cellspacing="0"
+             align="center"
+             class="table1">
+        <tr align="center"
+            class="tit">
+          <td :colspan="Clock?12:7"
+              class="fsing">
+            {{item.style}}积分榜
+          </td>
 
-      </tr>
-      <tr align="center"
-          class="tr_tit">
-        <td width="20px">排名</td>
-        <td>球队</td>
-        <td v-if="Clock1">赛</td>
-        <td v-if="Clock1">胜</td>
-        <td v-if="Clock1">平</td>
-        <td v-if="Clock1">负</td>
-        <td v-if="Clock">胜率</td>
-        <td v-if="Clock">平率</td>
-        <td v-if="Clock">负率</td>
-        <td v-if="Clock">均得</td>
-        <td v-if="Clock">均失</td>
-        <td v-if="Clock1">分</td>
-      </tr>
+        </tr>
+        <tr align="center"
+            class="tr_tit">
+          <td width="20px">
+            <b>排名</b>
+          </td>
+          <td>
+            <b>球队</b>
+          </td>
+          <td v-if="Clock1">
+            <b>赛</b>
+          </td>
+          <td v-if="Clock1">
+            <b>胜</b>
+          </td>
+          <td v-if="Clock1">
+            <b>平</b>
+          </td>
+          <td v-if="Clock1">
+            <b>负</b>
+          </td>
+          <td v-if="Clock">
+            <b>胜率</b>
+          </td>
+          <td v-if="Clock">
+            <b>平率</b>
+          </td>
+          <td v-if="Clock">
+            <b>负率</b>
+          </td>
+          <td v-if="Clock">
+            <b>均进</b>
+          </td>
+          <td v-if="Clock">
+            <b>均失</b>
+          </td>
+          <td v-if="Clock1">
+            <b>分</b>
+          </td>
+        </tr>
 
-      <tr align="center"
-          v-for="(i,index) in item.list"
-          :key="index"
-          :style="{'background-color': (i.teamName ===datas[0] || i.teamName ===datas[1] ? '#ffffb1':'')}">
-        <td>{{index+1}}</td>
-        <td>{{i.teamName}}</td>
-        <td v-if="Clock1">{{i.count}}</td>
-        <td v-if="Clock1">{{i.win}}</td>
-        <td v-if="Clock1">{{i.flat}}</td>
-        <td v-if="Clock1">{{i.fail}}</td>
-        <td v-if="Clock">{{(i.win/i.count*100).toFixed(2)}}%</td>
-        <td v-if="Clock">{{(i.flat/i.count*100).toFixed(2)}}%</td>
-        <td v-if="Clock">{{(i.fail/i.count*100).toFixed(2)}}%</td>
-        <td v-if="Clock">{{(i.totalHomeScore/i.count).toFixed(1)}}</td>
-        <td v-if="Clock">{{(i.totalGutstScore/i.count).toFixed(1)}}</td>
-        <td v-if="Clock1">{{i.score}}</td>
+        <tr align="center"
+            v-for="(i,index) in item.list"
+            :key="index"
+            :style="{'background-color': (i.teamName ===datas[0] || i.teamName ===datas[1] ? '#ffffb1':'')}">
+          <td>{{index+1}}</td>
+          <td>{{i.teamName}}</td>
+          <td v-if="Clock1">{{i.count}}</td>
+          <td v-if="Clock1">{{i.win}}</td>
+          <td v-if="Clock1">{{i.flat}}</td>
+          <td v-if="Clock1">{{i.fail}}</td>
+          <td v-if="Clock">{{(i.win/i.count*100).toFixed(2)}}%</td>
+          <td v-if="Clock">{{(i.flat/i.count*100).toFixed(2)}}%</td>
+          <td v-if="Clock">{{(i.fail/i.count*100).toFixed(2)}}%</td>
+          <td v-if="Clock">{{(i.totalHomeScore/i.count).toFixed(1)}}</td>
+          <td v-if="Clock">{{(i.totalGutstScore/i.count).toFixed(1)}}</td>
+          <td v-if="Clock1">{{i.score}}</td>
 
-      </tr>
+        </tr>
 
-    </table>
+      </table>
+    </div>
+
   </div>
 </template>
 <script >
@@ -128,5 +160,17 @@ export default {
       color: #fff;
     }
   }
+}
+.fsing {
+  font-size: 16px;
+}
+.history_right_box {
+  position: relative;
+}
+
+.el-button_icon {
+  position: absolute;
+  top: 5px;
+  right: 10px;
 }
 </style>

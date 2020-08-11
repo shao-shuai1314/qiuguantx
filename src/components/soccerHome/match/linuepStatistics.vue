@@ -4,6 +4,7 @@
          style="width: 1160px;display:flex;justify-content: space-between;">
       <div>
         <el-table :data="linuepStatisticsList.home"
+                  header-row-class-name="tableHead"
                   size="mini"
                   style="width: 570px">
           <el-table-column prop="date"
@@ -16,9 +17,10 @@
             </template>
 
             <el-table-column prop="number"
-                             label="球衣号码"
+                             label="号码"
                              width="30px"
                              align="center">
+
             </el-table-column>
             <el-table-column prop="place"
                              label="位置"
@@ -44,7 +46,7 @@
                              width="70px"
                              align="center">
             </el-table-column>
-            <el-table-column label="首替"
+            <el-table-column label="首/替"
                              width="60px"
                              align="center">
               <template slot-scope="scope">
@@ -78,8 +80,9 @@
                              align="center">
             </el-table-column>
             <el-table-column prop="expectedValue"
-                             label="身价"
+                             label="身价(万欧元)"
                              width="40px"
+                             label-class-name="expectedValue_label-class-name"
                              align="center">
             </el-table-column>
             <el-table-column prop="fromteamName"
@@ -99,6 +102,7 @@
 
       <div>
         <el-table :data="linuepStatisticsList.guest"
+                  header-row-class-name="tableHead"
                   size="mini"
                   style="width: 570px">
           <el-table-column prop="date"
@@ -110,7 +114,7 @@
               </div>
             </template>
             <el-table-column prop="number"
-                             label="球衣号码"
+                             label="号码"
                              width="30px"
                              align="center">
             </el-table-column>
@@ -138,7 +142,7 @@
                              width="70px"
                              align="center">
             </el-table-column>
-            <el-table-column label="首替"
+            <el-table-column label="首/替"
                              width="60px"
                              align="center">
               <template slot-scope="scope">
@@ -172,9 +176,11 @@
                              align="center">
             </el-table-column>
             <el-table-column prop="expectedValue"
-                             label="身价"
+                             label="身价(万欧元)"
                              width="40px"
+                             label-class-name="expectedValue_label-class-name"
                              align="center">
+
             </el-table-column>
             <el-table-column prop="fromteamName"
                              label="上家俱乐部"
@@ -196,6 +202,7 @@
     <div style="width: 1160px;display:flex;justify-content: space-between;">
       <div style="width:570px">
         <el-table :data="playerSuspend.home"
+                  header-row-class-name="tableHead"
                   border
                   size="mini"
                   style="width: 100%">
@@ -228,6 +235,7 @@
 
       <div style="width:570px">
         <el-table :data="playerSuspend.guest"
+                  header-row-class-name="tableHead"
                   border
                   size="mini"
                   style="width: 100%">
@@ -323,5 +331,15 @@ export default {
   &:hover {
     color: #409eff;
   }
+}
+
+.tableHead {
+  font-weight: 600;
+  color: #303133;
+  font-size: 14px;
+  height: 50px;
+}
+.expectedValue_label-class-name {
+  font-size: 12px;
 }
 </style>

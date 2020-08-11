@@ -9,67 +9,79 @@
            style="margin:10px 0">
       <tr>
         <td :colspan="homeSchedule.length+1"
-            style="font-weight: 600;">
-          <h1 style="font-weight: 600;padding:10px 0">{{matchSeason}}赛季{{homeTeamName}}球路走势图</h1>
+            style="font-weight: 600;background-color: #83A2CA;">
+          <h1 style="line-height:40px">
+            <b class="fl"
+               style="margin-left:10px">{{matchSeason}}赛季
+              <span style="color:#fff">({{homeTeamName}})</span>球路走势图</b>
+            <span class="fr"
+                  style="font-size:14px;color: #f00;margin-right:10px">
+              <b>说明：所分析的球队比分在前，▲表示主场，●表示客场</b>
+            </span>
+          </h1>
         </td>
       </tr>
       <tr align="center">
-        <td style="white-space:nowrap;padding:0 6px">全</td>
+        <td style="white-space:nowrap;padding:0 6px;">
+          <b>全</b>
+        </td>
         <td style="white-space:nowrap;"
             v-for="(item,i) in homeSchedule"
             :key="i">
-          <span v-if="item.matchState == '-1'">
-            <span v-if="item.hometeamID == hometeamID">{{item.homeScore}}-{{item.guestScore}}</span>
-            <span v-else>{{item.guestScore}}-{{item.homeScore}}</span>
-          </span>
-          <span v-else
-                class="he_sp">
-            <span v-if="item.hometeamID == hometeamID">
-              <el-image src="../../static/sj.png"></el-image>
+          <router-link target="_blank"
+                       :to="{name:'history',params:{scheduleID:item.scheduleID}}">
+            <span v-if="item.matchState == '-1'">
+              <span v-if="item.hometeamID == hometeamID">{{item.homeScore}}-{{item.guestScore}}</span>
+              <span v-else>{{item.guestScore}}-{{item.homeScore}}</span>
             </span>
-            <span v-else-if="item.hometeamID != hometeamID">
-              <el-image src="../../static/yuan.png"></el-image>
+            <span v-else
+                  class="he_sp">
+              <span v-if="item.hometeamID == hometeamID">
+                <el-image src="../../static/sj.png"></el-image>
+              </span>
+              <span v-else-if="item.hometeamID != hometeamID">
+                <el-image src="../../static/yuan.png"></el-image>
+              </span>
             </span>
-          </span>
-
+          </router-link>
         </td>
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">对手</div>
+          <div class="teamtxt">
+            <b>对手</b>
+          </div>
         </td>
         <td v-for="(item,i) in homeSchedule"
             :key="i">
-          <div class="teamtxt">
+          <div class="teamtxt active_jl_dd">
             <span v-if="item.hometeamID == hometeamID">
-              <!-- <router-link target="_blank"
-                           :to="{name:'diskDrive',params:{scheduleID:item.guestteamID}}"> -->
               {{item.guestTeamName}}
-              <!-- </router-link> -->
             </span>
             <span v-else>
-              <!-- <router-link target="_blank"
-                           :to="{name:'diskDrive',params:{scheduleID:item.hometeamID}}"> -->
               {{item.homeTeamName}}
-              <!-- </router-link> -->
             </span>
+            <router-link target="_blank"
+                         class="active_jl"
+                         v-if='item.coachID!="未知"'
+                         :to="{name:'playerDetails',params:{playerID:item.coachID}}">{{item.coachName}}</router-link>
 
           </div>
         </td>
 
       </tr>
       <tr align="center">
-        <td>轮</td>
+        <td>
+          <b>轮</b>
+        </td>
         <td v-for="(item,i) in homeSchedule"
             :key="i">{{i+1}}</td>
-
       </tr>
-
       <tr>
         <td class="spf">
-          <span>胜</span>
-          <span>平</span>
-          <span>负</span>
+          <b>胜</b>
+          <b>平</b>
+          <b>负</b>
         </td>
         <td :colspan="homeSchedule.length"
             class="zk_td">
@@ -81,6 +93,7 @@
                  :style="{'margin-top':item.num == 2?'-40px':''}"
                  v-for="(item,i) in homeSchedule"
                  :key="i">
+
                 <span v-if="item.matchState == '-1'">
                   <span class="zk_span zhuchang"
                         v-if="item.hometeamID == hometeamID">
@@ -96,7 +109,6 @@
               </p>
             </div>
           </div>
-
           <div id="main"
                style="height:130px;"></div>
         </td>
@@ -112,46 +124,67 @@
            style="margin:10px 0">
       <tr>
         <td :colspan="guestSchedule.length+1"
-            style="font-weight: 600;">
-          <h1 style="font-weight: 600;padding:10px 0">{{matchSeason}}赛季{{guestTeamName}}球路走势图</h1>
-        </td>
-      </tr>
-      <tr align="center">
-        <td style="white-space:nowrap;padding:0 6px">全</td>
-        <td style="white-space:nowrap;"
-            v-for="(item,i) in guestSchedule"
-            :key="i">
-          <span v-if="item.matchState == '-1'">
-            <span v-if="item.hometeamID == guestteamID">{{item.homeScore}}-{{item.guestScore}}</span>
-            <span v-else>{{item.guestScore}}-{{item.homeScore}}</span>
-          </span>
-          <span v-else
-                class="he_sp">
-            <span v-if="item.hometeamID == guestteamID">
-              <el-image src="../../static/sj.png"></el-image>
+            style="font-weight: 600;background-color: #83A2CA;">
+          <h1 style="line-height:40px">
+            <b class="fl"
+               style="margin-left:10px">{{matchSeason}}赛季
+              <span style="color:#fff">({{guestTeamName}})</span>球路走势图</b>
+            <span class="fr"
+                  style="font-size:14px;color: #f00;margin-right:10px">
+              <b>说明：所分析的球队比分在前，▲表示主场，●表示客场</b>
             </span>
-            <span v-else-if="item.hometeamID != guestteamID">
-              <el-image src="../../static/yuan.png"></el-image>
-            </span>
-          </span>
+          </h1>
 
         </td>
       </tr>
       <tr align="center">
+        <td style="white-space:nowrap;padding:0 6px;">
+          <b>全</b>
+        </td>
+        <td style="white-space:nowrap;"
+            v-for="(item,i) in guestSchedule"
+            :key="i">
+          <router-link target="_blank"
+                       :to="{name:'history',params:{scheduleID:item.scheduleID}}">
+            <span v-if="item.matchState == '-1'">
+              <span v-if="item.hometeamID == guestteamID">{{item.homeScore}}-{{item.guestScore}}</span>
+              <span v-else>{{item.guestScore}}-{{item.homeScore}}</span>
+            </span>
+            <span v-else
+                  class="he_sp">
+              <span v-if="item.hometeamID == guestteamID">
+                <el-image src="../../static/sj.png"></el-image>
+              </span>
+              <span v-else-if="item.hometeamID != guestteamID">
+                <el-image src="../../static/yuan.png"></el-image>
+              </span>
+            </span>
+          </router-link>
+        </td>
+      </tr>
+      <tr align="center">
         <td>
-          <div class="teamtxt">对手</div>
+          <div class="teamtxt">
+            <b>对手</b>
+          </div>
         </td>
         <td v-for="(item,i) in guestSchedule"
             :key="i">
-          <div class="teamtxt">
+          <div class="teamtxt active_jl_dd">
             <span v-if="item.hometeamID == guestteamID">{{item.guestTeamName}}</span>
             <span v-else>{{item.homeTeamName}}</span>
+            <router-link target="_blank"
+                         class="active_jl"
+                         v-if='item.coachID!="未知"'
+                         :to="{name:'playerDetails',params:{playerID:item.coachID}}">{{item.coachName}}</router-link>
           </div>
         </td>
 
       </tr>
       <tr align="center">
-        <td>轮</td>
+        <td>
+          <b>轮</b>
+        </td>
         <td v-for="(item,i) in guestSchedule"
             :key="i">{{i+1}}</td>
 
@@ -159,9 +192,9 @@
 
       <tr>
         <td class="spf">
-          <span>胜</span>
-          <span>平</span>
-          <span>负</span>
+          <b>胜</b>
+          <b>平</b>
+          <b>负</b>
         </td>
         <td :colspan="guestSchedule.length"
             class="zk_td">
@@ -205,12 +238,22 @@
            style="margin:10px 0">
       <tr>
         <td :colspan="homeSchedule.length+1"
-            style="font-weight: 600;">
-          <h1 style="font-weight: 600;padding:10px 0">{{matchSeason}}赛季{{homeTeamName}}盘路走势图</h1>
+            style="font-weight: 600;background-color: #83A2CA;">
+          <h1 style="line-height:40px">
+            <b class="fl"
+               style="margin-left:10px">{{matchSeason}}赛季
+              <span style="color:#fff">({{homeTeamName}})</span>盘路走势图</b>
+            <span class="fr"
+                  style="font-size:14px;color: #f00;margin-right:10px">
+              <b>说明：所分析的球队比分在前，▲表示主场，●表示客场</b>
+            </span>
+          </h1>
         </td>
       </tr>
       <tr align="center">
-        <td style="white-space:nowrap;padding:0 6px">全</td>
+        <td style="white-space:nowrap;padding:0 6px">
+          <b>全</b>
+        </td>
         <td style="white-space:nowrap;"
             v-for="(item,i) in homeSchedule"
             :key="i">
@@ -232,7 +275,9 @@
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">终盘</div>
+          <div class="teamtxt">
+            <b>终盘</b>
+          </div>
         </td>
         <td v-for="(item,i) in homeTrends"
             :key="i">
@@ -248,19 +293,32 @@
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">对手</div>
+          <div class="teamtxt">
+            <b>对手</b>
+          </div>
         </td>
         <td v-for="(item,i) in homeSchedule"
             :key="i">
-          <div class="teamtxt">
-            <span v-if="item.hometeamID == hometeamID">{{item.guestTeamName}}</span>
-            <span v-else>{{item.homeTeamName}}</span>
+          <div class="teamtxt active_jl_dd">
+            <span v-if="item.hometeamID == hometeamID">
+              {{item.guestTeamName}}
+            </span>
+            <span v-else>
+              {{item.homeTeamName}}
+            </span>
+            <router-link target="_blank"
+                         class="active_jl"
+                         v-if='item.coachID!="未知"'
+                         :to="{name:'playerDetails',params:{playerID:item.coachID}}">{{item.coachName}}</router-link>
+
           </div>
         </td>
 
       </tr>
       <tr align="center">
-        <td>轮</td>
+        <td>
+          <b>轮</b>
+        </td>
         <td v-for="(item,i) in homeSchedule"
             :key="i">{{i+1}}</td>
 
@@ -268,9 +326,9 @@
 
       <tr>
         <td class="spf">
-          <span>赢</span>
-          <span>走</span>
-          <span>输</span>
+          <b>赢</b>
+          <b>走</b>
+          <b>输</b>
         </td>
         <td :colspan="homeSchedule.length"
             class="zk_td">
@@ -314,12 +372,22 @@
            style="margin:10px 0">
       <tr>
         <td :colspan="guestSchedule.length+1"
-            style="font-weight: 600;">
-          <h1 style="font-weight: 600;padding:10px 0">{{matchSeason}}赛季{{guestTeamName}}盘路走势图</h1>
+            style="font-weight: 600;background-color: #83A2CA;">
+          <h1 style="line-height:40px">
+            <b class="fl"
+               style="margin-left:10px">{{matchSeason}}赛季
+              <span style="color:#fff">({{guestTeamName}})</span>盘路走势图</b>
+            <span class="fr"
+                  style="font-size:14px;color: #f00;margin-right:10px">
+              <b>说明：所分析的球队比分在前，▲表示主场，●表示客场</b>
+            </span>
+          </h1>
         </td>
       </tr>
       <tr align="center">
-        <td style="white-space:nowrap;padding:0 6px">全</td>
+        <td style="white-space:nowrap;padding:0 6px">
+          <b>全</b>
+        </td>
         <td style="white-space:nowrap;"
             v-for="(item,i) in guestSchedule"
             :key="i">
@@ -341,7 +409,9 @@
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">终盘</div>
+          <div class="teamtxt">
+            <b>终盘</b>
+          </div>
         </td>
         <td v-for="(item,i) in guestTrends"
             :key="i">
@@ -357,28 +427,36 @@
       </tr>
       <tr align="center">
         <td>
-          <div class="teamtxt">对手</div>
+          <div class="teamtxt">
+            <b>对手</b>
+          </div>
         </td>
         <td v-for="(item,i) in guestSchedule"
             :key="i">
-          <div class="teamtxt">
+          <div class="teamtxt active_jl_dd">
             <span v-if="item.hometeamID == guestteamID">{{item.guestTeamName}}</span>
             <span v-else>{{item.homeTeamName}}</span>
+            <router-link target="_blank"
+                         class="active_jl"
+                         v-if='item.coachID!="未知"'
+                         :to="{name:'playerDetails',params:{playerID:item.coachID}}">{{item.coachName}}</router-link>
           </div>
         </td>
 
       </tr>
       <tr align="center">
-        <td>轮</td>
+        <td>
+          <b>轮</b>
+        </td>
         <td v-for="(item,i) in guestSchedule"
             :key="i">{{i+1}}</td>
       </tr>
 
       <tr>
         <td class="spf">
-          <span>胜</span>
-          <span>平</span>
-          <span>负</span>
+          <b>胜</b>
+          <b>平</b>
+          <b>负</b>
         </td>
         <td :colspan="guestSchedule.length"
             class="zk_td">
@@ -807,7 +885,7 @@ td div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 18px;
+  padding-top: 18px;
 }
 .sz {
   width: 8px;
@@ -877,6 +955,29 @@ td div {
   span {
     display: flex;
     align-items: center;
+  }
+}
+a {
+  display: block;
+  width: 100%;
+  &:hover {
+    color: #409eff;
+  }
+}
+
+.active_jl {
+  display: none;
+  position: absolute;
+  top: 20px;
+  padding: 4px;
+  background: #fff;
+  right: 12px;
+  z-index: 99;
+}
+.active_jl_dd {
+  position: relative;
+  &:hover .active_jl {
+    display: block;
   }
 }
 </style>

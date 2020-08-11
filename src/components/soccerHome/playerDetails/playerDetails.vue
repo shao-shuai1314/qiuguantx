@@ -49,16 +49,6 @@
             <el-tab-pane label="杯赛"
                          name="2"></el-tab-pane>
           </el-tabs>
-          <!-- 筛选 -->
-          <!-- <span class="fl">
-            <el-checkbox-group v-model="checkedCities"
-                               @change="handleCheckedCitiesChange">
-              <el-checkbox v-for="city in sclass_list"
-                           :label="city.sclassID"
-                           :key="city.sclassID">{{city.sclassName}}</el-checkbox>
-            </el-checkbox-group>
-          </span> -->
-
           <div>
             <div style="margin-bottom:10px"
                  class="fr">
@@ -313,38 +303,6 @@ export default {
   },
   methods: {
 
-
-    // 联赛筛选
-    // handleCheckedCitiesChange (value) {
-    //   console.log(value)
-    //   if (this.timeListVe == '全部') {
-    //     this.playerTechStatistics_len = []
-    //     value.forEach((item) => {
-    //       this.playerTechStatistics_g.forEach((it, i) => {
-    //         if (it.sclassID == item) {
-    //           this.playerTechStatistics_len.push(it)
-    //         }
-    //       })
-    //     })
-    //   } else {
-    //     this.playerTechStatistics_len = []
-    //     value.forEach((item) => {
-    //       this.playerTechStatistics_g.forEach((it, i) => {
-    //         if (it.sclassID == item) {
-    //           this.playerTechStatistics_len.push(it)
-    //         }
-    //       })
-    //     })
-    //     this.playerTechStatistics_len = this.playerTechStatistics_len.filter((item) => {
-    //       return item.matchtime.slice(0, 4) == this.timeListVe
-    //     })
-    //   }
-
-    //   console.log(this.playerTechStatistics_len)
-    //   this.fyList(this.playerTechStatistics_len)
-    //   this.currentPage1 = 1
-    // },
-
     //  球员基本信息
     async dataList1 () {
       const res = await this.$http.get('teamInfo/player/' + this.scheduleID);
@@ -366,13 +324,12 @@ export default {
       this.fyList(this.playerTechStatistics_len)
       // console.log(this.playerTechStatistics_len)
 
-      console.log(res.data.sclass_list)
 
       // 联赛杯赛划分
-      this.zs = res.data.sclass_list
-      this.zs.forEach(item => {
-        this.checkedCities.push(item.sclassID)
-      })
+      // this.zs = res.data.sclass_list
+      // this.zs.forEach(item => {
+      //   this.checkedCities.push(item.sclassID)
+      // })
       // 筛选框显示
       if (this.timeListVe == '全部') {
         this.sclass_list = this.zs

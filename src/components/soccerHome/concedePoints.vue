@@ -24,6 +24,7 @@
 
       <el-table :data="tableData"
                 border
+                header-row-class-name="tableHead"
                 size="mini"
                 :header-cell-style="{'background':'#f5f7fa'}"
                 style="width: 100%;margin-top:-30px">
@@ -174,5 +175,12 @@ a {
   &:hover {
     color: #409eff;
   }
+}
+
+.tableHead {
+  font-weight: 600;
+  color: #303133;
+  font-size: 14px;
+  height: 50px;
 }
 </style>
