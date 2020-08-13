@@ -99,7 +99,6 @@ export default {
   methods: {
     async OnListG () {
       const res = await this.$http.get('teamInfo/' + this.scheduleID + '/lineup/');
-      if (res.status !== 200) return console.log('球队阵容信息取失败');
       var Coachcolors = { '前锋': 'rgba(190,76,89,0.5)', '中场': 'rgba(100,76,89,0.5)', '后卫': 'rgba(180,16,89,0.5)', '守门员': 'rgba(110,106,89,0.5)', '替补': 'rgba(170,76,29,0.5)' }
       // 颜色
       res.data.forEach((item) => {

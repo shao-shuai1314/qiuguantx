@@ -1,5 +1,5 @@
 <template>
-  <div>球冠指数</div>
+  <div style="height:500px">球冠指数</div>
 </template>
 <script >
 export default {

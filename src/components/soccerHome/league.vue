@@ -551,7 +551,7 @@ export default {
 
     this.zd_stype = { '0': '未开', '1': '上半场', '2': '中场', '3': '下半场', '4': '加时', '5': '点球', '-1': '完场', '-10': '取消', '-11': '待定', '-12': '腰斩', '-13': '中断', '-14': '推迟' }
 
-    // this.OnOddsList()
+    this.OnOddsList()
 
   },
   computed: {
@@ -729,8 +729,13 @@ export default {
         // 最新一轮
         this.paginAtv = round_ej.curr_round;
         this.subSclassName = round_ej.subSclassName
+        console.log(this.subSclassName)
         this.MatchList = this.match_list.filter(item => item.subSclassName == round_ej.subSclassName)
-        this.OnPaging(round_ej.curr_round)
+        console.log(round_ej.curr_round, 111)
+        if (round_ej.curr_round) {
+          this.OnPaging(round_ej.curr_round)
+        }
+
 
         // 积分榜
         this.LeagueList = []
@@ -878,7 +883,8 @@ export default {
         scheduleIDlist.push(item.scheduleID)
       })
       this.scheduleIDlist = scheduleIDlist.join(",")
-      this.OnOddsList()
+      // this.OnOddsList()
+      this.OnRadioOdds(1)
       // 赔率类型
       this.radioOdds = 1
     },
@@ -886,7 +892,7 @@ export default {
     // 赔率
     async OnOddsList () {
       const res = await this.$http.get('odds/shceduleCompany/');
-      if (res.status !== 200) return console.log('赔率列表获取失败');
+      if (res.status !== 200) return console.log('赔率公司获取失败');
       // console.log(res.data)
       this.OddsList0 = [];
       this.OddsList1 = [];
@@ -910,7 +916,7 @@ export default {
       this.OddsList = this.OddsList0;
       this.OddsValue = this.OddsList[0].companyID
 
-      this.OnRadioOdds(1)
+      // this.OnRadioOdds(1)
 
     },
     async OnRadioOdds (e) {

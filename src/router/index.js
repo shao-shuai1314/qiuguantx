@@ -368,7 +368,7 @@ const router = new Router({
 
             // 球员教练详细信息
             {
-              path: '/soccer/team/playerDetails/:playerID',
+              path: '/soccer/team/player/:playerID',
               name: 'playerDetails',
               component: playerDetails,
               meta: {

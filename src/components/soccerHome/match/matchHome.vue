@@ -57,31 +57,62 @@
 
       </el-card>
       <!-- 选项卡公共 -->
-      <el-tabs v-model="activeName"
-               @tab-click="handleClick">
-        <el-tab-pane label="欧赔"
-                     name="odds"></el-tab-pane>
-        <el-tab-pane label="亚盘"
-                     name="subPanel"></el-tab-pane>
-        <el-tab-pane label="比赛历史"
-                     name="history"></el-tab-pane>
-        <el-tab-pane label="教练对阵"
-                     name="coachConfrontation"></el-tab-pane>
-        <el-tab-pane label="球路盘路"
-                     name="diskDrive"></el-tab-pane>
-        <el-tab-pane label="技术统计"
-                     name="statistics"></el-tab-pane>
-        <el-tab-pane label="伤停统计"
-                     name="linuepStatistics"></el-tab-pane>
-        <el-tab-pane label="交易盈亏"
-                     name="exchanges"></el-tab-pane>
-        <el-tab-pane label="球冠指数"
-                     name="exponent"></el-tab-pane>
-        <!-- <el-tab-pane label="比赛预测"
-                     name="exponent"></el-tab-pane> -->
-        <el-tab-pane label="球队位置"
-                     name="TeamPosition"></el-tab-pane>
-      </el-tabs>
+      <div class="tabs_box">
+        <el-tabs v-model="activeName"
+                 @tab-click="handleClick">
+          <el-tab-pane :name="name_tabs1">
+            <span slot="label">
+              <span class="tabs_box_span"
+                    @mouseenter="mouseOver"
+                    @mouseleave="mouseLeave">
+                {{name_tabs}}
+                <span class="tabs_box_icon">
+                  <i v-if="clocks"
+                     class="el-icon-arrow-up"></i>
+                  <i v-else
+                     class="el-icon-arrow-down"></i>
+                </span>
+              </span>
+            </span>
+          </el-tab-pane>
+          <el-tab-pane label="教练对阵"
+                       name="coachConfrontation"></el-tab-pane>
+          <el-tab-pane label="球员转会"
+                       name="coachConfrontation11"></el-tab-pane>
+          <el-tab-pane label="球路盘路"
+                       name="diskDrive"></el-tab-pane>
+          <el-tab-pane label="比赛历史"
+                       name="history"></el-tab-pane>
+          <el-tab-pane label="技术统计"
+                       name="statistics"></el-tab-pane>
+          <el-tab-pane label="伤停统计"
+                       name="linuepStatistics"></el-tab-pane>
+          <el-tab-pane label="球队位置"
+                       name="TeamPosition"></el-tab-pane>
+          <el-tab-pane label="赛事分析"
+                       name="exponent11"></el-tab-pane>
+        </el-tabs>
+        <div class="tabs_box_dl"
+             :style="{'border':clocks?'':'0px'}"
+             @mouseenter="mouseOver"
+             @mouseleave="mouseLeave">
+          <dl v-if="clocks">
+            <dd>
+              <span @click="handleClick2('欧赔','odds')">欧赔</span>
+            </dd>
+            <dd>
+              <span @click="handleClick2('亚盘','subPanel')">亚盘</span>
+            </dd>
+            <dd>
+              <span @click="handleClick2('交易盈亏','exchanges')">交易盈亏</span>
+            </dd>
+            <dd>
+              <span @click="handleClick2('球冠指数','exponent')">球冠指数</span>
+            </dd>
+          </dl>
+        </div>
+
+      </div>
 
       <!-- 路由占位符 -->
       <!-- <router-view></router-view> -->
@@ -98,6 +129,10 @@ export default {
       activeName: 'history',
       scheduleID: '',
       headerList: {},
+      // 选项卡第一个名
+      name_tabs: '球冠指数',
+      clocks: false,
+      name_tabs1: '',
     };
   },
   watch: {
@@ -112,26 +147,49 @@ export default {
     this.scheduleID = this.$route.params.scheduleID
     // console.log(this.scheduleID)
     this.OnHeaderG()
+    if (this.$route.name == 'odds' || this.$route.name == 'subPanel' || this.$route.name == 'exchanges' || this.$route.name == 'exponent') {
+      let name_tabs1 = { odds: '欧赔', subPanel: '亚盘', exchanges: '交易盈亏', exponent: '球冠指数' }
+      this.activeName = this.$route.name
+      this.name_tabs1 = this.$route.name
+      this.name_tabs = name_tabs1[this.$route.name]
+    }
     // 判断初始选项卡位置
-    if (this.$route.name) return this.activeName = this.$route.name
-    // this.OnHeaderG()
+    if (this.$route.name) {
+      this.activeName = this.$route.name
+    }
 
 
   },
   methods: {
-    // 跳转链接
-    handleClick (tab, event) {
-      // console.log(tab.name);
-      // this.$router.push(tab.name)
-      this.$router.push({ path: '/soccer/match/' + tab.name + '/' + this.scheduleID }).catch(err => err);
-    },
     //  头部公用接口
     async OnHeaderG () {
       const res = await this.$http.get('soccer/matchInfo/' + this.scheduleID);
       if (res.status !== 200) return console.log('对阵头部信息取失败');
-      // console.log(res.data)
       this.headerList = res.data
-    }
+    },
+    // 跳转链接
+    handleClick (tab, event) {
+      if (tab.name != 'exponent') {
+        // 初始
+        this.name_tabs = '球冠指数'
+        this.name_tabs1 = 'exponent'
+      }
+      this.$router.push({ path: '/soccer/match/' + tab.name + '/' + this.scheduleID }).catch(err => err);
+
+
+    },
+    handleClick2 (name, href) {
+      this.name_tabs = name
+      this.activeName = this.name_tabs1
+      this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID }).catch(err => err);
+    },
+    // 移入移除
+    mouseOver () {
+      this.clocks = true
+    },
+    mouseLeave () {
+      this.clocks = false
+    },
   }
 }
 </script>
@@ -225,5 +283,47 @@ export default {
   left: 20px;
   font-size: 16px;
   text-align: center;
+}
+/* .tabs_box {
+  display: flex;
+} */
+
+.tabs_box {
+  position: relative;
+  .tabs_box_span {
+    .tabs_box_icon {
+      .i1 {
+        &:hover {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}
+.tabs_box_dl {
+  position: absolute;
+  top: 30px;
+  width: 70px;
+  background: #fff;
+  border: 1px solid #ddd;
+  z-index: 999999999999999;
+
+  dd {
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    &:hover {
+      background: #eee;
+    }
+    span {
+      padding-left: 6px;
+      cursor: pointer;
+      width: 100%;
+      display: inline-block;
+      &:hover {
+        color: #409eff;
+      }
+    }
+  }
 }
 </style>

@@ -38,7 +38,7 @@
                        :value="item.value">
             </el-option>
           </el-select>
-          <span class="fsing">{{HomeSPF.Hs}}胜{{HomeSPF.Hp}}平{{HomeSPF.Hf}}负， 其中主场{{HomeSPF.onHs}}胜{{HomeSPF.onHp}}平{{HomeSPF.onHf}}负</span>
+          <span class="fsing">{{HomeSPF.Hs}}胜&nbsp;{{HomeSPF.Hp}}平&nbsp;{{HomeSPF.Hf}}负&nbsp;， 其中主场&nbsp;&nbsp;{{HomeSPF.onHs}}胜&nbsp;{{HomeSPF.onHp}}平&nbsp;{{HomeSPF.onHf}}负&nbsp;</span>
         </div>
         <!-- 主场 -->
         <table width="100%"
@@ -239,7 +239,7 @@
                        :value="item.value">
             </el-option>
           </el-select>
-          <span class="fsing">{{GuestSPF.Ks}}胜{{GuestSPF.Kp}}平{{GuestSPF.Kf}}负 其中客场{{GuestSPF.onKs}}胜{{GuestSPF.onKp}}平{{GuestSPF.onKf}}负</span>
+          <span class="fsing">{{GuestSPF.Ks}}胜&nbsp;{{GuestSPF.Kp}}平&nbsp;{{GuestSPF.Kf}}负&nbsp;, 其中客场&nbsp;&nbsp;{{GuestSPF.onKs}}胜&nbsp;{{GuestSPF.onKp}}平&nbsp;{{GuestSPF.onKf}}负</span>
         </div>
         <!-- 客场 -->
         <table width="100%"
@@ -449,6 +449,7 @@
             <td>{{item.matchtime.replace('T',' ')}}</td>
             <td class="borderL">
               <router-link target="_blank"
+                           :style="{'color': (item.hometeamID ===homeTeamID ? item.colors:''),'font-weight':(item.hometeamID ===homeTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
             </td>
             <td>
@@ -459,6 +460,7 @@
             </td>
             <td>
               <router-link target="_blank"
+                           :style="{'color': (item.guestteamID ===homeTeamID ? item.colors:''),'font-weight':(item.guestteamID ===homeTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
             </td>
             <td class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
@@ -510,6 +512,7 @@
             <td>{{item.matchtime.replace('T',' ')}}</td>
             <td class="borderL">
               <router-link target="_blank"
+                           :style="{'color': (item.hometeamID ===guestTeamID ? item.colors:''),'font-weight':(item.hometeamID ===guestTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
             </td>
             <td>
@@ -520,6 +523,7 @@
             </td>
             <td>
               <router-link target="_blank"
+                           :style="{'color': (item.guestteamID ===guestTeamID ? item.colors:''),'font-weight':(item.guestteamID ===guestTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
             </td>
             <td class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
@@ -566,7 +570,7 @@
                        :value="item.value">
             </el-option>
           </el-select>
-          <span class="fsing">{{hometeamName}}&nbsp;&nbsp;&nbsp;{{ClashSPF.Js}}胜{{ClashSPF.Jp}}平{{ClashSPF.Jf}}负 其中主场{{ClashSPF.onJs}}胜{{ClashSPF.onJp}}平{{ClashSPF.onJf}}负</span>
+          <span class="fsing">{{hometeamName}}&nbsp;&nbsp;&nbsp;{{ClashSPF.Js}}胜&nbsp;{{ClashSPF.Jp}}平&nbsp;{{ClashSPF.Jf}}负&nbsp; 其中主场&nbsp;&nbsp;{{ClashSPF.onJs}}胜&nbsp;{{ClashSPF.onJp}}平&nbsp;{{ClashSPF.onJf}}负</span>
         </div>
         <!-- 交锋 -->
         <table width="100%"
@@ -992,12 +996,12 @@ export default {
     // 教练添加
     coachFn (coacList, Zklist) {
       // 教练颜色
-      // var Coachcolors = ['rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)', 'rgba(110,106,89,0.5)', 'rgba(170,76,29,0.5)']
+      var Coachcolors = ['rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)', 'rgba(110,106,89,0.5)', 'rgba(170,76,29,0.5)', 'rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)']
 
-      var Coachcolors = []
+      // var Coachcolors = []
       var cor = {}
       for (let i = 0; i < coacList.length; i++) {
-        Coachcolors[i] = `rgba(${Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256)},0.5)`
+        // Coachcolors[i] = `rgba(${Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256)},0.5)`
         cor[coacList[i].playerId] = Coachcolors[i]
       }
       Zklist.forEach(item => {
@@ -1025,6 +1029,10 @@ export default {
       // 客场颜色
 
       this.addColor(res.data.guestHistoryList, res.data.allInfo.guestTeamID)
+
+      // 未来颜色
+      this.addColor(res.data.homeFutureList, res.data.allInfo.homeTeamID)
+      this.addColor(res.data.guestFutureList, res.data.allInfo.guestTeamID)
 
       // 交锋颜色
       this.addColor(res.data.mutualHistoryList, res.data.allInfo.homeTeamID)
