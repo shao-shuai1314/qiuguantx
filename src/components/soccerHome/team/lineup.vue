@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     async OnListG () {
-      const res = await this.$http.get('teamInfo/' + this.scheduleID + '/lineup/');
+      const res = await this.$http.get('teamInfo/' + this.$route.params.teamID + '/lineup/');
       var Coachcolors = { '前锋': 'rgba(190,76,89,0.5)', '中场': 'rgba(100,76,89,0.5)', '后卫': 'rgba(180,16,89,0.5)', '守门员': 'rgba(110,106,89,0.5)', '替补': 'rgba(170,76,29,0.5)' }
       // 颜色
       res.data.forEach((item) => {

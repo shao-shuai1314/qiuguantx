@@ -1010,16 +1010,9 @@ export default {
     },
     async OnHistory () {
       const res = await this.$http.get('soccer/matchInfo/' + this.scheduleID + '/history/');
-      if (res.status !== 200) return console.log('对阵头部信息取失败');
       // 教练遍历
       this.coachFn(res.data.home_coach, res.data.homeHistoryList)
       this.coachFn(res.data.guest_coach, res.data.guestHistoryList)
-
-
-      // console.log(res.data.homeHistoryList, res.data.homeCoach)
-
-
-
 
 
 

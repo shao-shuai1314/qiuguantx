@@ -58,59 +58,80 @@
       </el-card>
       <!-- 选项卡公共 -->
       <div class="tabs_box">
-        <el-tabs v-model="activeName"
-                 @tab-click="handleClick">
-          <el-tab-pane :name="name_tabs1">
-            <span slot="label">
-              <span class="tabs_box_span"
-                    @mouseenter="mouseOver"
-                    @mouseleave="mouseLeave">
-                {{name_tabs}}
-                <span class="tabs_box_icon">
-                  <i v-if="clocks"
-                     class="el-icon-arrow-up"></i>
-                  <i v-else
-                     class="el-icon-arrow-down"></i>
-                </span>
-              </span>
-            </span>
-          </el-tab-pane>
-          <el-tab-pane label="教练对阵"
-                       name="coachConfrontation"></el-tab-pane>
-          <el-tab-pane label="球员转会"
-                       name="coachConfrontation11"></el-tab-pane>
-          <el-tab-pane label="球路盘路"
-                       name="diskDrive"></el-tab-pane>
-          <el-tab-pane label="比赛历史"
-                       name="history"></el-tab-pane>
-          <el-tab-pane label="技术统计"
-                       name="statistics"></el-tab-pane>
-          <el-tab-pane label="伤停统计"
-                       name="linuepStatistics"></el-tab-pane>
-          <el-tab-pane label="球队位置"
-                       name="TeamPosition"></el-tab-pane>
-          <el-tab-pane label="赛事分析"
-                       name="exponent11"></el-tab-pane>
-        </el-tabs>
-        <div class="tabs_box_dl"
-             :style="{'border':clocks?'':'0px'}"
-             @mouseenter="mouseOver"
-             @mouseleave="mouseLeave">
-          <dl v-if="clocks">
-            <dd>
-              <span @click="handleClick2('欧赔','odds')">欧赔</span>
-            </dd>
-            <dd>
-              <span @click="handleClick2('亚盘','subPanel')">亚盘</span>
-            </dd>
-            <dd>
-              <span @click="handleClick2('交易盈亏','exchanges')">交易盈亏</span>
-            </dd>
-            <dd>
-              <span @click="handleClick2('球冠指数','exponent')">球冠指数</span>
-            </dd>
-          </dl>
-        </div>
+        <ul>
+          <li>
+            <div @click="handleClick1(0,'exponent','球冠指数')"
+                 :class="activeIndex==0?'active':''">
+              <span>{{activeName1}}</span>
+              <i class="el-icon-arrow-down"></i>
+            </div>
+            <dl>
+              <dd>
+                <span @click="handleClick2(0,'欧赔','odds')">欧赔</span>
+              </dd>
+              <dd>
+                <span @click="handleClick2(0,'亚赔','subPanel')">亚赔</span>
+              </dd>
+              <dd>
+                <span>交易盈亏</span>
+              </dd>
+              <dd>
+                <span @click="handleClick2(0,'球冠指数','exponent')">球冠指数</span>
+              </dd>
+            </dl>
+          </li>
+          <li>
+            <div @click="handleClick1(1,'coachConfrontation')"
+                 :class="activeIndex==1?'active':''">
+              <span>{{activeName2}}</span>
+              <i class="el-icon-arrow-down"></i>
+            </div>
+            <dl>
+              <dd>
+                <span @click="handleClick3(1,'教练对阵','coachConfrontation')">教练对阵</span>
+              </dd>
+              <dd>
+                <span @click="handleClick3(1,'球员转会','PlayerTransfer')">球员转会</span>
+              </dd>
+            </dl>
+          </li>
+          <li>
+            <div @click="handleClick1(2,'statistics')"
+                 :class="activeIndex==2?'active':''">
+              <span>{{activeName3}}</span>
+              <i class="el-icon-arrow-down"></i>
+            </div>
+            <dl>
+              <dd>
+                <span @click="handleClick4(2,'技术统计','statistics')">技术统计</span>
+              </dd>
+              <dd>
+                <span @click="handleClick4(2,'伤停统计','linuepStatistics')">伤停统计</span>
+              </dd>
+            </dl>
+          </li>
+          <li>
+            <span class="tabs-span"
+                  @click="handleClick1(3,'history')"
+                  :class="activeIndex==3?'active':''">比赛历史</span>
+          </li>
+          <li>
+            <span class="tabs-span"
+                  @click="handleClick1(4,'diskDrive')"
+                  :class="activeIndex==4?'active':''">球路盘路</span>
+          </li>
+          <li>
+            <span class="tabs-span"
+                  @click="handleClick1(5,'TeamPosition')"
+                  :class="activeIndex==5?'active':''">球队位置</span>
+          </li>
+          <li>
+            <span class="tabs-span"
+                  @click="handleClick1(6,'analyse')"
+                  :class="activeIndex==6?'active':''">赛前分析</span>
+          </li>
+
+        </ul>
 
       </div>
 
@@ -126,7 +147,11 @@
 export default {
   data () {
     return {
-      activeName: 'history',
+      activeName1: '球冠指数',
+      activeName2: '教练对阵',
+      activeName3: '技术统计',
+      activeIndex: 0,
+
       scheduleID: '',
       headerList: {},
       // 选项卡第一个名
@@ -139,23 +164,29 @@ export default {
     '$route' (to, from) {
       if (to.params.scheduleID !== from.params.scheduleID) {
         this.$router.go(0);
+
       }
     }
+
   },
   created () {
-    // console.log(this.$route.params.scheduleID)
     this.scheduleID = this.$route.params.scheduleID
-    // console.log(this.scheduleID)
     this.OnHeaderG()
-    if (this.$route.name == 'odds' || this.$route.name == 'subPanel' || this.$route.name == 'exchanges' || this.$route.name == 'exponent') {
-      let name_tabs1 = { odds: '欧赔', subPanel: '亚盘', exchanges: '交易盈亏', exponent: '球冠指数' }
-      this.activeName = this.$route.name
-      this.name_tabs1 = this.$route.name
-      this.name_tabs = name_tabs1[this.$route.name]
-    }
     // 判断初始选项卡位置
     if (this.$route.name) {
-      this.activeName = this.$route.name
+      let styles = { 'exponent': [0, '球冠指数'], 'odds': [0, '欧赔'], 'subPanel': [0, '亚赔'], 'coachConfrontation': [1, '教练对阵'], 'PlayerTransfer': [1, '球员转会'], 'statistics': [2, '技术统计'], 'linuepStatistics': [2, '伤停统计'], 'history': [3, '比赛历史'], 'diskDrive': [4, '球路盘路'], 'TeamPosition': [5, '球队位置'], 'analyse': [6, '赛事分析'] }
+
+      // this.activeName = this.$route.name
+      this.activeIndex = styles[this.$route.name][0]
+      if (this.activeIndex == 0) {
+        this.activeName1 = styles[this.$route.name][1]
+      } else if (this.activeIndex == 1) {
+        this.activeName2 = styles[this.$route.name][1]
+      } else if (this.activeIndex == 2) {
+        this.activeName3 = styles[this.$route.name][1]
+      }
+
+
     }
 
 
@@ -166,30 +197,50 @@ export default {
       const res = await this.$http.get('soccer/matchInfo/' + this.scheduleID);
       if (res.status !== 200) return console.log('对阵头部信息取失败');
       this.headerList = res.data
+      let TeamName = [res.data.homeTeamInfo.homeTeamName, res.data.homeTeamInfo.hometeamID, res.data.guestTeamInfo.homeTeamName, res.data.guestTeamInfo.hometeamID]
+      let CoachName = [res.data.homeTeamCoachInfo.homeTeamCoachName, res.data.homeTeamCoachInfo.homeTeamCoachID, res.data.guestTeamCoachInfo.guestTeamCoachName, res.data.guestTeamCoachInfo.guestTeamCoachID]
+
+      sessionStorage.setItem('TeamName', TeamName)
+      sessionStorage.setItem('CoachName', CoachName)
+
     },
-    // 跳转链接
-    handleClick (tab, event) {
-      if (tab.name != 'exponent') {
-        // 初始
-        this.name_tabs = '球冠指数'
-        this.name_tabs1 = 'exponent'
+    handleClick1 (index, href) {
+
+      if (index == 0) {
+        if (this.activeName1 != '球冠指数') return
+      } else if (index == 1) {
+        if (this.activeName2 != '教练对阵') return
+      } else if (index == 2) {
+        if (this.activeName3 != '技术统计') return
       }
-      this.$router.push({ path: '/soccer/match/' + tab.name + '/' + this.scheduleID }).catch(err => err);
 
+      this.activeName1 = '球冠指数'
+      this.activeName2 = '教练对阵'
+      this.activeName3 = '技术统计'
+      this.activeIndex = index
+      this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID }).catch(err => err);
 
     },
-    handleClick2 (name, href) {
-      this.name_tabs = name
-      this.activeName = this.name_tabs1
+    gg (index, href) {
+      this.activeName1 = '球冠指数'
+      this.activeName2 = '教练对阵'
+      this.activeName3 = '技术统计'
+      this.activeIndex = index
       this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID }).catch(err => err);
     },
-    // 移入移除
-    mouseOver () {
-      this.clocks = true
+    handleClick2 (index, name, href) {
+      this.gg(index, href)
+      this.activeName1 = name
     },
-    mouseLeave () {
-      this.clocks = false
+    handleClick3 (index, name, href) {
+      this.gg(index, href)
+      this.activeName2 = name
     },
+    handleClick4 (index, name, href) {
+      this.gg(index, href)
+      this.activeName3 = name
+
+    }
   }
 }
 </script>
@@ -284,44 +335,76 @@ export default {
   font-size: 16px;
   text-align: center;
 }
-/* .tabs_box {
-  display: flex;
-} */
 
 .tabs_box {
-  position: relative;
-  .tabs_box_span {
-    .tabs_box_icon {
-      .i1 {
-        &:hover {
-          transform: rotate(180deg);
-        }
-      }
-    }
+  .active {
+    border-bottom: 2px solid #409eff;
+    color: #409eff;
+    font-weight: 600;
+    transition: 0.3s;
   }
-}
-.tabs_box_dl {
-  position: absolute;
-  top: 30px;
-  width: 70px;
-  background: #fff;
-  border: 1px solid #ddd;
-  z-index: 999999999999999;
-
-  dd {
-    height: 25px;
-    line-height: 25px;
-    font-size: 14px;
-    &:hover {
-      background: #eee;
-    }
-    span {
-      padding-left: 6px;
+  ul {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    li {
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      margin-right: 40px;
+      font-size: 14px;
       cursor: pointer;
-      width: 100%;
-      display: inline-block;
-      &:hover {
+      .tabs-span {
+        cursor: pointer;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+      }
+      div {
+        height: 40px;
+        line-height: 40px;
+      }
+      &:hover dl {
+        display: block;
+        transition: 0.3s;
+      }
+      &:hover i {
+        transform: rotate(180deg);
         color: #409eff;
+        transition: 0.3s;
+      }
+      &:hover div span {
+        color: #409eff;
+      }
+      dl {
+        position: absolute;
+        top: 36px;
+        background: #fff;
+        border: 1px solid #eee;
+        z-index: 9999999;
+        display: none;
+        width: 70px;
+        dd {
+          height: 30px;
+          line-height: 30px;
+          font-size: 14px;
+          span {
+            margin-left: 6px;
+            width: 100%;
+            display: inline-block;
+            &:hover {
+              color: #409eff;
+            }
+          }
+          &:hover {
+            background: #eee;
+          }
+        }
       }
     }
   }

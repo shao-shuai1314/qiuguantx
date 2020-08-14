@@ -41,6 +41,9 @@ import exchanges from '@/components/soccerHome/match/exchanges'
 import exponent from '@/components/soccerHome/match/exponent'
 import TeamPosition from '@/components/soccerHome/match/TeamPosition'
 import linuepStatistics from '@/components/soccerHome/match/linuepStatistics'
+import analyse from '@/components/soccerHome/match/analyse'
+import PlayerTransfer from '@/components/soccerHome/match/PlayerTransfer'
+
 
 
 // 欧赔变动子页
@@ -289,6 +292,22 @@ const router = new Router({
                   name: 'TeamPosition',
                   meta: {
                     title: '球队位置'
+                  }
+                },
+                {
+                  path: '/soccer/match/analyse/:scheduleID',
+                  component: analyse,
+                  name: 'analyse',
+                  meta: {
+                    title: '赛前分析'
+                  }
+                },
+                {
+                  path: '/soccer/match/PlayerTransfer/:scheduleID',
+                  component: PlayerTransfer,
+                  name: 'PlayerTransfer',
+                  meta: {
+                    title: '球员转会'
                   }
                 }
               ]
