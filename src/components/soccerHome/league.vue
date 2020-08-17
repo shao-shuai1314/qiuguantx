@@ -422,7 +422,7 @@
           </div>
           <div class="tit"
                v-if="violationsList.length">
-            <p v-for="item in violationsList[0]"
+            <p v-for="item in violationsList"
                :key="item.teamID">
               <router-link target="_blank"
                            :to="{name:'information',params:{teamID:item.teamID}}">"{{item.teamName}}"</router-link>{{item.cause}}</p>
@@ -589,6 +589,10 @@ export default {
       this.kind = res.data.sclass_data.kind
       // 积分榜
       this.leagues_data = res.data.sclass_data.leagues_data
+      if (this.leagues_data.length == 0) {
+        this.leagues_data = { all_score: [], color_data: [], guest_score: [], home_score: [], koufen: {} }
+
+      }
       // 升降级颜色
       this.color_data = res.data.sclass_data.leagues_data.color_data
 
@@ -617,7 +621,9 @@ export default {
         //  联赛杯赛初始
         if (this.kind == 1) {
           this.MatchList = this.match_list.filter(item => item.subSclassName == round_ej.subSclassName)
-          this.OnPaging(round_ej.curr_round)
+          if (round_ej.count_round) {
+            this.OnPaging(round_ej.curr_round)
+          }
 
           // 积分榜
           this.leagues_data.forEach(item => {
@@ -649,6 +655,7 @@ export default {
           var round_ej = this.subsClassList.find(item => {
             return item.subsclassId == this.subsClassList[this.subsClassList.length - 1].subsclassId
           })
+
           // 是否分组
           if (round_ej.groupnum) {
             this.groupList = this.A_Z.slice(0, round_ej.groupnum)
@@ -660,30 +667,33 @@ export default {
             this.MatchList = this.match_list.filter(item => item.grouping == round_ej.subSclassName)
           }
           // 积分榜
-          this.fzdata = this.leagues_data.find(item => item.subclassId == round_ej.subsclassId)
-          if (this.fzdata) {
-            this.fzdata.leagues_list.forEach((items, index) => {
-              items.LeagueList = []
-              items.league.forEach((item, i) => {
-                items.LeagueList.push({ rank: item[0], teamID: item[1], teamName: item[2], count: item[3], win_score: item[4], flat_score: item[5], fail_score: item[6], totalHomeScore: item[7], totalGutstScore: item[8], goalDifference: item[9], score: item[10] })
+          if (this.leagues_data.length) {
+            this.fzdata = this.leagues_data.find(item => item.subclassId == round_ej.subsclassId)
+            if (this.fzdata) {
+              this.fzdata.leagues_list.forEach((items, index) => {
+                items.LeagueList = []
+                items.league.forEach((item, i) => {
+                  items.LeagueList.push({ rank: item[0], teamID: item[1], teamName: item[2], count: item[3], win_score: item[4], flat_score: item[5], fail_score: item[6], totalHomeScore: item[7], totalGutstScore: item[8], goalDifference: item[9], score: item[10] })
+                })
               })
-            })
-            this.LeagueList = this.fzdata.leagues_list[0].LeagueList
-            this.linecount = this.fzdata.leagues_list[0].linecount
-            // 文字说明
-            this.violationsLists = '备注：有颜色球队表示已出线球队'
-            if (this.fzdata.leagues_list[0].linecount) {
-              for (let i = 0; i < this.fzdata.leagues_list[0].linecount; i++) {
-                this.LeagueList[i].color = 'red'
+              this.LeagueList = this.fzdata.leagues_list[0].LeagueList
+              this.linecount = this.fzdata.leagues_list[0].linecount
+              // 文字说明
+              this.violationsLists = '备注：有颜色球队表示已出线球队'
+              if (this.fzdata.leagues_list[0].linecount) {
+                for (let i = 0; i < this.fzdata.leagues_list[0].linecount; i++) {
+                  this.LeagueList[i].color = 'red'
+                }
               }
             }
           }
+
           // 获取赔率id
           this.peilv()
         }
         // 文字说明
         if (this.LeagueLists) {
-          this.violationsList.push([...Object.values(this.LeagueLists.koufen)])
+          this.violationsList = [...Object.values(this.LeagueLists.koufen)]
         }
       } else {
         // 不是二级联赛
@@ -692,24 +702,33 @@ export default {
         // 赛程数据
         this.MatchList = this.onMatchList(this.match_list, this.paginAtv)
         // 文字说明
-        this.violationsList.push([...Object.values(this.leagues_data.koufen)])
+        if (this.leagues_data.koufen) {
+          this.violationsList = [...Object.values(this.leagues_data.koufen)]
+        }
+
+
+
+
+
         // 获取赔率id
         // 获取赔率id
         this.peilv()
         // 积分榜
         this.LeagueList = this.leagues_data.all_score
-        // console.log(this.LeagueList, 111)
         //  升降级颜色
         function colors (list1, list2) {
-          list1.forEach(items => {
-            list2.forEach(item => {
-              items.rank_data.forEach(it => {
-                if (item.rank == it) {
-                  item.colors = items.color
-                }
+          if (list1) {
+            list1.forEach(items => {
+              list2.forEach(item => {
+                items.rank_data.forEach(it => {
+                  if (item.rank == it) {
+                    item.colors = items.color
+                  }
+                })
               })
             })
-          })
+          }
+
         }
         colors(this.color_data, this.leagues_data.all_score)
         colors(this.color_data, this.leagues_data.guest_score)
@@ -729,9 +748,9 @@ export default {
         // 最新一轮
         this.paginAtv = round_ej.curr_round;
         this.subSclassName = round_ej.subSclassName
-        console.log(this.subSclassName)
         this.MatchList = this.match_list.filter(item => item.subSclassName == round_ej.subSclassName)
-        console.log(round_ej.curr_round, 111)
+
+
         if (round_ej.curr_round) {
           this.OnPaging(round_ej.curr_round)
         }
@@ -787,24 +806,27 @@ export default {
         }
 
         // 积分榜
-        this.fzdata = this.leagues_data.find(item => item.subclassId == round_ej.subsclassId)
-        if (this.fzdata) {
-          this.fzdata.leagues_list.forEach((items, index) => {
-            items.LeagueList = []
-            items.league.forEach((item, i) => {
-              items.LeagueList.push({ rank: item[0], teamID: item[1], teamName: item[2], count: item[3], win_score: item[4], flat_score: item[5], fail_score: item[6], totalHomeScore: item[7], totalGutstScore: item[8], goalDifference: item[9], score: item[10] })
+        if (this.leagues_data.length) {
+          this.fzdata = this.leagues_data.find(item => item.subclassId == round_ej.subsclassId)
+          if (this.fzdata) {
+            this.fzdata.leagues_list.forEach((items, index) => {
+              items.LeagueList = []
+              items.league.forEach((item, i) => {
+                items.LeagueList.push({ rank: item[0], teamID: item[1], teamName: item[2], count: item[3], win_score: item[4], flat_score: item[5], fail_score: item[6], totalHomeScore: item[7], totalGutstScore: item[8], goalDifference: item[9], score: item[10] })
+              })
             })
-          })
-          this.LeagueList = this.fzdata.leagues_list[0].LeagueList
-          this.linecount = this.fzdata.leagues_list[0].linecount
-          if (this.fzdata.leagues_list[0].linecount) {
-            for (let i = 0; i < this.fzdata.leagues_list[0].linecount; i++) {
-              console.log(i)
-              this.LeagueList[i].color = 'red'
-            }
-          }
+            this.LeagueList = this.fzdata.leagues_list[0].LeagueList
+            this.linecount = this.fzdata.leagues_list[0].linecount
+            if (this.fzdata.leagues_list[0].linecount) {
+              for (let i = 0; i < this.fzdata.leagues_list[0].linecount; i++) {
 
+                this.LeagueList[i].color = 'red'
+              }
+            }
+
+          }
         }
+
         // 获取赔率id
         this.peilv()
 
@@ -892,8 +914,6 @@ export default {
     // 赔率
     async OnOddsList () {
       const res = await this.$http.get('odds/shceduleCompany/');
-      if (res.status !== 200) return console.log('赔率公司获取失败');
-      // console.log(res.data)
       this.OddsList0 = [];
       this.OddsList1 = [];
       this.OddsList2 = [];
@@ -952,8 +972,6 @@ export default {
       }
       if (obj.scheduleIDs.length == 0 || obj.companyID.length || obj.oddsType.length) return
       const res = await this.$http.get('odds/shceduleOdds/', { params: obj });
-      if (res.status !== 200) return console.log('赔率数据获取失败');
-      // console.log(res.data.oddsList)
       //  亚指判断
       let YzStyle = "平手,平/半,半球,半/一,一球,一/球半,球半,球半/两,两球,两/两球半,两球半,两球半/三,三球,三/三球半,三球半,三球半/四球,四球,四/四球半,四球半,四球半/五,五球,五/五球半,五球半,五球半/六,六球,六/六球半,六球半,六球半/七,七球,七/七球半,七球半,七球半/八,八球,八/八球半,八球半,八球半/九,九球,九/九球半,九球半,九球半/十,十球".split(",");
       let YzStyle3 = ["0", "-0/0.5", "-0.5", "-0.5/1", "-1", "-1/1.5", "-1.5", "-1.5/2", "-2", "-2/2.5", "-2.5", "-2.5/3", "-3", "-3/3.5", "-3.5", "-3.5/4", "-4", "-4/4.5", "-4.5", "-4.5/5", "-5", "-5/5.5", "-5.5", "-5.5/6", "-6", "-6/6.5", "-6.5", "-6.5/7", "-7", "-7/7.5", "-7.5", "-7.5/8", "-8", "-8/8.5", "-8.5", "-8.5/9", "-9", "-9/9.5", "-9.5", "-9.5/10", "-10"];

@@ -106,6 +106,7 @@ export default {
       })
 
       this.dataList = res.data
+      sessionStorage.setItem("lineupList", JSON.stringify(res.data));
 
 
     },

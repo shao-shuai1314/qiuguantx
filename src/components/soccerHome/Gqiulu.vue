@@ -143,7 +143,7 @@ export default {
       echarts_name.on("click", function (e) {
         if (!e.data.url) return
         // console.log(e)
-        window.open(`http://192.168.3.51:8080/#/soccer/team/playerDetails/${e.data.url}`)
+        window.open(`http://192.168.3.51:8080/#/soccer/team/player/${e.data.url}`)
 
       })
     }

@@ -342,4 +342,12 @@ export default {
 .expectedValue_label-class-name {
   font-size: 12px;
 }
+
+.el-table__body-wrapper {
+  overflow: visible !important;
+}
+
+.el-table {
+  overflow: visible !important;
+}
 </style>

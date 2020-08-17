@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/components/home'
 import index from '@/components/index'
-import lotteryTicket from '@/components/lotteryTicket'
+import lotteryTicket from '@/components/zucai'
 import video from '@/components/video'
 import app from '@/components/app'
 
@@ -43,6 +43,7 @@ import TeamPosition from '@/components/soccerHome/match/TeamPosition'
 import linuepStatistics from '@/components/soccerHome/match/linuepStatistics'
 import analyse from '@/components/soccerHome/match/analyse'
 import PlayerTransfer from '@/components/soccerHome/match/PlayerTransfer'
+import textLive from '@/components/soccerHome/match/textLive'
 
 
 
@@ -115,7 +116,7 @@ const router = new Router({
             title: '球冠首页',
           }
         }, {
-          path: '/lotteryTicket',
+          path: '/zucai',
           component: lotteryTicket,
           meta: {
             title: '球冠足彩'
@@ -268,6 +269,14 @@ const router = new Router({
                   name: 'linuepStatistics',
                   meta: {
                     title: '对阵伤停'
+                  }
+                },
+                {
+                  path: '/soccer/match/textLive/:scheduleID',
+                  component: textLive,
+                  name: 'textLive',
+                  meta: {
+                    title: '文字直播'
                   }
                 },
                 {

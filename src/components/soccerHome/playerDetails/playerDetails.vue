@@ -13,9 +13,13 @@
                 <dd v-if="headerData.place">
                   <b>位置：</b>{{headerData.place[0].place}}</dd>
                 <dd v-if="headerData.place">
-                  <b>号码：</b>{{headerData.place[0].number}}号</dd>
+                  <b>号码：</b>
+                  <span v-if="headerData.place[0].number">{{headerData.place[0].number}}号</span>
+                </dd>
                 <dd v-if="headerData.place">
-                  <b>预计身价：</b>{{headerData.expectedValue}}万英镑</dd>
+                  <b>预计身价：</b>
+                  <span v-if="headerData.expectedValue">{{headerData.expectedValue}}万英镑</span>
+                </dd>
               </dl>
               <dl>
                 <dd>
@@ -27,9 +31,13 @@
               </dl>
               <dl>
                 <dd>
-                  <b>身高：</b>{{headerData.tallness}}CM</dd>
+                  <b>身高：</b>
+                  <span v-if="headerData.tallness">{{headerData.tallness}}CM</span>
+                </dd>
                 <dd>
-                  <b>体重：</b>{{headerData.weight}}KG</dd>
+                  <b>体重：</b>
+                  <span v-if="headerData.weight">{{headerData.weight}}KG</span>
+                </dd>
                 <dd>
                   <b>惯用脚：</b>{{idiomaticFeet[headerData.idiomaticFeet]}}</dd>
               </dl>
@@ -211,13 +219,13 @@
 
         </div>
 
-        <div class="kua">
-          <!-- 获得荣誉 -->
+        <!-- 获得荣誉 -->
+        <!-- <div class="kua">
           <el-divider content-position="left">
             <h6>获得荣誉</h6>
           </el-divider>
           <div class="wusj"> 暂无数据</div>
-        </div>
+        </div> -->
 
         <div class="kua zhuanh">
           <!-- 转会 -->
@@ -327,64 +335,45 @@
     <!-- 右边内容 -->
     <el-card class="right_box fr">
       <h6>相关队员</h6>
-      <!-- 前锋 -->
-      <dl>
-        <dd class="dd-h">
-          <p>前锋</p>
-          <p>进球</p>
-          <p>国籍</p>
-        </dd>
-        <dd v-for="item in 6"
-            :key="item">
-          <p>
-            <el-image></el-image>
-            <router-link to="">莱万特朵夫斯基</router-link>
-          </p>
-          <p>40</p>
-          <p>
-            <el-image></el-image>
-          </p>
-        </dd>
-      </dl>
-      <!-- 中长 -->
-      <dl>
-        <dd class="dd-h">
-          <p>中场</p>
-          <p>进球</p>
-          <p>国籍</p>
-        </dd>
-        <dd v-for="item in 6"
-            :key="item">
-          <p>
-            <el-image></el-image>
-            <router-link to="">莱万特朵夫斯基</router-link>
-          </p>
-          <p>40</p>
-          <p>
-            <el-image></el-image>
-          </p>
-        </dd>
-      </dl>
+      <el-table :data="playerList"
+                size="mini"
+                class-name="aaa"
+                :header-cell-style="{
+    'color': '#303133',
+    'border-bottom': '1px rgb(103, 194, 58) solid',
+    'font-size':'14px'
+}"
+                style="width: 296px">
+        <el-table-column prop="number"
+                         class-name="aa"
+                         label="号码"
+                         align="center"
+                         width="30">
+        </el-table-column>
+        <el-table-column prop="place"
+                         label="位置"
+                         align="center"
+                         width="40">
+          <template slot-scope="scope">
+            <span style="width:100%;height:100%;display:block;"
+                  :style="{'background':scope.row.colors}">{{scope.row.place}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="playerName"
+                         align="center"
+                         label="姓名">
+          <template slot-scope="scope">
+            <router-link target="_blank"
+                         :to="{name:'playerDetails',params:{playerID:scope.row.playerID}}">{{scope.row.playerName}}</router-link>
 
-      <!-- 后卫 -->
-      <dl>
-        <dd class="dd-h">
-          <p>后卫</p>
-          <p>进球</p>
-          <p>国籍</p>
-        </dd>
-        <dd v-for="item in 6"
-            :key="item">
-          <p>
-            <el-image></el-image>
-            <router-link to="">莱万特朵夫斯基</router-link>
-          </p>
-          <p>40</p>
-          <p>
-            <el-image></el-image>
-          </p>
-        </dd>
-      </dl>
+          </template>
+        </el-table-column>
+        <el-table-column prop="country"
+                         align="center"
+                         width="60"
+                         label="国籍">
+        </el-table-column>
+      </el-table>
     </el-card>
 
   </div>
@@ -405,6 +394,7 @@ export default {
       playerTechStatistics_g: [],
       playerTechStatistics_len: [],
       idiomaticFeet: { 0: '左脚', 1: '右脚', 2: '双脚' },
+      playerList: [],
       // 联赛杯赛
       ls: [],
       bs: [],
@@ -421,8 +411,6 @@ export default {
     this.dataList1()
     this.dataList2()
     this.dataList3()
-    // this.OnLineup()
-
 
     // 时间获取
     let ii = 0
@@ -435,6 +423,13 @@ export default {
     this.timeList[0].value = '全部'
     this.timeList[0].label = '全部'
 
+
+    // 其他球员信息
+    var temp = sessionStorage.getItem("lineupList")
+    this.playerList = JSON.parse(temp);
+
+
+
   },
   methods: {
 
@@ -445,7 +440,6 @@ export default {
       var birthday = new Date(res.data.birthday.replace(/-/g, "\/"));
       var d = new Date();
       var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
-      console.log(age)
       this.age = age
       this.headerData = res.data
     },
@@ -472,19 +466,6 @@ export default {
 
     },
 
-    // async OnLineup () {
-    //   const res = await this.$http.get('teamInfo/' + this.$route.params.teamID + '/lineup/');
-    //   var Coachcolors = { '前锋': 'rgba(190,76,89,0.5)', '中场': 'rgba(100,76,89,0.5)', '后卫': 'rgba(180,16,89,0.5)', '守门员': 'rgba(110,106,89,0.5)', '替补': 'rgba(170,76,29,0.5)' }
-    //   // 颜色
-    //   res.data.forEach((item) => {
-    //     item.colors = Coachcolors[item.place]
-    //   })
-
-    //   this.LineupList = res.data
-    //   console.log(this.LineupList)
-
-
-    // },
     // 分页数组
     fyList (list) {
       var chunk = 10;
@@ -686,50 +667,9 @@ export default {
 /* 右边内容 */
 .right_box {
   width: 316px;
-  /* height: 1000px; */
   h6 {
     font-size: 18px;
-    font-weight: 600;
-  }
-  dl {
-    dd {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #ececec;
-      p {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        line-height: 40px;
-        &:nth-child(1) {
-          width: 60%;
-          .el-image {
-            width: 20px;
-            height: 24px;
-            margin-right: 6px;
-          }
-        }
-        &:nth-child(2) {
-          width: 20%;
-        }
-        &:nth-child(3) {
-          width: 20%;
-          .el-image {
-            width: 24px;
-            height: 10px;
-          }
-        }
-        font-size: 14px;
-      }
-    }
-    .dd-h {
-      background: #f3f4ef;
-      margin-top: 20px;
-      p {
-        font-weight: 600;
-      }
-    }
+    font-weight: 900;
   }
 }
 
@@ -755,5 +695,15 @@ a {
   &:hover {
     color: #409eff;
   }
+}
+
+.el-table--mini td,
+.el-table--mini th {
+  padding: 0 !important;
+}
+.el-table .cell {
+  background: red !important;
+  height: 36px !important;
+  line-height: 38px !important;
 }
 </style>

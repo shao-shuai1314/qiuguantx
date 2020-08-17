@@ -163,7 +163,7 @@ export default {
     return {
       menulist: [
         { authName: "首页", id: 1, order: 1, path: "/index" },
-        { authName: "足彩", id: 21, order: 1, path: "/lotteryTicket" },
+        { authName: "足彩", id: 21, order: 1, path: "/zucai" },
         { authName: "足球中心", id: 18, order: 4, path: "/soccer" },
         { authName: "新闻", id: 20, order: 1, path: "/news" },
         { authName: "视频", id: 14, order: 3, path: "/video" },

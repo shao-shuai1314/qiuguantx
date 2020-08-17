@@ -23,6 +23,7 @@
               <el-image :src="`http://qiuguantx.com/img/team/${headerList.homeTeamInfo.homeTeamFlag}`"></el-image>
               <p>
                 <router-link target="_blank"
+                             v-if="headerList.homeTeamCoachInfo.homeTeamCoachID"
                              :to="{name:'playerDetails',params:{playerID:headerList.homeTeamCoachInfo.homeTeamCoachID}}">{{headerList.homeTeamCoachInfo.homeTeamCoachName}}</router-link>
               </p>
             </div>
@@ -49,6 +50,7 @@
               <el-image :src="`http://qiuguantx.com/img/team/${headerList.guestTeamInfo.homeTeamFlag}`"></el-image>
               <p>
                 <router-link target="_blank"
+                             v-if="headerList.guestTeamCoachInfo.guestTeamCoachID"
                              :to="{name:'playerDetails',params:{playerID:headerList.guestTeamCoachInfo.guestTeamCoachID}}">{{headerList.guestTeamCoachInfo.guestTeamCoachName}}</router-link>
               </p>
             </div>
@@ -107,6 +109,9 @@
               </dd>
               <dd>
                 <span @click="handleClick4(2,'伤停统计','linuepStatistics')">伤停统计</span>
+              </dd>
+              <dd>
+                <span @click="handleClick4(2,'文字直播','textLive')">文字直播</span>
               </dd>
             </dl>
           </li>
@@ -174,7 +179,7 @@ export default {
     this.OnHeaderG()
     // 判断初始选项卡位置
     if (this.$route.name) {
-      let styles = { 'exponent': [0, '球冠指数'], 'odds': [0, '欧赔'], 'subPanel': [0, '亚赔'], 'coachConfrontation': [1, '教练对阵'], 'PlayerTransfer': [1, '球员转会'], 'statistics': [2, '技术统计'], 'linuepStatistics': [2, '伤停统计'], 'history': [3, '比赛历史'], 'diskDrive': [4, '球路盘路'], 'TeamPosition': [5, '球队位置'], 'analyse': [6, '赛事分析'] }
+      let styles = { 'exponent': [0, '球冠指数'], 'odds': [0, '欧赔'], 'subPanel': [0, '亚赔'], 'coachConfrontation': [1, '教练对阵'], 'PlayerTransfer': [1, '球员转会'], 'statistics': [2, '技术统计'], 'textLive': [2, '文字直播'], 'linuepStatistics': [2, '伤停统计'], 'history': [3, '比赛历史'], 'diskDrive': [4, '球路盘路'], 'TeamPosition': [5, '球队位置'], 'analyse': [6, '赛事分析'] }
 
       // this.activeName = this.$route.name
       this.activeIndex = styles[this.$route.name][0]
@@ -195,13 +200,12 @@ export default {
     //  头部公用接口
     async OnHeaderG () {
       const res = await this.$http.get('soccer/matchInfo/' + this.scheduleID);
-      if (res.status !== 200) return console.log('对阵头部信息取失败');
       this.headerList = res.data
       let TeamName = [res.data.homeTeamInfo.homeTeamName, res.data.homeTeamInfo.hometeamID, res.data.guestTeamInfo.homeTeamName, res.data.guestTeamInfo.hometeamID]
       let CoachName = [res.data.homeTeamCoachInfo.homeTeamCoachName, res.data.homeTeamCoachInfo.homeTeamCoachID, res.data.guestTeamCoachInfo.guestTeamCoachName, res.data.guestTeamCoachInfo.guestTeamCoachID]
-
       sessionStorage.setItem('TeamName', TeamName)
       sessionStorage.setItem('CoachName', CoachName)
+      sessionStorage.setItem('Score', `${res.data.homeScore}-${res.data.guestScore}`)
 
     },
     handleClick1 (index, href) {

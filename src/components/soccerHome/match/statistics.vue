@@ -307,7 +307,7 @@
 
       <div class="statistics_box_top">
         <h6>
-          <span>3 - 1 完</span>
+          <span>{{Score}} 完</span>
         </h6>
         <dl v-for="(item,i) in detailResultList"
             :key="i">
@@ -492,7 +492,8 @@ export default {
       homeNumber: [],
       guestNumber: [],
 
-      cl: false
+      cl: false,
+      Score: sessionStorage.getItem('Score')
 
 
     };
