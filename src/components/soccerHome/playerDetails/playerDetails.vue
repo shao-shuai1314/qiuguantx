@@ -89,143 +89,157 @@
             </el-table-column>
           </el-table>
         </div>
+        <!-- 统计 -->
 
         <div>
-          <!-- 比赛数据 -->
           <el-divider content-position="left">
-            <h6>比赛数据</h6>
+            <h6>信息统计</h6>
           </el-divider>
-          <el-tabs v-model="activeName"
-                   @tab-click="handleClick"
-                   v-if="playerTechStatistics_g.length">
-            <el-tab-pane label="总计"
-                         name="3"></el-tab-pane>
-            <el-tab-pane label="联赛"
-                         name="1"></el-tab-pane>
-            <el-tab-pane label="杯赛"
-                         name="2"></el-tab-pane>
-          </el-tabs>
-          <div v-if="playerTechStatistics">
+          <div>
             <div>
-              <div style="margin-bottom:10px"
-                   class="fr">
-                <el-select v-model="timeListVe"
-                           size="mini"
-                           @change="OnTime"
-                           placeholder="请选择">
-                  <el-option v-for="item in timeList"
-                             :key="item.value"
-                             :label="item.label"
-                             :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-
-              <table width="100%"
-                     border="0"
-                     cellpadding="0"
-                     cellspacing="0"
-                     align="center"
-                     class="table_NeiRong">
-                <tr align="center"
-                    class="table_NeiRong_one">
-                  <td width="">
-                    <b>赛事</b>
-                  </td>
-                  <td width="">
-                    <b>比赛时间</b>
-                  </td>
-                  <td width="">
-                    <b>主队</b>
-                  </td>
-                  <td width="5%">
-                    <b>比分</b>
-                  </td>
-                  <td width="">
-                    <b>客队</b>
-                  </td>
-                  <td width="">
-                    <b>是否首发</b>
-                  </td>
-                  <td width="5%">
-                    <b>进球</b>
-                  </td>
-                  <td width="5%">
-                    <b>点球</b>
-                  </td>
-                  <td width="8%">
-                    <b>乌龙球</b>
-                  </td>
-                  <td width="5%">
-                    <b>助攻</b>
-                  </td>
-                  <td width="5%">
-                    <b>黄牌</b>
-                  </td>
-                  <td width="5%">
-                    <b>红牌</b>
-                  </td>
-                  <td width="5%">
-                    <b>评分</b>
-                  </td>
-
-                </tr>
-                <tr align="center"
-                    v-for="(item,index) in playerTechStatistics"
-                    :key="index"
-                    class="">
-                  <td>{{item.sclassName}}</td>
-                  <td>{{item.matchtime.slice(0,10)}}</td>
-                  <td>
-                    <router-link target="_blank"
-                                 :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
-                  </td>
-                  <td>{{item.homeScore}}-{{item.guestScore}}</td>
-                  <td>
-                    <router-link target="_blank"
-                                 :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
-                  </td>
-                  <td>
-                    <span v-if="item.isFirstTeam">是</span>
-                    <span v-else>否</span>
-                  </td>
-                  <td>{{item.notPenaltyGoals}}</td>
-                  <td>{{item.penaltyGoals}}</td>
-                  <td>{{item.owngoals}}</td>
-                  <td>{{item.assist}}</td>
-                  <td>{{item.yellow}}</td>
-                  <td>{{item.red}}</td>
-                  <td>{{item.rating}}</td>
-
-                </tr>
-              </table>
-
-              <el-pagination small
-                             background
-                             @size-change="handleSizeChange"
-                             @current-change="handleCurrentChange"
-                             :current-page.sync="currentPage1"
-                             layout="prev, pager, next"
-                             :hide-on-single-page="hideOnsingle"
-                             :page-size="10"
-                             :total="playerTechStatistics_len.length">
-              </el-pagination>
-
+              <el-tag :type="typeClor == 0?'success':'info'"
+                      size="mini"
+                      @click="Onxiaoz()">总计</el-tag>
+              <el-tag :type="typeClor == 1?'success':'info'"
+                      size="mini"
+                      @click="Onxiaoz(1)">联赛</el-tag>
+              <el-tag :type="typeClor == 2?'success':'info'"
+                      size="mini"
+                      @click="Onxiaoz(2)">杯赛</el-tag>
             </div>
+            <!-- 球员 -->
+            <el-table :data="playerTj"
+                      v-if="playerTj.length"
+                      size="mini"
+                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                      style="width: 100%">
+              <el-table-column align="center"
+                               label="">
+                <template slot="header">
+                  <div class="linue-header">
+                    <b>球员信息统计</b>
+                  </div>
+                </template>
+                <el-table-column prop="sclassName"
+                                 label="联赛"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="matchSeason"
+                                 label="赛季"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="teamName"
+                                 label="俱乐部"
+                                 align="center"
+                                 width="">
+                  <template slot-scope="scope">
+                    <router-link target="_blank"
+                                 :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamName}}</router-link>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="count"
+                                 label="上场"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="place"
+                                 label="首发"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="penaltyGoals"
+                                 label="点球进球"
+                                 align="center"
+                                 width="60">
+                </el-table-column>
+                <el-table-column prop="notPenaltyGoals"
+                                 label="射门进球"
+                                 align="center"
+                                 width="60">
+                </el-table-column>
+                <el-table-column prop="assist"
+                                 label="助攻"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="yellow"
+                                 label="黄牌"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="red"
+                                 label="红牌"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="owngoals"
+                                 label="乌龙"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+              </el-table-column>
+            </el-table>
+            <!-- 教练 -->
+            <el-table :data="coachTj"
+                      v-if="coachTj.length"
+                      size="mini"
+                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                      style="width: 100%">
+              <el-table-column align="center"
+                               label="">
+                <template slot="header">
+                  <div class="linue-header">
+                    <b>教练信息统计</b>
+                  </div>
+                </template>
+                <el-table-column prop="sclassName"
+                                 label="联赛"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="season"
+                                 label="赛季"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="teamName"
+                                 label="俱乐部"
+                                 align="center"
+                                 width="">
+                  <template slot-scope="scope">
+                    <router-link target="_blank"
+                                 :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamName}}</router-link>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="score"
+                                 label="总得分"
+                                 align="center"
+                                 width="60">
+                </el-table-column>
+                <el-table-column prop="win"
+                                 label="胜"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="flat"
+                                 label="平"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="fail"
+                                 label="负"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+              </el-table-column>
+            </el-table>
+            <div v-if="coachTj.length && playerTj.length"> 暂无数据</div>
+
           </div>
 
-          <div v-else
-               class="wusj"> 暂无数据</div>
-
         </div>
-
-        <!-- 获得荣誉 -->
-        <!-- <div class="kua">
-          <el-divider content-position="left">
-            <h6>获得荣誉</h6>
-          </el-divider>
-          <div class="wusj"> 暂无数据</div>
-        </div> -->
 
         <div class="kua zhuanh">
           <!-- 转会 -->
@@ -390,19 +404,20 @@ export default {
       hideOnsingle: false,
       headerData: [],
       playerTransfer: [],
-      playerTechStatistics: [],
-      playerTechStatistics_g: [],
-      playerTechStatistics_len: [],
+
       idiomaticFeet: { 0: '左脚', 1: '右脚', 2: '双脚' },
       playerList: [],
       // 联赛杯赛
-      ls: [],
-      bs: [],
-      zs: [],
-      sclass_list: [],
+
       coachTransfer: [],
       transferType: { 1: '完全所有', 2: "租借", 3: '自由转会', 4: '租借结束', 5: '共同所有' },
-      duty: { 2: '教练', 4: '助理教练', 6: '临时教练' }
+      duty: { 2: '教练', 4: '助理教练', 6: '临时教练' },
+      // 统计
+      playerTj: [],
+      coachTj: [],
+      playerTjs: [],
+      coachTjs: [],
+      typeClor: 0
     };
   },
   created () {
@@ -450,119 +465,35 @@ export default {
       this.coachTransfer = res.data.coachTransfer
     },
 
+
     async dataList3 () {
       const res = await this.$http.get(`teamInfo/player/${this.scheduleID}/playerTechStatistics`);
-      this.playerTechStatistics = res.data.playerTechStatistics
-      this.playerTechStatistics_g = res.data.playerTechStatistics
-
-      this.playerTechStatistics_len = res.data.playerTechStatistics
-
-      this.fyList(this.playerTechStatistics_len)
-
-      // 筛选框显示
-      if (this.timeListVe == '全部') {
-        this.sclass_list = this.zs
-      }
-
-    },
-
-    // 分页数组
-    fyList (list) {
-      var chunk = 10;
-      var len = list;
-      var result = [];
-      for (let i = 0; i < len.length; i += chunk) {
-        result.push(len.slice(i, i + chunk)) // 每10项分成一组        
-      }
-      this.result = result
-      this.playerTechStatistics = this.result[0]
-
-      if (this.result.length == 0) {
-        this.hideOnsingle = true
-      }
-    },
-
-    // 时间点击
-    OnTime (v) {
-      // 杯赛联赛时间选择
-      this.checkedCities = []
-      this.zs.forEach(item => {
-        this.checkedCities.push(item.sclassID)
-      })
-      if (this.activeName != 3) {
-        this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-          return item.matchtime.slice(0, 4) == v && item.kind == this.activeName
-        })
-        if (v == '全部') {
-          this.playerTechStatistics_len = this.playerTechStatistics_g
-        }
+      if (res.data.coachTj) {
+        this.coachTjs = res.data.coachTj
+        this.coachTj = res.data.coachTj
       } else {
-        this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-          return item.matchtime.slice(0, 4) == v
+        this.playerTjs = res.data.playerTj
+        this.playerTj = res.data.playerTj
+      }
+
+    },
+    Onxiaoz (v) {
+      if (v) {
+        this.coachTj = this.coachTjs.filter(item => {
+          return item.kind == v
         })
-        if (v == '全部') {
-          this.playerTechStatistics_len = this.playerTechStatistics_g
-        }
-      }
-
-
-      this.fyList(this.playerTechStatistics_len)
-      this.currentPage1 = 1
-    },
-    // 页码
-    handleSizeChange (val) {
-      this.playerTechStatistics = this.result[val - 1]
-    },
-    // 页码
-    handleCurrentChange (val) {
-      this.playerTechStatistics = this.result[val - 1]
-    },
-
-    // 联赛选着
-    handleClick (tab, event) {
-      this.checkedCities = []
-      this.zs.forEach(item => {
-        this.checkedCities.push(item.sclassID)
-      })
-
-      if (this.timeListVe == '全部') {
-        if (tab.label == '联赛') {
-          this.sclass_list = []
-
-          this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-            return item.kind == 1
-          })
-        } else if (tab.label == '杯赛') {
-          this.sclass_list = []
-          this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-            return item.kind == 2
-          })
-        } else {
-          this.sclass_list = this.zs
-          this.playerTechStatistics_len = this.playerTechStatistics_g
-        }
+        this.playerTj = this.playerTjs.filter(item => {
+          return item.kind == v
+        })
+        this.typeClor = v
       } else {
-        if (tab.label == '联赛') {
-          this.sclass_list = []
-          this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-            return item.kind == 1 && item.matchtime.slice(0, 4) == this.timeListVe
-          })
-        } else if (tab.label == '杯赛') {
-          this.sclass_list = []
-          this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-            return item.kind == 2 && item.matchtime.slice(0, 4) == this.timeListVe
-          })
-        } else {
-          this.sclass_list = this.zs
-          this.playerTechStatistics_len = this.playerTechStatistics_g.filter((item, i) => {
-            return item.matchtime.slice(0, 4) == this.timeListVe
-          })
-        }
+        this.coachTj = this.coachTjs
+        this.playerTj = this.playerTjs
+        this.typeClor = 0
       }
-      this.fyList(this.playerTechStatistics_len)
-      this.currentPage1 = 1
 
     }
+
   }
 }
 </script>

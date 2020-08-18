@@ -53,8 +53,8 @@
                      name="information"></el-tab-pane>
         <el-tab-pane label="球队阵容"
                      name="lineup"></el-tab-pane>
-        <el-tab-pane label="教练战绩"
-                     name="coachResults"></el-tab-pane>
+        <!-- <el-tab-pane label="教练战绩"
+                     name="coachResults"></el-tab-pane> -->
         <el-tab-pane label="球队赛程"
                      name="teamSchedule"></el-tab-pane>
         <el-tab-pane label="球员转会"
