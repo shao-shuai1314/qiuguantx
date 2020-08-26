@@ -349,7 +349,8 @@ td div {
     width: 100%;
     display: flex;
     position: absolute;
-    bottom: 62px;
+    bottom: 36%;
+    left: 0;
     z-index: 99999999;
     justify-content: space-between;
     .zk_p {

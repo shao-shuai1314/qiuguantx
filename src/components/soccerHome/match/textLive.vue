@@ -2,7 +2,7 @@
   <div class="gWidth">
     <div class="fl"
          style="margin-top:-4px">
-      <el-table :data="tableData"
+      <!-- <el-table :data="tableData"
                 height="900"
                 border
                 size="mini"
@@ -17,14 +17,27 @@
                          label="直播详情"
                          width="">
           <template slot-scope="scope">
-            <div>
+            <div class="aaa">
               <span style="margin-left:10px"
                     v-html="scope.row.content"></span>
             </div>
           </template>
         </el-table-column>
 
-      </el-table>
+      </el-table> -->
+
+      <ul class="textLive">
+        <li>
+          <h3>直播详情</h3>
+          <div style="margin-top:40px">
+            <div class="div-a" v-for="(item,index) in tableData" :key="index">
+            <span style="margin-left:10px"
+                    v-html="item.content"></span>
+          </div>
+          </div>
+          
+        </li>
+      </ul>
 
     </div>
     <el-card class="statistics_box_right fr">
@@ -428,5 +441,48 @@ export default {
   display: flex;
   width: 1160px;
   justify-content: space-between;
+}
+
+.textLive{
+  position: relative;
+  height: 900px;
+  width: 720px;
+  li{
+    height: 900px;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    margin-top: 16px;
+    border-radius: 6px;
+    margin-right: 10px;
+    overflow: hidden;
+     overflow-y: scroll;
+     h3{
+       position: absolute;
+       top: 1px;
+       width: 690px;
+       font-weight: 900;
+       text-align: center;
+       background: #fff;
+       border-radius: 6px;
+       height: 40px;
+       line-height: 40px;
+       border-bottom: 1px solid rgb(103, 194, 58);
+     }
+     p{
+       font-size: 14px;
+     }
+     span{
+       font-size: 14px;
+     }
+     .div-a{
+       height: 60px;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       border-bottom: 1px solid #eee;
+     }
+    
+  }
+
 }
 </style>

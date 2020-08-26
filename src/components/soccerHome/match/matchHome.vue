@@ -222,7 +222,7 @@ export default {
       this.activeName2 = '教练对阵'
       this.activeName3 = '技术统计'
       this.activeIndex = index
-      this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID }).catch(err => err);
+      this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID })
 
     },
     gg (index, href) {
@@ -230,7 +230,7 @@ export default {
       this.activeName2 = '教练对阵'
       this.activeName3 = '技术统计'
       this.activeIndex = index
-      this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID }).catch(err => err);
+      this.$router.push({ path: '/soccer/match/' + href + '/' + this.scheduleID })
     },
     handleClick2 (index, name, href) {
       this.gg(index, href)
@@ -388,6 +388,7 @@ export default {
       dl {
         position: absolute;
         top: 36px;
+        left: 0;
         background: #fff;
         border: 1px solid #eee;
         z-index: 9999999;

@@ -5,6 +5,16 @@
 
       <div class="write_tou">
         <div>
+          <el-select v-model="sclassId"
+                     placeholder="输入赛事id">
+            <el-option v-for="item in sclassIdList"
+                       :key="item.sclassId"
+                       :label="item.sclassName"
+                       :value="item.sclassId">
+            </el-option>
+          </el-select>
+        </div>
+        <div>
           <el-date-picker v-model="dateval"
                           type="date"
                           value-format="yyyy-MM-dd"
@@ -22,8 +32,8 @@
           </el-select>
         </div>
         <div>
-          <el-input v-model="inputGjz"
-                    placeholder="请输入关键字"></el-input>
+          <el-input v-model="inputTitle"
+                    placeholder="请输入标题"></el-input>
         </div>
 
       </div>
@@ -39,13 +49,14 @@
                       @change="onEditorChange($event)">
         </quill-editor>
       </div>
-      <button v-on:click="saveHtml">保存</button>
+      <button v-on:click="saveHtml">发送</button>
     </div>
   </div>
 
 </template>
 
 <script>
+import Qs from 'qs'
 export default {
   name: 'App',
   data () {
@@ -53,25 +64,27 @@ export default {
       content: `<p>hello world</p>`,
       editorOption: {},
 
-
+      sclassId: 36,
       dateval: '',
       inputGjz: '',
+      inputTitle: '',
       state1: '',
+      sclassIdList: [ {
+        sclassId: '',
+        sclassName: '其他'
+      }],
       options: [{
-        value: '选项1',
-        label: '黄金糕'
+        value: '虎扑',
+        label: '虎扑'
       }, {
-        value: '选项2',
-        label: '双皮奶'
+        value: '懂球帝',
+        label: '懂球帝'
       }, {
-        value: '选项3',
-        label: '蚵仔煎'
+        value: '直播吧',
+        label: '直播吧'
       }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+        value: '新浪体育',
+        label: '新浪体育'
       }],
     }
   },
@@ -80,29 +93,68 @@ export default {
       return this.$refs.myQuillEditor.quill;
     },
   },
+  created(){
+    this.rx_sclass()
+  },
   methods: {
     onEditorReady (editor) { // 准备编辑器
     },
     onEditorBlur () { }, // 失去焦点事件
     onEditorFocus () { }, // 获得焦点事件
     onEditorChange () { }, // 内容改变事件
-    saveHtml: function (event) {
-      alert(this.content);
+    async saveHtml (event) {
+      var formData = Qs.stringify({
+        sclassId: this.sclassId,
+        title: this.inputTitle,
+        content: this.content,
+        // keyword: this.inputGjz,
+        reprinted: this.state1,
+        publicTime: this.dateval
+      });
+      if (!this.$getMyConfig.getConfig()) {
+        console.log(formData)
+        if (this.inputTitle != '' && this.content != '' && this.state1 != '' && this.dateval != '') {
+          const { data: res } = await this.$http.request({
+            url: '/user/publicJournalism/',
+            method: 'POST',
+            data: formData,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+          })
+          this.$message.success('发送成功')
+
+          // this.sclassId = '36'
+          this.inputTitle = ''
+          this.content = ''
+          // this.inputGjz = ''
+          this.state1 = ''
+          this.dateval = ''
+        } else {
+          alert('不能为空');
+        }
+
+
+      } else {
+        alert('登录过期请重新登录');
+      }
+    },
+
+
+    async rx_sclass(){
+      const { data: res } = await this.$http.get(`rx_sclass`);
+      this.rx_sclass = res
+      res.forEach(item=>{
+        this.sclassIdList.unshift(item)
+      })
     }
+
+
   }
 }
 </script>
 
 <style lang = 'less' >
-/* #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  background: #fff;
-} */
 .write_news {
   background: #fff;
   height: 100%;

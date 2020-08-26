@@ -14,7 +14,7 @@
       <el-table-column align="center"
                        prop="level"
                        min-width="138">
-        <template slot="header">
+        <template slot="header"  slot-scope="scope">
           <el-dropdown trigger="click"
                        @command="handleCommand"
                        size="mini">

@@ -27,23 +27,37 @@
             </el-menu-item>
           </el-menu>
 
-          <!-- 退出 -->
-          <div class="SignIn_box">
-            欢迎访问球冠，请先&nbsp;
+          <!-- 注册 -->
+          <div class="SignIn_box"
+               v-if="!showTX">
+            欢迎访问球冠，请先&nbsp;&nbsp;&nbsp;&nbsp;
             <router-link :to="{path:'/users'}">
               <el-button type="info"
                          size="mini"
+                         @click="ONuserinfo"
                          round>
-                注册
+                登录
               </el-button>
             </router-link>
-            &nbsp; 或者&nbsp;
-            <router-link :to="{path:'/users'}">
-              <el-button type="info"
-                         size="mini"
-                         round>登录</el-button>
-            </router-link>
           </div>
+
+          <div class="SignIn_box"
+               @click="ONuserinfo"
+               v-else>
+            <!-- <router-link > -->
+            <el-image style="width:40px;border-radius:50px" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-image>
+            <!-- </router-link> -->
+            <span style="margin-left:10px;font-size:14px">{{username}}</span>
+            <div class="SignIn_bh">
+              <router-link target="_blank" v-if="is_editor"
+                           :to="{name:'writeNews'}">
+                发文章
+              </router-link>
+              <p style="width:50px;cursor:pointer" @click="Onoff">退出</p>
+
+            </div>
+          </div>
+
         </div>
       </el-header>
       <!-- 内容 -->
@@ -55,7 +69,6 @@
           <router-view></router-view>
         </keep-alive>
       </el-main>
-
       <!-- 返回顶部 -->
       <el-backtop>
         <i style=" border-radius: 50%;color:#409eff"
@@ -136,6 +149,7 @@
 <script>
 export default {
   created () {
+    // console.log(this.$getMyConfig.getConfig(),111)
     // console.log(this.$route.fullPath)
     this.fullPath = this.$route.fullPath
     if (this.$route.path.substring(0, 7) == '/soccer') {
@@ -143,6 +157,16 @@ export default {
     } else {
       this.act = ""
     }
+    const tokenStr = localStorage.getItem('token')
+    if (!tokenStr) {
+      this.showTX = false
+    } else {
+      this.showTX = true
+      this.username = localStorage.getItem('username')
+      this.user_id = localStorage.getItem('user_id')
+      // this.ONuserinfo()
+    }
+
   },
   updated () {
     this.fullPath = this.$route.fullPath
@@ -150,7 +174,6 @@ export default {
   watch: {
     $route (to, from) {
       var a = to.fullPath
-      // console.log(to.fullPath.substring(0, 7));
       if (to.fullPath.substring(0, 7) == '/soccer') {
         this.act = "act"
       } else {
@@ -161,6 +184,10 @@ export default {
   },
   data () {
     return {
+      showTX: false,
+      username: '',
+      user: '',
+      is_editor: '',
       menulist: [
         { authName: "首页", id: 1, order: 1, path: "/index" },
         { authName: "足彩", id: 21, order: 1, path: "/zucai" },
@@ -170,18 +197,25 @@ export default {
         { authName: "APP", id: 13, order: 2, path: "/app" },
 
       ],
-      menulist2: [
-        { authName: '1111', id: 16, order: 4, path: "/11" },
-        { authName: '22222', id: 17, order: 4, path: "/22" }
-      ],
+
       fullPath: '',
       // 添加导航颜色
-      act: ''
+      act: '',
     };
   },
   methods: {
     handleSelect (key, keyPath) {
       // console.log(key, keyPath);
+    },
+    async ONuserinfo () {
+      if (!this.$getMyConfig.getConfig()) {
+        const { data: res } = await this.$http.get(`/user/userinfo/`);
+        this.is_editor = res.data.is_editor
+      }
+    },
+    Onoff(){
+      this.showTX = false
+         localStorage.removeItem('token');
     }
   }
 }
@@ -212,9 +246,17 @@ export default {
     // logo
     .Header_left {
       height: 70px;
+      width: 108px;
       a {
         display: inline-block;
         height: 70px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        .el-image {
+          width: 100px;
+          height: 64.81px;
+        }
       }
     }
     // 导航
@@ -233,9 +275,37 @@ export default {
       height: 70px;
       display: flex;
       align-items: center;
+      position: relative;
+      &:hover .SignIn_bh {
+        display: block;
+      }
       .el-button {
         background: #3a4451;
         border-radius: 4px;
+      }
+      .SignIn_bh {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        // width: 100px;
+        height: 60px;
+        line-height: 30px;
+        text-align: center;
+        background: #fff;
+        border: 1px solid #eee;
+        font-size: 14px;
+        display: none;
+        a &:hover{
+          color: #007aff;
+        }
+         span &:hover{
+          color: #007aff;
+        }
+        span {
+          cursor: pointer;
+          width: 100%;
+          display: inline-block;
+        }
       }
     }
   }

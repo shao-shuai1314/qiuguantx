@@ -651,7 +651,7 @@ export default {
             colors(this.color_data, this.LeagueLists.home_score)
           } catch (err) {
           }
-        } else {
+        } else if (this.kind == 2) {
           var round_ej = this.subsClassList.find(item => {
             return item.subsclassId == this.subsClassList[this.subsClassList.length - 1].subsclassId
           })
@@ -696,6 +696,15 @@ export default {
           this.violationsList = [...Object.values(this.LeagueLists.koufen)]
         }
       } else {
+
+        if (!res.data.sclass_data.count_round) {
+          // 没轮次 没联赛
+          this.MatchList = this.match_list
+          console(this.match_list, 111)
+        }
+
+
+
         // 不是二级联赛
         // 分上下页
         this.onCount_round(res.data.sclass_data.count_round, res.data.sclass_data.curr_round)

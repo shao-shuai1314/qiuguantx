@@ -18,6 +18,6 @@ export default {
   width: 100%;
   height: 765px;
   background-color: #fff !important;
-  background: url('../../static/appbj.png') no-repeat center;
+  background: url('../assets/appbj.png') no-repeat center;
 }
 </style>

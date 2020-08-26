@@ -31,7 +31,7 @@
                :key="index"
                class="video-item-img"
                :class="index == 0 ? 'act':''">
-            <el-image src="../../static/cs.jpg"></el-image>
+            <el-image src="../assets/cs.jpg"></el-image>
             <i>2:30</i>
             <p> 狼队前锋阿达玛-特拉奥雷本赛季发挥极为出色，吸引了</p>
           </div>

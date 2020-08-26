@@ -141,9 +141,11 @@ export default {
       //5. 使用刚指定的配置项和数据显示图表。
       echarts_name.setOption(option);
       echarts_name.on("click", function (e) {
-        if (!e.data.url) return
-        // console.log(e)
-        window.open(`http://192.168.3.51:8080/#/soccer/team/player/${e.data.url}`)
+         if (e.data.url) {
+
+          window.open(`http://qiuguantx.com/#/soccer/team/player/${e.data.url}`)
+          window.isCancel=true;
+        }
 
       })
     }

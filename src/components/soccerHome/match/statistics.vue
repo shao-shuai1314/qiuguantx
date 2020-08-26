@@ -49,10 +49,12 @@
                                 :key="i">
                       <div slot="content">姓名：{{item.name}}<br/>生日：{{item.birthday}}<br/>身价：{{item.expectedValue}}（万欧元）<br/>国籍：{{item.country}}</div>
                       <router-link target="_blank"
+                                   style="width:40px;height:40px;border-radius:50%;background:#eee;"
                                    v-if="item.playerId"
                                    :to="{name:'playerDetails',params:{playerID:item.playerId}}">
-                        <el-avatar fit="contain"
-                                   :src="`http://qiuguantx.com/img/player/${item.photo}` "></el-avatar>
+                        <el-image fit="contain"
+                                  style="width:40px;height:40px;border-radius:50%;overflow: hidden; "
+                                  :src="`http://qiuguantx.com/img/player/${item.photo}` "></el-image>
 
                         <p style="font-size:10px;width: 50px; height:20px;display:flex;align-items:center;justify-content:center">
                           <span>
@@ -85,10 +87,12 @@
                                 :key="i">
                       <div slot="content">姓名：{{item.name}}<br/>生日：{{item.birthday}}<br/>身价：{{item.expectedValue}}（万欧元）<br/>国籍：{{item.country}}</div>
                       <router-link target="_blank"
+                                   style="width:40px;height:40px;border-radius:50%;background:#eee; "
                                    v-if="item.playerId"
                                    :to="{name:'playerDetails',params:{playerID:item.playerId}}">
-                        <el-avatar fit="contain"
-                                   :src="`http://qiuguantx.com/img/player/${item.photo}` "></el-avatar>
+                        <el-image fit="contain"
+                                  style="width:40px;height:40px;border-radius:50%;overflow: hidden;"
+                                  :src="`http://qiuguantx.com/img/player/${item.photo}` "></el-image>
                         <p style="font-size:10px;width: 50px; height:20px;display:flex;align-items:center;justify-content:center">
                           <span>
                             {{item.number}}
@@ -890,5 +894,10 @@ a {
   justify-content: space-between;
   color: #fff;
   font-size: 14px;
+}
+
+.el-avatar img {
+  width: 40px !important;
+  height: 40px !important;
 }
 </style>

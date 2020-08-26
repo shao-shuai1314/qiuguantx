@@ -823,9 +823,13 @@ export default {
       //5. 使用刚指定的配置项和数据显示图表。
       echarts_name.setOption(option);
       echarts_name.on("click", function (e) {
-        if (!e.data.url) return
-        console.log(`http://192.168.3.51:8080/#/soccer/team/playerDetails/${e.data.url}`)
-        window.open(`http://192.168.3.51:8080/#/soccer/team/playerDetails/${e.data.url}`)
+        if (e.data.url) {
+
+          window.open(`http://qiuguantx.com/#/soccer/team/player/${e.data.url}`)
+          window.isCancel=true;
+        }
+        // console.log(`http://192.168.3.51:8080/#/soccer/team/playerDetails/${e.data.url}`)
+        
 
       })
     }
@@ -842,9 +846,9 @@ table {
   background-color: #ebf8ff;
 }
 .qiululist {
-  margin-left: -1160px;
+  /* margin-left: -1160px;
   -webkit-transform: translateX(20px);
-  transform: translateX(50%);
+  transform: translateX(50%); */
 }
 tr {
   background-color: #ebf8ff;
@@ -913,11 +917,12 @@ td div {
 
 .zk_box {
   width: 100%;
-  height: 100%;
+height: 150px;
   display: flex;
   justify-content: center;
   position: absolute;
   bottom: 0;
+  left: 0;
 }
 .zk_td {
   /* width: 100%; */
@@ -926,12 +931,15 @@ td div {
     width: 100%;
     display: flex;
     position: absolute;
-    bottom: 62px;
+        bottom: 36%;
+    /* margin-bottom: -22px; */
+    left: -2px;
     /* z-index: 9; */
     justify-content: space-between;
     .zk_p {
       position: relative;
       z-index: 99;
+          left: 0;
       .zk_span {
         display: flex;
         width: 16px;
@@ -947,6 +955,7 @@ td div {
     .zk_p0 {
       position: relative;
       bottom: -40px;
+      left: 0;
     }
   }
 }

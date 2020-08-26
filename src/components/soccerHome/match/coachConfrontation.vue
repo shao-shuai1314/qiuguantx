@@ -11,7 +11,7 @@
       <el-table-column prop="date"
                        align="center"
                        width="">
-        <template slot="header">
+        <template slot="header" slot-scope="scope">
           <div class="tableData-header">
             <b>{{TeamNameInfo[0]}} &nbsp; &nbsp; &nbsp; &nbsp;VS&nbsp; &nbsp; &nbsp; &nbsp; {{TeamNameInfo[2]}}</b>
           </div>
@@ -19,7 +19,7 @@
         <el-table-column prop="date"
                          align="center"
                          width="">
-          <template slot="header">
+          <template slot="header" slot-scope="scope">
             <div class="tableData-xheader">
               <b>{{TeamNameInfo[0]}} ： {{CoachNameInfo[0]}}</b>
               <b>

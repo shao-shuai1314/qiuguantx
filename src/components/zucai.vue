@@ -81,7 +81,7 @@ export default {
   methods: {
     async onDataList (i) {
       const res = await this.$http.get(`zucai/zc14/`);
-      console.log(res.data)
+      // console.log(res.data)
       this.tableData = res.data[i].match_list
       if (this.options.length == 0) {
         res.data.forEach(item => {

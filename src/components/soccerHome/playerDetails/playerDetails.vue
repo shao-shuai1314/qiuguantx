@@ -8,15 +8,15 @@
             <p>{{headerData.name_e}}</p>
             <div class="details">
               <dl>
-                <dd v-if="headerData.place">
+                <dd v-if="placeLen">
                   <b>俱乐部：</b>{{headerData.place[0].teamID__name_j}}</dd>
-                <dd v-if="headerData.place">
+                <dd v-if="placeLen">
                   <b>位置：</b>{{headerData.place[0].place}}</dd>
-                <dd v-if="headerData.place">
+                <dd v-if="placeLen">
                   <b>号码：</b>
                   <span v-if="headerData.place[0].number">{{headerData.place[0].number}}号</span>
                 </dd>
-                <dd v-if="headerData.place">
+                <dd v-if="placeLen">
                   <b>预计身价：</b>
                   <span v-if="headerData.expectedValue">{{headerData.expectedValue}}万英镑</span>
                 </dd>
@@ -56,7 +56,6 @@
         </el-divider>
         <div>
           <el-table :data="headerData.place"
-                    size="mini"
                     :header-cell-style="{'color': '#303133','font-size':'14px'}"
                     style="width: 100%">
             <el-table-column prop="toTeamName"
@@ -73,6 +72,7 @@
                                width="">
                 <template slot-scope="scope">
                   <router-link target="_blank"
+                  v-if="scope.row.teamID"
                                :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamID__name_j}}</router-link>
                 </template>
               </el-table-column>
@@ -89,157 +89,8 @@
             </el-table-column>
           </el-table>
         </div>
-        <!-- 统计 -->
 
-        <div>
-          <el-divider content-position="left">
-            <h6>信息统计</h6>
-          </el-divider>
-          <div>
-            <div>
-              <el-tag :type="typeClor == 0?'success':'info'"
-                      size="mini"
-                      @click="Onxiaoz()">总计</el-tag>
-              <el-tag :type="typeClor == 1?'success':'info'"
-                      size="mini"
-                      @click="Onxiaoz(1)">联赛</el-tag>
-              <el-tag :type="typeClor == 2?'success':'info'"
-                      size="mini"
-                      @click="Onxiaoz(2)">杯赛</el-tag>
-            </div>
-            <!-- 球员 -->
-            <el-table :data="playerTj"
-                      v-if="playerTj.length"
-                      size="mini"
-                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
-                      style="width: 100%">
-              <el-table-column align="center"
-                               label="">
-                <template slot="header">
-                  <div class="linue-header">
-                    <b>球员信息统计</b>
-                  </div>
-                </template>
-                <el-table-column prop="sclassName"
-                                 label="联赛"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-                <el-table-column prop="matchSeason"
-                                 label="赛季"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-                <el-table-column prop="teamName"
-                                 label="俱乐部"
-                                 align="center"
-                                 width="">
-                  <template slot-scope="scope">
-                    <router-link target="_blank"
-                                 :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamName}}</router-link>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="count"
-                                 label="上场"
-                                 align="center"
-                                 width="40">
-                </el-table-column>
-                <el-table-column prop="place"
-                                 label="首发"
-                                 align="center"
-                                 width="40">
-                </el-table-column>
-                <el-table-column prop="penaltyGoals"
-                                 label="点球进球"
-                                 align="center"
-                                 width="60">
-                </el-table-column>
-                <el-table-column prop="notPenaltyGoals"
-                                 label="射门进球"
-                                 align="center"
-                                 width="60">
-                </el-table-column>
-                <el-table-column prop="assist"
-                                 label="助攻"
-                                 align="center"
-                                 width="40">
-                </el-table-column>
-                <el-table-column prop="yellow"
-                                 label="黄牌"
-                                 align="center"
-                                 width="40">
-                </el-table-column>
-                <el-table-column prop="red"
-                                 label="红牌"
-                                 align="center"
-                                 width="40">
-                </el-table-column>
-                <el-table-column prop="owngoals"
-                                 label="乌龙"
-                                 align="center"
-                                 width="40">
-                </el-table-column>
-              </el-table-column>
-            </el-table>
-            <!-- 教练 -->
-            <el-table :data="coachTj"
-                      v-if="coachTj.length"
-                      size="mini"
-                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
-                      style="width: 100%">
-              <el-table-column align="center"
-                               label="">
-                <template slot="header">
-                  <div class="linue-header">
-                    <b>教练信息统计</b>
-                  </div>
-                </template>
-                <el-table-column prop="sclassName"
-                                 label="联赛"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-                <el-table-column prop="season"
-                                 label="赛季"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-                <el-table-column prop="teamName"
-                                 label="俱乐部"
-                                 align="center"
-                                 width="">
-                  <template slot-scope="scope">
-                    <router-link target="_blank"
-                                 :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamName}}</router-link>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="score"
-                                 label="总得分"
-                                 align="center"
-                                 width="60">
-                </el-table-column>
-                <el-table-column prop="win"
-                                 label="胜"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-                <el-table-column prop="flat"
-                                 label="平"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-                <el-table-column prop="fail"
-                                 label="负"
-                                 align="center"
-                                 width="">
-                </el-table-column>
-              </el-table-column>
-            </el-table>
-            <div v-if="coachTj.length && playerTj.length"> 暂无数据</div>
 
-          </div>
-
-        </div>
 
         <div class="kua zhuanh">
           <!-- 转会 -->
@@ -268,6 +119,7 @@
                     <span>
                       <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
                       <router-link target="_blank"
+                      v-if="scope.row.toTeamId"
                                    :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
                     </span>
 
@@ -319,9 +171,11 @@
                   <p class="zh_p">
                     <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.fromTeamImg"></el-image>
                     <router-link target="_blank"
+                    v-if="scope.row.fromTeamId"
                                  :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link> &nbsp;&nbsp;&nbsp;
                     <i class="el-icon-right"></i>&nbsp;&nbsp;&nbsp;
                     <router-link target="_blank"
+                    v-if="scope.row.toTeamId"
                                  :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
                     <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
                   </p>
@@ -341,6 +195,166 @@
           <div class="wusj"
                v-if="!playerTransfer.length && !coachTransfer.length"> 暂无数据</div>
         </div>
+
+
+
+
+
+
+
+        <!-- 统计 -->
+
+        <div>
+          <el-divider content-position="left">
+            <h6>信息统计</h6>
+          </el-divider>
+          <div>
+            <div class="cursor_sty">
+              <el-tag :type="typeClor == 0?'success':'info'"
+                      size="mini"
+                      @click="Onxiaoz()">总计</el-tag>
+              <el-tag :type="typeClor == 1?'success':'info'"
+                      size="mini"
+                      @click="Onxiaoz(1)">联赛</el-tag>
+              <el-tag :type="typeClor == 2?'success':'info'"
+                      size="mini"
+                      @click="Onxiaoz(2)">杯赛</el-tag>
+            </div>
+            <!-- 球员 -->
+            <el-table :data="playerTj"
+                      v-if="playerTj.length"
+                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                      style="width: 100%">
+              <el-table-column align="center"
+                               label="">
+                <template slot="header"  slot-scope="scope">
+                  <div class="linue-header">
+                    <b>球员信息统计</b>
+                  </div>
+                </template>
+                <el-table-column prop="sclassName"
+                                 label="联赛"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="matchSeason"
+                                 label="赛季"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="teamName"
+                                 label="俱乐部"
+                                 align="center"
+                                 width="">
+                  <template slot-scope="scope">
+                    <router-link target="_blank"
+                    v-if="scope.row.teamID"
+                                 :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamName}}</router-link>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="count"
+                                 label="上场"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="place"
+                                 label="首发"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="penaltyGoals"
+                                 label="点球进球"
+                                 align="center"
+                                 width="60">
+                </el-table-column>
+                <el-table-column prop="notPenaltyGoals"
+                                 label="射门进球"
+                                 align="center"
+                                 width="60">
+                </el-table-column>
+                <el-table-column prop="assist"
+                                 label="助攻"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="yellow"
+                                 label="黄牌"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="red"
+                                 label="红牌"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+                <el-table-column prop="owngoals"
+                                 label="乌龙"
+                                 align="center"
+                                 width="40">
+                </el-table-column>
+              </el-table-column>
+            </el-table>
+            <!-- 教练 -->
+            <el-table :data="coachTj"
+                      v-if="coachTj.length"
+                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                      style="width: 100%">
+              <el-table-column align="center"
+                               label="">
+                <template slot="header"  slot-scope="scope">
+                  <div class="linue-header">
+                    <b>教练信息统计</b>
+                  </div>
+                </template>
+                <el-table-column prop="sclassName"
+                                 label="联赛"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="season"
+                                 label="赛季"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column
+                                 label="俱乐部"
+                                 align="center"
+                                 width="">
+                  <template slot-scope="scope">
+                    <router-link target="_blank"
+                    v-if="scope.row.teamId"
+                                 :to="{name:'information',params:{teamID:scope.row.teamId}}">{{scope.row.teamName}}</router-link>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="score"
+                                 label="总得分"
+                                 align="center"
+                                 width="60">
+                </el-table-column>
+                <el-table-column prop="win"
+                                 label="胜"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="flat"
+                                 label="平"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+                <el-table-column prop="fail"
+                                 label="负"
+                                 align="center"
+                                 width="">
+                </el-table-column>
+              </el-table-column>
+            </el-table>
+            <div v-if="coachTj.length && playerTj.length"> 暂无数据</div>
+
+          </div>
+
+        </div>
+
+        
 
       </el-card>
 
@@ -407,6 +421,11 @@ export default {
 
       idiomaticFeet: { 0: '左脚', 1: '右脚', 2: '双脚' },
       playerList: [],
+placeLen:'',
+
+
+
+
       // 联赛杯赛
 
       coachTransfer: [],
@@ -451,12 +470,12 @@ export default {
     //  球员基本信息
     async dataList1 () {
       const res = await this.$http.get('teamInfo/player/' + this.scheduleID);
-      console.log(res.data.birthday)
       var birthday = new Date(res.data.birthday.replace(/-/g, "\/"));
       var d = new Date();
       var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
       this.age = age
       this.headerData = res.data
+      this.placeLen = res.data.place.length
     },
 
     async dataList2 () {
@@ -558,6 +577,7 @@ export default {
     tr {
       height: 30px;
       font-size: 14px;
+      
     }
     td {
       border-bottom: 1px solid #ececec;
@@ -636,5 +656,11 @@ a {
   background: red !important;
   height: 36px !important;
   line-height: 38px !important;
+}
+.cursor_sty{
+  .el-tag{
+    cursor: pointer;
+    margin-right: 10px;
+  }
 }
 </style>

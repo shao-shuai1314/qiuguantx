@@ -104,8 +104,12 @@
           <tr align="center"
               v-for="item in homeHistoryList.slice(0,this.homeNum)"
               :key="item.scheduleID">
-            <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+            <td>
+              <router-link target="_blank"
+                           :to="{name:'league',params:{sclassID:item.sclassID}}">
+                {{item.sclassName}}
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+              </router-link>
             </td>
 
             <td :style="{'background':item.coachID!='未知'?item.Coachcolors:''}">
@@ -305,8 +309,12 @@
           <tr align="center"
               v-for="item in guestHistoryList.slice(0,this.guestNum)"
               :key="item.scheduleID">
-            <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+            <td>
+              <router-link target="_blank"
+                           :to="{name:'league',params:{sclassID:item.sclassID}}">
+                {{item.sclassName}}
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+              </router-link>
             </td>
             <td :style="{'background':item.coachID!='未知'?item.Coachcolors:''}">
               {{item.matchtime.replace('T',' ')}}
@@ -443,8 +451,12 @@
           <tr align="center"
               v-for="(item,index) in homeFutureList"
               :key="index">
-            <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+            <td>
+              <router-link target="_blank"
+                           :to="{name:'league',params:{sclassID:item.sclassID}}">
+                {{item.sclassName}}
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+              </router-link>
             </td>
             <td>{{item.matchtime.replace('T',' ')}}</td>
             <td class="borderL">
@@ -506,8 +518,12 @@
           <tr align="center"
               v-for="(item,i) in guestFutureList"
               :key="i">
-            <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+            <td>
+              <router-link target="_blank"
+                           :to="{name:'league',params:{sclassID:item.sclassID}}">
+                {{item.sclassName}}
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+              </router-link>
             </td>
             <td>{{item.matchtime.replace('T',' ')}}</td>
             <td class="borderL">
@@ -635,8 +651,12 @@
           <tr align="center"
               v-for="item in mutualHistoryList.slice(0,clashNum)"
               :key="item.scheduleID">
-            <td>{{item.sclassName}}
-              <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+            <td>
+              <router-link target="_blank"
+                           :to="{name:'league',params:{sclassID:item.sclassID}}">
+                {{item.sclassName}}
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+              </router-link>
             </td>
             <td>{{item.matchtime.replace('T',' ')}}</td>
 

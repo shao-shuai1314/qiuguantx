@@ -1,7 +1,8 @@
 <template>
   <div>
     <!-- 背景 -->
-    <div class="user_bj"></div>
+    <!-- <div class="user_bj"></div> -->
+    <el-image src="../../static/qiuchang.jpg"></el-image>
     <!-- 用户表单 -->
     <div class="user_box">
       <!-- 返回上一页 -->
@@ -14,7 +15,7 @@
       <!-- logo -->
       <div class="logo">
         <router-link :to="{ path: '/' }">
-          <el-image src="../../../static/logo.png"></el-image>
+          <el-image src="../../static/logo.png"></el-image>
         </router-link>
       </div>
       <!-- 登录方式 -->
@@ -36,9 +37,9 @@
                  :rules="rules"
                  ref="ruleForm"
                  label-width="0px">
-          <el-form-item prop="name">
-            <el-input v-model="ruleForm.name"
-                      placeholder="登录名/手机号"></el-input>
+          <el-form-item prop="phone">
+            <el-input v-model="ruleForm.phone"
+                      placeholder="手机号"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input type="password"
@@ -80,7 +81,7 @@
                       class="code"
                       placeholder="手机验证码"></el-input>
             <el-button type="primary"
-                       @click="">发送验证码</el-button>
+                       @click="onCode">发送验证码</el-button>
           </el-form-item>
 
           <div class="wjzc-item">
@@ -132,7 +133,11 @@
                       class="code"
                       placeholder="手机验证码"></el-input>
             <el-button type="primary"
-                       @click="">发送验证码</el-button>
+                       v-show="show"
+                       @click="onCode">获取验证码</el-button>
+            <el-button type="primary"
+                       v-show="!show"
+                       class="count">{{count}}</el-button>
           </el-form-item>
 
           <div class="wjzc-item">
@@ -145,7 +150,7 @@
           <!-- 登录重置 -->
           <el-form-item class="odengl">
             <el-button type="primary"
-                       @click="submitForm('ruleForm')">注册</el-button>
+                       @click="submitForm1('ruleForm')">注册</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
 
@@ -160,58 +165,82 @@
 
 </template>
 <script >
+import Qs from 'qs'
 export default {
   data () {
+    var reg = /^[a-zA-Z]\w{7,15}$/;
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
+      } else if (!reg.test(value)) {
+        return callback(new Error('密码（长度8-16， 必须字母开头，且包含数字）'));
       } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass');
-        }
+        callback()
       }
     };
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请再次输入密码'));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'));
+        return callback(new Error('请再次输入密码'));
+      } else if (!reg.test(value)) {
+        return callback(new Error('密码（长度8-16， 必须字母开头，且包含数字）'));
+      } if (value !== this.ruleForm.pass) {
+        return callback(new Error('两次输入密码不一致!'));
       } else {
+        callback()
       }
+    }
+    // 验证码
+    var code = (rule, value, callback) => {
+      if (value === '') {
+        return callback(new Error('验证码不能为空'));
+      }
+      if (!this.codeVal) {
+        return callback(new Error('请先获取验证码'));
+      }
+      if (value != this.codeVal) {
+        return callback(new Error('验证码错误'));
+      }
+      else {
+        callback()
+      }
+
     }
     // 手机号验证
     var checkPhone = (rule, value, callback) => {
       const phoneReg = /^1[3|4|5|6|7|8][0-9]{9}$/
       if (!value) {
         return callback(new Error('电话号码不能为空'))
-      }
-      setTimeout(() => {
-
-        if (!Number.isInteger(+value)) {
-          callback(new Error('请输入数字值'))
+      } else {
+        if (phoneReg.test(value)) {
+          callback()
         } else {
-          if (phoneReg.test(value)) {
-            callback()
-          } else {
-            callback(new Error('电话号码格式不正确'))
-          }
+          callback(new Error('电话号码格式不正确'))
         }
-      }, 100)
+      }
     };
     return {
+
+      //  验证码
+      show: true,
+      count: '',
+      timer: null,
+      codeVal: '',
+
+      msg: '',
+
+
+
       // 登录类型
       types: 'passwardLogin',
 
       ruleForm: {
-        name: '',
         password: '',
+
+
         code: '',
         phone: '',
-
         pass: '',
         checkPass: '',
-
-
       },
       rules: {
         name: [
@@ -219,8 +248,7 @@ export default {
           { min: 3, max: 5, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
         code: [
-          { required: true, message: '验证码', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 4 到 5 个字符', trigger: 'blur' }
+          { required: true, validator: code, trigger: 'blur' }
         ],
 
         phone: [
@@ -228,8 +256,7 @@ export default {
         ],
 
         password: [
-          { required: true, message: '用户密码', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur' }
         ],
         checkPass: [
           { validator: validatePass2, trigger: 'blur' }
@@ -245,16 +272,113 @@ export default {
     ONsy () {
       window.history.back();
     },
-    // 表单验证
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+    // 注册
+    submitForm1 (formName) {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
-          alert('submit!');
+          var formData = Qs.stringify({
+            mobile: this.ruleForm.phone,
+            password: this.ruleForm.pass,
+            code: this.ruleForm.code
+          });
+          const { data: res } = await this.$http.request({
+            url: '/user/register/',
+            method: 'POST',
+            data: formData,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+          })
+          if (res.status == 400) {
+            console.log(1234)
+            // this.msg = res.msg
+            return this.$message.error(res.msg)
+          } else {
+            this.$message.success('登录成功')
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("username", res.data.username);
+            localStorage.setItem("user_id", res.data.user_id);
+            window.history.back();
+          }
+
         } else {
           console.log('error submit!!');
           return false;
         }
       });
+    },
+
+    // 登录
+    submitForm (formName) {
+      this.$refs[formName].validate(async valid => {
+        if (valid) {
+          var formData = Qs.stringify({
+            username: this.ruleForm.phone,
+            password: this.ruleForm.password,
+          });
+          const { data: res } = await this.$http.request({
+            url: '/user/login/',
+            method: 'POST',
+            data: formData,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+          })
+          if (res.status == 400) {
+            // this.msg = res.msg
+            return this.$message.error(res.msg)
+          } else {
+            this.$message.success('登录成功')
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("username", res.data.username);
+            localStorage.setItem("user_id", res.data.user_id);
+            localStorage.setItem("timestamp", res.data.timestamp);
+
+
+            // console.log( res.data.token.split('.')[1])
+            window.history.back();
+           
+          }
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+
+
+    // 验证码
+    async onCode () {
+
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000)
+      }
+
+      //  发送验证码
+      var formData = Qs.stringify({
+        mobile: this.ruleForm.phone
+      });
+      const { data: res } = await this.$http.request({
+        url: '/user/send_code/',
+        method: 'POST',
+        data: formData,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+      })
+      this.codeVal = res.code
+      return this.$message.error(res.msg)
     },
     // 重置
     resetForm (formName) {
@@ -288,7 +412,6 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #fff !important;
-  background: url('../../../static/qiuchang.jpg') no-repeat center;
   -webkit-filter: blur(3px);
   filter: blur(3px);
   position: absolute;

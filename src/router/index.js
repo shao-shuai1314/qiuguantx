@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+
+
 import home from '@/components/home'
 import index from '@/components/index'
 import lotteryTicket from '@/components/zucai'
@@ -8,7 +11,11 @@ import app from '@/components/app'
 
 // 新闻
 import news from '@/components/news/news'
+
 import writeNews from '@/components/news/writeNews '
+import newdetail from '@/components/news/newdetail'
+
+
 
 // 足球中心
 import soccer from '@/components/soccerHome/soccer'
@@ -82,6 +89,7 @@ const router = new Router({
 
     {
       path: '/writeNews',
+      name: 'writeNews',
       component: writeNews,
       meta: {
         title: '管理员新闻页'
@@ -409,6 +417,15 @@ const router = new Router({
 
 
         {
+          path: '/newdetail/:recordId',
+          name: 'newdetail',
+          component: newdetail,
+          meta: {
+            title: '球冠新闻详情页'
+          }
+        },
+
+        {
           path: '/news',
           component: news,
           meta: {
@@ -434,14 +451,24 @@ const router = new Router({
 
 // 挂载导航守卫
 router.beforeEach((to, from, next) => {
-  // if (to.path === '/login') return next();
-  // // 获取token
-  // const tokenStr = window.sessionStorage.getItem('token')
-  // if (!tokenStr) return next('/login')
-  if (to.meta.title) {
-    document.title = to.meta.title
+  if (to.path === '/user') return next();
+  // // // 获取token
+  // const tokenStr = localStorage.getItem('token')
+  // if (!tokenStr) return next('/user')
+  // if (to.meta.title) {
+  //   document.title = to.meta.title
+  // }
+  // next()
+  let timestamp =  localStorage.getItem("timestamp");
+  //  当前时间
+  var newTimestamp =`${Date.parse(new Date())}`.slice(0,10)
+  if(newTimestamp >=  timestamp){
+    localStorage.removeItem('token');
   }
   next()
+  // if(this.$getMyConfig.getConfig()){
+  //   console.log('导航守卫')
+  // }
 })
 
 export default router

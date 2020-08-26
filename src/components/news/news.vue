@@ -4,11 +4,12 @@
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>新闻</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="news_left fl">
+    <el-card class="news_left fl">
       <h2 style="font-weight: normal;margin-left:10px;display: flex;justify-content: space-between;">
         <span>五大联赛新闻</span>
         <div class="dates">
           <el-date-picker v-model="dateval"
+                          @change='ondate'
                           type="date"
                           value-format="yyyy-MM-dd"
                           placeholder="选择日期">
@@ -25,92 +26,173 @@
         <el-tabs v-model="activeName"
                  @tab-click="handleClick">
           <el-tab-pane label="英超"
-                       name="first">
+                       name="36">
           </el-tab-pane>
           <el-tab-pane label="西甲"
-                       name="second">
+                       name="31">
           </el-tab-pane>
           <el-tab-pane label="意甲"
-                       name="third"></el-tab-pane>
+                       name="34"></el-tab-pane>
           <el-tab-pane label="德甲"
-                       name="fourth"></el-tab-pane>
+                       name="8"></el-tab-pane>
           <el-tab-pane label="法甲"
-                       name="fv"></el-tab-pane>
+                       name="11"></el-tab-pane>
           <el-tab-pane label="其他"
                        name="six"></el-tab-pane>
         </el-tabs>
       </div>
 
       <ul>
-        <li v-for="item in 3"
-            :key="item">
-          <router-link to="">
-            <span>1</span>
+        <li v-for="(item,index) in newList"
+            :key="index">
+          <router-link target="_blank"
+                       :to="{name:'newdetail',params:{recordId:item.recordId}}">
+            <span style="margin-right:20px"
+                  v-if="currentPage1 == 1">{{index+currentPage1}}</span>
+            <span style="margin-right:20px"
+                  v-else>{{index+currentPage1*10-9}}</span>
             <el-image></el-image>
             <div class="tit">
               <h3>
-                <p>张璐：我们怎么用三年时间搞垮了中国足球？</p>
-                <p class="sx">英超新闻</p>
+                <p v-html="item.title"></p>
+                <p style="color:#898a89;font-size: 14px;">{{item.userName}}</p>
               </h3>
-              <p class="bt">
-                狼队前锋阿达玛-特拉奥雷本赛季发挥极为出色，吸引了众多豪门的关注。据法国媒体le10 Sport狼队前锋阿达玛-特拉奥雷本赛季发挥极为出色，吸引了众多豪门的关注。据法国媒体le10 Sport
-              </p>
-              <p class="pl">430评论&nbsp;&nbsp;&nbsp;&nbsp;50点赞</p>
+              <p class="bt"
+                 v-html="item.content"></p>
+              <p class="pl">{{item.reprinted}} {{item.publicTime}}</p>
             </div>
           </router-link>
           <el-divider></el-divider>
         </li>
       </ul>
-    </div>
+
+      <div class="block"
+           style="display:flex;justify-content:center;align-items:center">
+        <el-pagination :page-size="10"
+                       background
+                       @size-change="handleSizeChange"
+                       @current-change="handleCurrentChange"
+                       :current-page.sync="currentPage1"
+                       :total="total"
+                       layout="prev, pager, next">
+        </el-pagination>
+      </div>
+    </el-card>
     <!-- 新闻右边内容 -->
     <div class="news_right_box fr">
-      <h6>球冠热门新闻</h6>
+      <h3 style="margin-left:10px;">球冠热门新闻</h3>
       <el-divider></el-divider>
       <div class="news_right_top">
-        <router-link to="">
-          <div class="img_tit"
-               v-for="item in 4"
-               :key="item">
-            <div class="imgs">
-              <el-image></el-image>
-            </div>
-            <p> 狼队前锋阿达玛-特拉奥雷本赛季发挥极为出色，吸引了众多豪门的关注</p>
+        <div class="img_tit"
+             v-for="(item,index) in results.slice(0,4)"
+             :key="index">
+          <div class="imgs">
+            <el-image></el-image>
           </div>
-        </router-link>
+          <p>
+            <router-link target="_blank"
+                         :to="{name:'newdetail',params:{recordId:item.recordId}}">{{item.title}}</router-link>
+
+          </p>
+        </div>
 
       </div>
       <div class="news_right_bottom">
-        <p v-for="item in 10"
-           :key="item">
-          <router-link to="">狼队前锋阿达玛-特拉奥雷本赛季发挥极为出色，吸引了众多豪门的关注</router-link>
+        <p v-for="(item,index) in results.slice(4,10)"
+           :key="index">
+          <router-link target="_blank"
+                       :to="{name:'newdetail',params:{recordId:item.recordId}}">{{item.title}}</router-link>
         </p>
       </div>
     </div>
-
   </div>
 </template>
 <script >
 export default {
   data () {
     return {
-      activeName: 'second',
+      currentPage1: 1,
+      activeName: '36',
+      total: 0,
       dateval: '',
-      input2: ''
+      input2: '',
+      newList: [],
+      sclassId: 36,
+      getListnew: [],
+      results: []
     };
   },
+  created () {
+    this.jk({ sclassId: 36 })
+    this.rm()
+  },
   methods: {
-    handleClick (tab, event) {
-      console.log(tab.label);
+    async handleClick (tab) {
+      this.currentPage1 = 1
+      this.dateval = ''
+      this.sclassId = tab.name
+      if (tab.name == 'six') {
+        this.jk({})
+      } else {
+        this.jk({ sclassId: tab.name })
+      }
+
+    },
+    async ondate () {
+      if (this.sclassId == 'six') {
+        this.jk({ publicTime: this.dateval })
+      } else {
+        this.jk({ sclassId: this.sclassId, publicTime: this.dateval })
+      }
+    },
+    async jk (obj) {
+      const { data: res } = await this.$http.get(`/showJournalism`, { params: obj });
+      res.results.forEach(item => {
+        item.content = item.content.split('<p>')[1]
+      })
+      this.newList = res.results
+      this.total = res.count
+    },
+
+    async handleSizeChange (val) {
+      let obj = {}
+      if (this.sclassId != 'six') {
+        obj.sclassId = this.sclassId
+      }
+
+      obj.page = val
+      if (this.dateval) {
+        obj.publicTime = this.dateval
+      }
+      this.jk(obj)
+    },
+    async handleCurrentChange (val) {
+
+      this.index_ss = val
+      let obj = {}
+      if (this.sclassId != 'six') {
+        obj.sclassId = this.sclassId
+      }
+      obj.page = val
+      if (this.dateval) {
+        obj.publicTime = this.dateval
+      }
+
+      this.jk(obj)
+    },
+
+    async rm () {
+      let obj = { hotNews: 1 }
+      const { data: res } = await this.$http.get(`/showJournalism`, { params: obj });
+      console.log(res, 111)
+      this.results = res.results
     }
+
   }
 }
 </script>
 <style lang = 'less' scoped >
 .news_box {
-  /* background: #fff; */
-  margin-top: 10px;
-  border-radius: 6px;
-  /* padding-top: 20px; */
   &::after {
     content: '';
     display: block;
@@ -135,6 +217,9 @@ export default {
           color: #444;
           display: flex;
           justify-content: space-between;
+          &:hover h3 {
+            color: #3680d8;
+          }
         }
         span {
           display: inline-block;
@@ -167,10 +252,6 @@ export default {
             width: 100%;
             font-size: 14px;
             color: #898a89;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            overflow: hidden;
           }
           .pl {
             width: 100%;
@@ -248,6 +329,11 @@ export default {
   align-items: flex-start;
   .el-input {
     width: 200px;
+  }
+}
+a {
+  &:hover {
+    color: #3680d8;
   }
 }
 </style>
