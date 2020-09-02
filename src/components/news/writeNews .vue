@@ -85,6 +85,9 @@ export default {
       }, {
         value: '新浪体育',
         label: '新浪体育'
+      },{
+        value: '今日头条',
+        label: '今日头条'
       }],
     }
   },
@@ -129,7 +132,7 @@ export default {
           this.content = ''
           // this.inputGjz = ''
           this.state1 = ''
-          this.dateval = ''
+          // this.dateval = ''
         } else {
           alert('不能为空');
         }

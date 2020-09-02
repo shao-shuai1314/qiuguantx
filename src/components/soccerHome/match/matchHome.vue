@@ -16,6 +16,7 @@
               <router-link target="_blank"
                            v-if="headerList.homeTeamInfo"
                            :to="{name:'information',params:{teamID:headerList.homeTeamInfo.hometeamID}}">{{headerList.homeTeamInfo.homeTeamName}}</router-link>
+               <span v-if="mingC.length" style="color: #999;font-size:14px;margin-left:10px">[{{mingC[0].index}}]</span>
             </h2>
             <p v-if="headerList.homeTeamInfo">{{headerList.homeTeamInfo.homeTeamName_E}}</p>
             <div class="img_tit"
@@ -30,7 +31,7 @@
           </div>
 
           <div class="content">
-            <h2 v-if="headerList.matchState"
+            <h2 v-if="headerList.matchState ==-1"
                 style="color:#ed5565">{{headerList.homeScore}}-{{headerList.guestScore}}</h2>
             <h2 v-else>vs</h2>
             <p>开赛时间：{{`${headerList.matchtime}`.replace('T',' &nbsp;')}}</p>
@@ -43,6 +44,7 @@
               <router-link target="_blank"
                            v-if="headerList.guestTeamInfo"
                            :to="{name:'information',params:{teamID:headerList.guestTeamInfo.hometeamID}}">{{headerList.guestTeamInfo.homeTeamName}}</router-link>
+              <span v-if="mingC.length" style="color: #999;font-size:14px;margin-left:10px">[{{mingC[1].index}}]</span>
             </h2>
             <p v-if="headerList.guestTeamInfo">{{headerList.guestTeamInfo.homeTeamName_E}}</p>
             <div class="img_tit"
@@ -128,7 +130,7 @@
           <li>
             <span class="tabs-span"
                   @click="handleClick1(5,'TeamPosition')"
-                  :class="activeIndex==5?'active':''">球队位置</span>
+                  :class="activeIndex==5?'active':''">地理位置</span>
           </li>
           <li>
             <span class="tabs-span"
@@ -163,6 +165,8 @@ export default {
       name_tabs: '球冠指数',
       clocks: false,
       name_tabs1: '',
+
+      mingC:[]
     };
   },
   watch: {
@@ -174,7 +178,7 @@ export default {
     }
 
   },
-  created () {
+   created () {
     this.scheduleID = this.$route.params.scheduleID
     this.OnHeaderG()
     // 判断初始选项卡位置
@@ -190,9 +194,8 @@ export default {
       } else if (this.activeIndex == 2) {
         this.activeName3 = styles[this.$route.name][1]
       }
-
-
     }
+  //  console.log(JSON.parse(temp))
 
 
   },
@@ -205,7 +208,27 @@ export default {
       let CoachName = [res.data.homeTeamCoachInfo.homeTeamCoachName, res.data.homeTeamCoachInfo.homeTeamCoachID, res.data.guestTeamCoachInfo.guestTeamCoachName, res.data.guestTeamCoachInfo.guestTeamCoachID]
       sessionStorage.setItem('TeamName', TeamName)
       sessionStorage.setItem('CoachName', CoachName)
+       sessionStorage.setItem('matchState', res.data.matchState)
       sessionStorage.setItem('Score', `${res.data.homeScore}-${res.data.guestScore}`)
+
+      // 名次
+
+      const ss = await this.$http.get(`/soccer/matchInfo/${this.$route.params.scheduleID}/league/`);
+
+     ss.data.all_league.forEach((item,index)=>item.index = index+1)
+      let home_m =  ss.data.all_league.find(item=>item.teamID == TeamName[1])
+      let guest_m = ss.data.all_league.find(item=>item.teamID == TeamName[3])
+
+      if(home_m == undefined ){
+        home_m = {index:''}
+      }
+      if(guest_m == undefined){
+         guest_m = {index:''}
+      }
+
+      // 名次
+    //     var temp = sessionStorage.getItem("mingC")
+     this.mingC = [home_m,guest_m]
 
     },
     handleClick1 (index, href) {

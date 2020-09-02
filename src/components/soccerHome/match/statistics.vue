@@ -11,7 +11,7 @@
                   位置错乱
                 </span>
                 <span v-else>
-                  {{homeLineup.map(item=>{ if(item[0].longmenSort != 0){ return item.length } }).join('-')}}
+                  {{homeLineup.map(item=>{ if(item[0].longmenSort != 0){ return item.length } }).join('-').slice(1)}}
                 </span>
               </div>
               <div>
@@ -19,7 +19,7 @@
                   位置错乱
                 </span>
                 <span v-else>
-                  {{guestLineup.map(item=>{ if(item[0].longmenSort != 0){ return item.length } }).reverse().join('-')}}
+                  {{guestLineup.map(item=>{ if(item[0].longmenSort != 0){ return item.length } }).reverse().join('-').slice(1)}}
                 </span>
               </div>
 
@@ -128,31 +128,38 @@
               <h6>进球:</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==8 && item.teamID == guestteamID">
-                  {{guestNumber[item.playerID]}} &nbsp;
-                  <router-link target="_blank"
-                               v-if="item.playerID"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>(乌龙球) &nbsp;（{{item.happentime}}'）
-                </dd>
-                <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==1 && item.teamID == homeTeamID">
-                  {{homeNumber[item.playerID]}} &nbsp;
-                  <router-link target="_blank"
-                               v-if="item.playerID"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>
-                  <router-link target="_blank"
-                               v-if="item.playerID_in && item.playerName_in"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID_in}}"> (助攻：{{item.playerName_in}}&nbsp;（{{item.happentime}}'））</router-link>
+                    :key="`index1-${i}`">
+                  <div v-if="item.kind==8 && item.teamID == homeTeamID">
+                    {{guestNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>(乌龙球) &nbsp;（{{item.happentime}}'）
+                  </div>
+                  <div v-if="item.kind==1 && item.teamID === homeTeamID">
+                    {{homeNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>
+                    <router-link target="_blank"
+                                 v-if="item.playerID_in && item.playerName_in"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID_in}}"> (助攻：{{item.playerName_in}}&nbsp;)</router-link>（{{item.happentime}}'）
+                  </div>
+                  <div v-if="item.kind==7 && item.teamID === homeTeamID">
+                    {{homeNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>
+                    (点球&nbsp;（{{item.happentime}}'）)
+                  </div>
+
                 </dd>
               </dl>
               <h6>换人：</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==11 && item.teamID == homeTeamID">
-                  <div style="display:flex;height:30px;align-items:center">
+                    :key="`index3-${i}`">
+                  <div style="display:flex;height:30px;align-items:center"
+                       v-if="item.kind==11 && item.teamID === homeTeamID">
                     <svg style="width:16px;height:16px">
                       <use xlink:href="#icon-huanru"></use>
                     </svg>
@@ -175,21 +182,23 @@
               <h6>红牌：</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==2 && item.teamID == homeTeamID">
-                  {{homeNumber[item.playerID]}} &nbsp;
-                  <router-link target="_blank"
-                               v-if="item.playerID"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID}}">
-                    {{item.playerName}}
-                  </router-link>&nbsp; （{{item.happentime}}'）
+                    :key="`index4-${i}`">
+                  <div v-if="item.kind==2 && item.teamID === homeTeamID">
+                    {{homeNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}">
+                      {{item.playerName}}
+                    </router-link>&nbsp; （{{item.happentime}}'）
+                  </div>
+
                 </dd>
               </dl>
               <h6>黄牌：</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==3 && item.teamID == homeTeamID">
+                    :key="`index5-${i}`"
+                    v-if="item.kind==3 && item.teamID === homeTeamID">
                   {{homeNumber[item.playerID]}} &nbsp;
                   <router-link target="_blank"
                                v-if="item.playerID"
@@ -216,23 +225,29 @@
               <h6>进球:</h6>
               <dl>
                 <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==8 && item.teamID == hometeamID">
-                  {{homeNumber[item.playerID]}} &nbsp;
-                  <router-link target="_blank"
-                               v-if="item.playerID"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>(乌龙球) &nbsp;（{{item.happentime}}'）
-                </dd>
-                <dd v-for="(item,i) in detailResultList"
-                    :key="i"
-                    v-if="item.kind==1 && item.teamID == guestteamID">
-                  {{guestNumber[item.playerID]}} &nbsp;
-                  <router-link target="_blank"
-                               v-if="item.playerID"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>
-                  <router-link target="_blank"
-                               v-if="item.playerID_in  && item.playerName_in"
-                               :to="{name:'playerDetails',params:{playerID:item.playerID_in}}">(助攻：{{item.playerName_in}}&nbsp;（{{item.happentime}}'））</router-link>
+                    :key="`index6-${i}`">
+                  <div v-if="item.kind==8 && item.teamID === guestteamID">
+                    {{guestNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>(乌龙球) &nbsp;（{{item.happentime}}'）
+                  </div>
+                  <div v-if="item.kind==1 && item.teamID == guestteamID">
+                    {{guestNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>
+                    <router-link target="_blank"
+                                 v-if="item.playerID_in  && item.playerName_in"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID_in}}">(助攻：{{item.playerName_in}}&nbsp;）</router-link>（{{item.happentime}}'）
+                  </div>
+                  <div v-if="item.kind==7 && item.teamID === guestteamID">
+                    {{homeNumber[item.playerID]}} &nbsp;
+                    <router-link target="_blank"
+                                 v-if="item.playerID"
+                                 :to="{name:'playerDetails',params:{playerID:item.playerID}}"> {{item.playerName}}</router-link>
+                    (点球&nbsp;（{{item.happentime}}'）)
+                  </div>
                 </dd>
               </dl>
               <h6>换人：</h6>
@@ -327,6 +342,7 @@
                 <router-link target="_blank"
                              v-if="item.playerID"
                              :to="{name:'playerDetails',params:{playerID:item.playerID}}">
+                             {{guestNumber[item.playerID]}}
                   {{homeNumber[item.playerID]}} {{item.playerName}}
                 </router-link>
                 <svg class="icon"
@@ -376,6 +392,7 @@
                 <router-link target="_blank"
                              v-if="item.playerID"
                              :to="{name:'playerDetails',params:{playerID:item.playerID}}">
+                             {{homeNumber[item.playerID]}}
                   {{guestNumber[item.playerID]}} {{item.playerName}}</router-link>
                 <svg class="icon"
                      v-if="item.kind == 11"
@@ -483,8 +500,8 @@ import '../../../css/font1/iconfont.js'
 export default {
   data () {
     return {
-      homeTeamID: "",
       guestteamID: "",
+      homeTeamID: '',
       detailResultList: [],
       teamStyle: ['', '#icon-jinqiu', "#icon-hongpai", "#icon-huangpai", '#icon-huanru', '#icon-huanchu', '', '#icon-dianqiu', "#icon-zuqiuwulongqiu", "#icon-lianghuangbianhong1", , , , , "#icon-zhugongbang",],
 
@@ -515,9 +532,11 @@ export default {
         return item.kind != 13
       })
       this.detailResultList = res.data.detailResultList
+      console.log(this.detailResultList)
 
 
       this.homeTeamID = res.data.teamInfo.homeTeamID;
+      // console.log( this.homeTeamID)
       this.guestteamID = res.data.teamInfo.guestteamID
 
 

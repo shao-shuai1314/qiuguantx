@@ -25,8 +25,22 @@
                          align="center"
                          width="">
         </el-table-column>
+        <el-table-column prop="sclassName"
+                         label="联  赛"
+                         align="center"
+                         width="">
+          <template slot-scope="scope">
+            <div style="display: flex;justify-content: center"> 
+              <div :style="{background:scope.row.color}" style="width:150px;">
+              <router-link target="_blank" :style="{'color':scope.row.color?'#fff':''}"
+                           :to="{name:'league',params:{sclassID:scope.row.sclassId}}">{{scope.row.sclassName}}</router-link>
+            </div>
+            </div>
+            
+          </template>
+        </el-table-column>
         <el-table-column prop="homeName"
-                         label="主胜队"
+                         label="主  队"
                          align="center"
                          width="">
           <template slot-scope="scope">
@@ -38,7 +52,7 @@
         </el-table-column>
         <el-table-column prop="address"
                          align="center"
-                         label="比分">
+                         label="比  分">
           <template slot-scope="scope">
             <div>
               <router-link target="_blank"
@@ -53,7 +67,7 @@
         </el-table-column>
         <el-table-column prop="guestName"
                          align="center"
-                         label="客胜队">
+                         label="客  队">
           <template slot-scope="scope">
             <div>
               <router-link target="_blank"
@@ -81,13 +95,13 @@ export default {
   methods: {
     async onDataList (i) {
       const res = await this.$http.get(`zucai/zc14/`);
-      // console.log(res.data)
       this.tableData = res.data[i].match_list
       if (this.options.length == 0) {
         res.data.forEach(item => {
           this.options.push(item.issueNum)
         })
         this.value = this.options[i]
+        
       }
 
 
@@ -102,4 +116,10 @@ export default {
 .zucai_box {
   background: #fff;
 }
+a {
+  &:hover {
+    color: #91c1f8;
+  }
+}
+
 </style>

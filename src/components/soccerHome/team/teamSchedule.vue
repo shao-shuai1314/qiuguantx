@@ -1,11 +1,14 @@
 <template>
   <div class="gWidth">
     <el-table :data="dataList"
-              stripe
+              border
+               size="mini"
               :header-cell-style="{
     'color': '#303133',
     'border-bottom': '1px rgb(103, 194, 58) solid',
-    'font-size':'14px'
+    'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px',
+    'height':'50px'
 }"
               style="width: 1160px">
       <el-table-column prop="sclassName"

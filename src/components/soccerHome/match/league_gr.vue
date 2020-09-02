@@ -99,7 +99,7 @@ export default {
       },
       sclassID: '',
       Clock: false,
-      Clock1: true
+      Clock1: true,
     }
   },
   props: ["datas"],
@@ -128,6 +128,13 @@ export default {
       this.leagueList.homeLeagueList.list = res.data.home_league
       this.leagueList.guestLeagueList.list = res.data.guest_league
       this.leagueList.allLeagueList.list = res.data.all_league
+       
+
+      // this.leagueList.allLeagueList.list.forEach((item,index)=>item.index = index+1)
+      // let home_m =  this.leagueList.allLeagueList.list.find(item=>item.teamName == this.datas[0])
+      // let guest_m =  this.leagueList.allLeagueList.list.find(item=>item.teamName == this.datas[1])
+
+      // sessionStorage.setItem("mingC", JSON.stringify([home_m,guest_m]));
     },
     onClock () {
       this.Clock = !this.Clock

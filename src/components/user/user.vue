@@ -290,7 +290,7 @@ export default {
             }
           })
           if (res.status == 400) {
-            console.log(1234)
+            // console.log(1234)
             // this.msg = res.msg
             return this.$message.error(res.msg)
           } else {

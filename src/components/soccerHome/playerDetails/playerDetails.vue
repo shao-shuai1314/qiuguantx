@@ -13,12 +13,22 @@
                 <dd v-if="placeLen">
                   <b>位置：</b>{{headerData.place[0].place}}</dd>
                 <dd v-if="placeLen">
-                  <b>号码：</b>
+                  <span v-if="headerData.kind == 1">
+                     <b>号码：</b>
                   <span v-if="headerData.place[0].number">{{headerData.place[0].number}}号</span>
+                  </span>
+                 
                 </dd>
                 <dd v-if="placeLen">
-                  <b>预计身价：</b>
-                  <span v-if="headerData.expectedValue">{{headerData.expectedValue}}万英镑</span>
+                  <span v-if="headerData.kind == 1">
+                    <b>预计身价：</b>
+                    <span v-if="headerData.expectedValue">{{headerData.expectedValue}}万英镑</span>
+                  </span>
+                  <span v-else>
+                    <b>首选阵型：</b>
+                    <span v-if="headerData.firstFormation">{{headerData.firstFormation}}</span>
+                  </span>
+
                 </dd>
               </dl>
               <dl>
@@ -39,7 +49,12 @@
                   <span v-if="headerData.weight">{{headerData.weight}}KG</span>
                 </dd>
                 <dd>
-                  <b>惯用脚：</b>{{idiomaticFeet[headerData.idiomaticFeet]}}</dd>
+                  <span v-if="headerData.kind == 1">
+                    <b>惯用脚：</b>{{idiomaticFeet[headerData.idiomaticFeet]}}</span>
+                  <!-- <span v-else>
+                    <b>支教特征：</b>{{idiomaticFeet[headerData.idiomaticFeet]}}</span> -->
+                </dd>
+
               </dl>
             </div>
           </div>
@@ -72,7 +87,7 @@
                                width="">
                 <template slot-scope="scope">
                   <router-link target="_blank"
-                  v-if="scope.row.teamID"
+                               v-if="scope.row.teamID"
                                :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamID__name_j}}</router-link>
                 </template>
               </el-table-column>
@@ -89,8 +104,6 @@
             </el-table-column>
           </el-table>
         </div>
-
-
 
         <div class="kua zhuanh">
           <!-- 转会 -->
@@ -119,7 +132,7 @@
                     <span>
                       <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
                       <router-link target="_blank"
-                      v-if="scope.row.toTeamId"
+                                   v-if="scope.row.toTeamId"
                                    :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
                     </span>
 
@@ -171,11 +184,11 @@
                   <p class="zh_p">
                     <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.fromTeamImg"></el-image>
                     <router-link target="_blank"
-                    v-if="scope.row.fromTeamId"
+                                 v-if="scope.row.fromTeamId"
                                  :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link> &nbsp;&nbsp;&nbsp;
                     <i class="el-icon-right"></i>&nbsp;&nbsp;&nbsp;
                     <router-link target="_blank"
-                    v-if="scope.row.toTeamId"
+                                 v-if="scope.row.toTeamId"
                                  :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
                     <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
                   </p>
@@ -195,12 +208,6 @@
           <div class="wusj"
                v-if="!playerTransfer.length && !coachTransfer.length"> 暂无数据</div>
         </div>
-
-
-
-
-
-
 
         <!-- 统计 -->
 
@@ -227,7 +234,8 @@
                       style="width: 100%">
               <el-table-column align="center"
                                label="">
-                <template slot="header"  slot-scope="scope">
+                <template slot="header"
+                          slot-scope="scope">
                   <div class="linue-header">
                     <b>球员信息统计</b>
                   </div>
@@ -248,7 +256,7 @@
                                  width="">
                   <template slot-scope="scope">
                     <router-link target="_blank"
-                    v-if="scope.row.teamID"
+                                 v-if="scope.row.teamID"
                                  :to="{name:'information',params:{teamID:scope.row.teamID}}">{{scope.row.teamName}}</router-link>
                   </template>
                 </el-table-column>
@@ -301,7 +309,8 @@
                       style="width: 100%">
               <el-table-column align="center"
                                label="">
-                <template slot="header"  slot-scope="scope">
+                <template slot="header"
+                          slot-scope="scope">
                   <div class="linue-header">
                     <b>教练信息统计</b>
                   </div>
@@ -316,13 +325,12 @@
                                  align="center"
                                  width="">
                 </el-table-column>
-                <el-table-column
-                                 label="俱乐部"
+                <el-table-column label="俱乐部"
                                  align="center"
                                  width="">
                   <template slot-scope="scope">
                     <router-link target="_blank"
-                    v-if="scope.row.teamId"
+                                 v-if="scope.row.teamId"
                                  :to="{name:'information',params:{teamID:scope.row.teamId}}">{{scope.row.teamName}}</router-link>
                   </template>
                 </el-table-column>
@@ -353,8 +361,6 @@
           </div>
 
         </div>
-
-        
 
       </el-card>
 
@@ -421,7 +427,7 @@ export default {
 
       idiomaticFeet: { 0: '左脚', 1: '右脚', 2: '双脚' },
       playerList: [],
-placeLen:'',
+      placeLen: '',
 
 
 
@@ -577,7 +583,6 @@ placeLen:'',
     tr {
       height: 30px;
       font-size: 14px;
-      
     }
     td {
       border-bottom: 1px solid #ececec;
@@ -601,6 +606,7 @@ placeLen:'',
   .zh_p {
     font-size: 14px;
     width: 100%;
+    overflow: hidden;
     text-align: center;
     display: flex;
     justify-content: space-around;
@@ -612,6 +618,8 @@ placeLen:'',
     .el-image {
       width: 20px;
       height: 20px;
+      display: inline-block;
+      overflow: hidden;
     }
   }
 }
@@ -657,8 +665,8 @@ a {
   height: 36px !important;
   line-height: 38px !important;
 }
-.cursor_sty{
-  .el-tag{
+.cursor_sty {
+  .el-tag {
     cursor: pointer;
     margin-right: 10px;
   }

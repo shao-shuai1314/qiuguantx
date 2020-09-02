@@ -40,7 +40,7 @@
 
       <el-table-column align="center"
                        label="最新指数">
-        <template slot="header">
+        <template slot="header" slot-scope="scope">
           <span>最新指数</span>
           <span class="actv"
                 @click="Oncz">{{czval}}</span>

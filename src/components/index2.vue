@@ -11,16 +11,20 @@
                        trigger="click"
                        height="262px">
             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner1.jpg"></el-image>  
+              <el-image style="height:100%"
+                        src="../../static/banner1.jpg"></el-image>
             </el-carousel-item>
             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner3.jpg"></el-image>  
+              <el-image style="height:100%"
+                        src="../../static/banner3.jpg"></el-image>
             </el-carousel-item>
             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner4.jpg"></el-image>  
+              <el-image style="height:100%"
+                        src="../../static/banner4.jpg"></el-image>
             </el-carousel-item>
-             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner6.png"></el-image>  
+            <el-carousel-item>
+              <el-image style="height:100%"
+                        src="../../static/banner6.png"></el-image>
             </el-carousel-item>
           </el-carousel>
           <!-- 推荐新闻 -->
@@ -42,20 +46,16 @@
         <!-- 右 -->
         <div class="Part1_fr fr">
 
-          <div v-for="(items,indexs) in newList"
-               :key="indexs">
-            <h2 v-if="typeof items === 'number' && !isNaN(items)"
-                style="margin-bottom:-10px;">
-              {{stys[items]}}   <router-link :to="{name:'news'}" style="font-size:14px">更多>></router-link>
-            </h2>
-            <div v-if="Array.isArray(items)">
-              <p v-for="(it,i) in items.slice(0,2)"
-                 :key="i">
-                <router-link :to="{name:'newdetail',params:{recordId:it.recordId}}"  target="_blank">
-                  {{it.title}}
-                </router-link>
-              </p>
-
+          <div v-for="(items,index) in results_a"
+               :key="index">
+            <div class="Part1_fr_box">
+              <el-image></el-image>
+              <div class="Part1_fr_div">
+                <p>{{items.title}}</p>
+                <el-progress v-show="index == 0"
+                             :percentage="items.percentage"
+                             :color="customColors"></el-progress>
+              </div>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@
             <router-link target="_blank"
                          :to="{name:'newdetail',params:{recordId:item.recordId}}">
               <span>{{index+1}}</span>
-              <el-image style="margin-left:10px" :src="`http://qiuguantx.com/${item.img}`"></el-image>
+              <el-image style="margin-left:10px"></el-image>
               <div class="tit">
                 <h3>
                   <p class="tit_p">{{item.title}}</p>
@@ -127,7 +127,7 @@
       <div class="league_s">
         <h2 style="font-weight: normal;height:30px;padding-left:10px;color:#E84B5B;padding-top:20px">
           <!-- <el-image style="width:200px" src="../../static/rm.gif"></el-image>           -->
-          积分榜 
+          积分榜
         </h2>
         <el-divider></el-divider>
 
@@ -182,7 +182,7 @@
                            align="center"
                            width="40"
                            label="积分">
-                           <template slot-scope="scope">
+            <template slot-scope="scope">
               <div style="color:#e74c5b;">{{scope.row.score}}</div>
             </template>
           </el-table-column>
@@ -210,26 +210,55 @@ export default {
       stys: { 36: '英超', 31: "西甲", 34: "意甲", 8: "德甲", 11: "法甲" },
       activeName: '36',
       leagueList: [],
-      color_data: []
+      color_data: [],
+      results_a: [],
+
+
+      customColors: [
+        { color: '#f56c6c', percentage: 0 },
+        { color: '#e6a23c', percentage: 40 },
+        { color: '#5cb87a', percentage: 60 },
+        { color: '#1989fa', percentage: 80 },
+        { color: '#6f7ad3', percentage: 100 }
+      ]
     };
   },
   created () {
     this.rm()
-    this.jk(36)
-    this.jk(31)
-    this.jk(34)
-    this.jk(8)
-    this.jk(11)
     this.league(36)
+
+    this.tx()
+
+    setInterval(() => {
+      this.tx()
+    }, 15800)
+
+
   },
   methods: {
-    imgString (str) {
-      var data = '';
-      str.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/, function (match, capture) {
-        data = capture;
-      });
-      return data
+
+    tx () {
+      this.timer = setInterval(() => {
+        // console.log(this.results_a[0].percentage)
+        try {
+          if (this.results_a[0].percentage <= 99) {
+            this.results_a[0].percentage++;
+
+          } else {
+            this.results_a[0].percentage = 0
+            this.results_a.push(this.results_a[0])
+            this.results_a.shift()
+            clearInterval(this.timer);
+            // this.tx()
+          }
+        } catch (err) {
+          // console.log(err.stack);
+        }
+
+      }, 150)
     },
+
+
     async rm () {
       let obj = { hotNews: 1 }
       // 去标签
@@ -239,17 +268,13 @@ export default {
       // 去标签
       res.results.forEach(item => {
         item.content_s = item.content.replace(regex, "")
-         item.img = this.imgString(item.content)
+        item.percentage = 0
       });
       this.results = res.results
+      this.results_a = res.results.slice(0, 4)
+      console.log(this.results_a)
     },
-    async jk (obj) {
-      const { data: res } = await this.$http.get(`/showJournalism`, { params: { sclassId: obj } });
-      res.results.forEach(item => {
-        item.iids = this.stys[obj]
-      })
-      this.newList.push(obj, res.results)
-    },
+
     async league (val) {
       var { data: res } = await this.$http.get(`/soccer/sclass/${val}/schedule/`);
 
@@ -280,7 +305,7 @@ export default {
       this.league(tab.name)
     }
 
-  }, 
+  },
 }
 </script>
 <style lang = 'less' scoped >
@@ -359,29 +384,27 @@ a {
       }
     }
     width: 400px;
-    div {
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: 18px;
-      /* color: #444; */
-      margin-bottom: 10px;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-    }
-    p {
-      width: 100%;
-      line-height: 29px;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      overflow: hidden;
-      a {
-        color: #3a4451;
+    height: 448px;
+    overflow: hidden;
+    .Part1_fr_box {
+      display: flex;
+      justify-content: space-between;
+      height: 110px;
+      border-bottom: 1px solid #dcdfe6;
+      align-items: center;
+      .el-image {
+        margin-right: 10px;
+        width: 150px;
+        height: 100px;
+        display: inline-block;
       }
+    }
+    .Part1_fr_div {
+      width: 280px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 
@@ -538,7 +561,6 @@ a {
     width: 250px;
     margin-left: 10px;
     margin-top: -20px;
-    
   }
   .el-table {
     width: 250px;

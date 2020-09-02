@@ -191,7 +191,7 @@
       <!-- 积分榜 -->
       <div class="bottom"
            v-if="LeagueList.length">
-        <el-divider></el-divider>
+        <!-- <el-divider></el-divider> -->
         <!-- 标题 -->
         <h2>
           <b>积分榜</b>
@@ -322,8 +322,8 @@
            ">
               <b>均失</b>
             </td>
-            <td width="6%
-           ">
+            <td width="6%"
+                class="border_td">
               <b>积分</b>
             </td>
 
@@ -402,7 +402,8 @@
               </span>
             </td>
 
-            <td width="">{{item.score}}</td>
+            <td width=""
+                class="border_td">{{item.score}}</td>
 
           </tr>
 
@@ -1109,6 +1110,16 @@ export default {
           height: 50px;
         }
         .table_NeiRong_two {
+          td {
+            border-left: 1px solid #d5e4f5;
+            border-top: 1px solid #d5e4f5;
+            &:nth-child(8n) {
+              border-right: 1px solid #d5e4f5;
+            }
+          }
+          &:last-child td {
+            border-bottom: 1px solid #d5e4f5;
+          }
           &:hover {
             background: #f3f4ef;
           }
@@ -1118,14 +1129,19 @@ export default {
   }
   .bottom {
     text-align: center;
-    .active_red {
-      background: #ff0000;
+    margin-top: 20px;
+    table tr td {
+      border-left: 1px solid #d5e4f5;
+      border-top: 1px solid #d5e4f5;
+      box-sizing: border-box;
     }
-    .active_green {
-      background: #00c1a3;
+    .border_td {
+      border-right: 1px solid #d5e4f5;
     }
-    .active_grey {
-      background: #999999;
+    tr {
+      &:nth-child(2n) {
+        background: #f7f7f7;
+      }
     }
     /* 底部简介信息 */
     .jianj {
@@ -1159,8 +1175,6 @@ export default {
         }
       }
     }
-    h2 {
-    }
     .el-select {
       width: 120px;
     }
@@ -1170,10 +1184,10 @@ export default {
         font-size: 14px;
       }
       .table_NeiRong_one {
-        background: #fff;
+        background: #f3f4ef;
+        border-bottom: 1px solid #85b4e7;
         font-size: 18px;
         height: 50px;
-        background: #f7f7f7;
       }
       .table_NeiRong_two {
         td {
@@ -1184,9 +1198,9 @@ export default {
             }
           }
         }
-        &:hover {
+        /* &:hover {
           background: #f3f4ef;
-        }
+        } */
       }
     }
   }

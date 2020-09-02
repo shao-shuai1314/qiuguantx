@@ -76,6 +76,13 @@ import register from '@/components/user/register'
 import login from '@/components/user/user'
 
 
+// 底部站点声明
+import footerhome from '@/components/footer/footerHome'
+import aboutus from '@/components/footer/aboutus'
+import contract from '@/components/footer/contract'
+
+
+
 
 
 
@@ -412,12 +419,32 @@ const router = new Router({
               }
             },
 
+            // 底部站点声明
+            {
+              path: '/footerhome',
+              component: footerhome,
+              redirect: "/aboutus",
+              children: [{
+                path: '/aboutus',
+                component: aboutus,
+                meta: {
+                  title: '关于我们',
+                }
+              }, {
+                path: '/contract',
+                component: contract,
+                meta: {
+                  title: '法律声明',
+                }
+              }, ]
+            }
+
           ]
         },
 
 
         {
-          path: '/newdetail/:recordId',
+          path: '/news/detail/:recordId',
           name: 'newdetail',
           component: newdetail,
           meta: {
@@ -428,6 +455,7 @@ const router = new Router({
         {
           path: '/news',
           component: news,
+          name: 'news',
           meta: {
             title: '球冠新闻'
           }
@@ -446,6 +474,7 @@ const router = new Router({
         }
       ]
     },
+
   ]
 })
 
@@ -459,10 +488,10 @@ router.beforeEach((to, from, next) => {
   //   document.title = to.meta.title
   // }
   // next()
-  let timestamp =  localStorage.getItem("timestamp");
+  let timestamp = localStorage.getItem("timestamp");
   //  当前时间
-  var newTimestamp =`${Date.parse(new Date())}`.slice(0,10)
-  if(newTimestamp >=  timestamp){
+  var newTimestamp = `${Date.parse(new Date())}`.slice(0, 10)
+  if (newTimestamp >= timestamp) {
     localStorage.removeItem('token');
   }
   next()

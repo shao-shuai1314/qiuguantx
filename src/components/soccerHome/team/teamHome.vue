@@ -61,8 +61,8 @@
                      name="transfer"></el-tab-pane>
         <el-tab-pane label="地理位置"
                      name="place"></el-tab-pane>
-        <el-tab-pane label="历年排名"
-                     name="place"></el-tab-pane>
+        <!-- <el-tab-pane label="历年排名"
+                     name="place"></el-tab-pane> -->
         <el-tab-pane label="历年球路"
                      name="OverTheYears_qiulu"></el-tab-pane>
       </el-tabs>

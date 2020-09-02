@@ -51,14 +51,14 @@
                   v-if="currentPage1 == 1">{{index+currentPage1}}</span>
             <span style="margin-right:20px"
                   v-else>{{index+currentPage1*10-9}}</span>
-            <el-image></el-image>
+            <el-image :src="`http://qiuguantx.com/${item.img}`"></el-image>
             <div class="tit">
               <h3>
                 <p v-html="item.title"></p>
                 <p style="color:#898a89;font-size: 14px;">{{item.userName}}</p>
               </h3>
-              <p class="bt"
-                 v-html="item.content"></p>
+              <!-- <p class="bt"
+                 v-html="item.content"></p> -->
               <p class="pl">{{item.reprinted}} {{item.publicTime}}</p>
             </div>
           </router-link>
@@ -87,7 +87,7 @@
              v-for="(item,index) in results.slice(0,4)"
              :key="index">
           <div class="imgs">
-            <el-image></el-image>
+             <el-image :src="`http://qiuguantx.com/${item.img}`"></el-image>
           </div>
           <p>
             <router-link target="_blank"
@@ -148,10 +148,13 @@ export default {
     async jk (obj) {
       const { data: res } = await this.$http.get(`/showJournalism`, { params: obj });
       res.results.forEach(item => {
-        item.content = item.content.split('<p>')[1]
+        // item.content = item.content.split('<p>')[1];
+        item.img = this.imgString(item.content)
       })
       this.newList = res.results
       this.total = res.count
+      // console.log(this.newList)
+      // this.imgString()
     },
 
     async handleSizeChange (val) {
@@ -167,7 +170,6 @@ export default {
       this.jk(obj)
     },
     async handleCurrentChange (val) {
-
       this.index_ss = val
       let obj = {}
       if (this.sclassId != 'six') {
@@ -177,16 +179,27 @@ export default {
       if (this.dateval) {
         obj.publicTime = this.dateval
       }
-
       this.jk(obj)
     },
 
     async rm () {
       let obj = { hotNews: 1 }
       const { data: res } = await this.$http.get(`/showJournalism`, { params: obj });
-      console.log(res, 111)
+      // console.log(res, 111)
+      res.results.forEach(item => {
+        item.img = this.imgString(item.content)
+      })
       this.results = res.results
-    }
+    },
+
+    imgString (str) {
+      var data = '';
+      str.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/, function (match, capture) {
+        data = capture;
+      });
+      return data
+    },
+
 
   }
 }
@@ -224,9 +237,9 @@ export default {
         span {
           display: inline-block;
           font-size: 20px;
+          display: inline-block;
           color: #b9001e;
-          width: 10px;
-          margin: 0 10px 0 30px;
+          margin: 0 0 0 20px;
         }
         .el-image {
           width: 150px;

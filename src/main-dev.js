@@ -33,7 +33,7 @@ Vue.prototype.$getMyConfig = getMyConfig;//引入配置文件
 
 // 配置路径 掉接口
 import axios from 'axios'
-axios.defaults.baseURL = 'http://192.168.3.6:8888/'
+axios.defaults.baseURL = 'http://qiuguantx.com:8080/'
 // http request拦截器 添加一个请求拦截器
 axios.interceptors.request.use(function (config) { 
   // 这里的config包含每次请求的内容

@@ -190,3 +190,14 @@ body .el-table colgroup.gutter {
   width: 100% !important;
   height: 100% !important;
 }
+
+
+
+.index_box .el-tabs__item{
+  padding:0 !important;
+}
+
+.index_box .el-table--mini td, .el-table--mini th {
+  padding: 0 !important;
+  height: 30px;
+}

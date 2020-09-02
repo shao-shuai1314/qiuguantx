@@ -2,10 +2,12 @@
   <div class="gWidth lineup_boxss">
     <el-table :data="dataList"
               size="mini"
+              border
               :header-cell-style="{
     'color': '#303133',
     'border-bottom': '1px rgb(103, 194, 58) solid',
-    'font-size':'14px'
+    'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px',
 }"
               stripe
               style="width: 1160px">
@@ -128,7 +130,7 @@ export default {
 }
 .lineup_boxss .el-table .cell {
   height: 100%;
-  line-height: 38px !important;
+  line-height: 50px !important;
 }
 .lineup_boxss .cell span {
   display: block;

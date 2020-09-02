@@ -391,7 +391,6 @@ td div {
   justify-content: center;
   position: absolute;
   bottom: 0;
-  left: 0;
 }
 
 .zk_td {
@@ -401,8 +400,7 @@ td div {
     width: 100%;
     display: flex;
     position: absolute;
-     bottom: 36%;
-    left: -2px;
+    bottom: 62px;
     justify-content: space-between;
     .zk_p {
       position: relative;
@@ -413,6 +411,7 @@ td div {
         height: 16px;
         align-items: center;
         justify-content: center;
+        /* background: #474747; */
         .el-image {
           width: 100%;
         }
@@ -421,7 +420,6 @@ td div {
     .zk_p0 {
       position: relative;
       bottom: -40px;
-      left: 0;
     }
   }
 }

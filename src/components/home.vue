@@ -34,7 +34,6 @@
             <router-link :to="{path:'/users'}">
               <el-button type="info"
                          size="mini"
-                         @click="ONuserinfo"
                          round>
                 登录
               </el-button>
@@ -85,21 +84,18 @@
                   <router-link to="/app">球冠App下载</router-link>
                 </p>
                 <p>
-                  <router-link to="">关于我们</router-link>
+                  <router-link target="_blank" :to="{path:'/aboutus'}">关于我们</router-link>
                 </p>
                 <p>
-                  <router-link to="">法律声明</router-link>
-                </p>
-                <p>
-                  <router-link to="">安全保障</router-link>
+                  <router-link target="_blank" :to="{path:'/contract'}">法律声明</router-link>
                 </p>
               </div>
               <div>
                 <p>
-                  <router-link to="">违法不良信息举报电话：010-8888888888</router-link>
+                  <router-link to="">违法不良信息举报电话：010-68582680</router-link>
                 </p>
                 <p>
-                  <router-link to="">举报邮箱：@qq111111111</router-link>
+                  <router-link to="">举报邮箱：yemachenaiwenhua@163.com</router-link>
                 </p>
                 <p>
                   <router-link to="">侵权投诉</router-link>
@@ -107,30 +103,15 @@
               </div>
               <div>
                 <p>
-                  <router-link to="">球冠App下载</router-link>
-                </p>
-                <p>
-                  <router-link to="">关于我们</router-link>
-                </p>
-                <p>
-                  <router-link to="">法律声明</router-link>
-                </p>
-                <p>
                   <router-link to="">安全保障</router-link>
+                </p>
+                <p>
+                  <router-link to="">营业执照</router-link>
                 </p>
               </div>
               <div>
                 <p>
-                  <router-link to="">球冠App下载</router-link>
-                </p>
-                <p>
-                  <router-link to="">关于我们</router-link>
-                </p>
-                <p>
-                  <router-link to="">法律声明</router-link>
-                </p>
-                <p>
-                  <router-link to="">安全保障</router-link>
+                  <el-image style="width:110px;height:110px"></el-image>
                 </p>
               </div>
             </div>
@@ -179,6 +160,11 @@ export default {
       } else {
         this.act = ""
       }
+      //  if (to.fullPath.substring(0, 5) == '/news') {
+      //   this.act = "act"
+      // } else {
+      //   this.act = ""
+      // }
       this.fullPath = to.path
     }
   },

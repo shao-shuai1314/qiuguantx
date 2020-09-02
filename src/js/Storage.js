@@ -4,7 +4,7 @@
   //  当前时间
   var newTimestamp =`${Date.parse(new Date())}`.slice(0,10)
 
-   let isTime = false
+   var isTime = false
 
   if(newTimestamp >=  timestamp){
     isTime = true

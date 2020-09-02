@@ -52,7 +52,8 @@ import {
   Checkbox,
   InfiniteScroll,
   CheckboxGroup,
-  DatePicker
+  DatePicker,
+  Progress
 
 
 } from 'element-ui'
@@ -106,6 +107,9 @@ Vue.use(Checkbox)
 Vue.use(InfiniteScroll)
 Vue.use(CheckboxGroup)
 Vue.use(DatePicker)
+Vue.use(Progress)
+
+
 
 
 

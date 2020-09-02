@@ -85,9 +85,8 @@
         </td>
         <td :colspan="homeSchedule.length"
             class="zk_td">
-          <div class="zk_box">
-            <div class="zk_div"
-                 :style="{'width':this.tdLengthZ+'px'}">
+              <div class="zk_box" >
+            <div class="zk_div" :style="{'width':this.tdLengthZ+'px'}">
               <p class="zk_p"
                  :class="item.num == 0?'zk_p0':''"
                  :style="{'margin-top':item.num == 2?'-40px':''}"
@@ -109,6 +108,7 @@
               </p>
             </div>
           </div>
+          
           <div id="main"
                style="height:130px;"></div>
         </td>
@@ -917,12 +917,11 @@ td div {
 
 .zk_box {
   width: 100%;
-height: 150px;
+  height: 100%;
   display: flex;
   justify-content: center;
   position: absolute;
   bottom: 0;
-  left: 0;
 }
 .zk_td {
   /* width: 100%; */
@@ -931,15 +930,12 @@ height: 150px;
     width: 100%;
     display: flex;
     position: absolute;
-        bottom: 36%;
-    /* margin-bottom: -22px; */
-    left: -2px;
+    bottom: 62px;
     /* z-index: 9; */
     justify-content: space-between;
     .zk_p {
       position: relative;
       z-index: 99;
-          left: 0;
       .zk_span {
         display: flex;
         width: 16px;
@@ -955,7 +951,6 @@ height: 150px;
     .zk_p0 {
       position: relative;
       bottom: -40px;
-      left: 0;
     }
   }
 }
@@ -989,4 +984,5 @@ a {
     display: block;
   }
 }
+
 </style>

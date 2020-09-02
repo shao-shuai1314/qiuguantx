@@ -23,14 +23,23 @@
           <el-table :data="ZRteam"
                     @sort-change="sortChange1"
                     ref="multipleSelection"
+                    size="mini"
                     :header-cell-style="{
-    'color': '#303133',
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
                     border>
-            <el-table-column label="转入球员"
+            <el-table-column label=""
                              align="center">
-              <el-table-column prop="date"
+              <template slot="header"
+                        slot-scope="scope">
+                <span style="color:rgb(248, 51, 71);font-size: 18px;">
+                  转入球员
+                </span>
+              </template>
+
+             <el-table-column prop="date"
                                label="序号"
                                align="center"
                                width="50">
@@ -70,7 +79,7 @@
                   <span v-else>
                     <router-link target="_blank"
                                  v-if="scope.row.toTeamId"
-                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                                 :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link>
                   </span>
                 </template>
               </el-table-column>
@@ -91,13 +100,21 @@
           <el-table :data="ZCteam"
                     @sort-change="sortChange3"
                     ref="multipleSelection1"
+                    size="mini"
                     :header-cell-style="{
-    'color': '#303133',
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
                     border>
             <el-table-column label="转出球员"
                              align="center">
+              <template slot="header"
+                        slot-scope="scope">
+                <span style="color:rgb(248, 51, 71);font-size: 18px;">
+                  转出球员
+                </span>
+              </template>
               <el-table-column prop="date"
                                label="序号"
                                align="center"
@@ -162,14 +179,22 @@
           <!-- 转入 -->
           <el-table :data="ZJteam"
                     ref="multipleSelection2"
+                    size="mini"
                     :header-cell-style="{
-    'color': '#303133',
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
                     border>
             <el-table-column label="租借球员"
                              @sort-change="sortChange2"
                              align="center">
+              <template slot="header"
+                        slot-scope="scope">
+                <span style="color:rgb(248, 51, 71);font-size: 18px;">
+                  租借球员
+                </span>
+              </template>
               <el-table-column prop="date"
                                label="序号"
                                align="center"
@@ -210,7 +235,7 @@
                   <span v-else>
                     <router-link target="_blank"
                                  v-if="scope.row.toTeamId"
-                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                                 :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link>
                   </span>
                 </template>
               </el-table-column>
@@ -231,14 +256,22 @@
           <!-- 外租球员 -->
           <el-table :data="WZteam"
                     ref="multipleSelection3"
+                    size="mini"
                     :header-cell-style="{
-    'color': '#303133',
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
                     @sort-change="sortChange4"
                     border>
             <el-table-column label="外租球员"
                              align="center">
+              <template slot="header"
+                        slot-scope="scope">
+                <span style="color:rgb(248, 51, 71);font-size: 18px;">
+                  外租球员
+                </span>
+              </template>
               <el-table-column prop="date"
                                label="序号"
                                align="center"
@@ -301,13 +334,21 @@
              style="width: 50%">
           <!-- 租借期满归队球员 -->
           <el-table :data="ZJQMteam"
+                    size="mini"
                     :header-cell-style="{
-    'color': '#303133',
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
                     border>
             <el-table-column label="租借期满归队球员"
                              align="center">
+              <template slot="header"
+                        slot-scope="scope">
+                <span style="color:rgb(248, 51, 71);font-size: 18px;">
+                  租借期满归队球员
+                </span>
+              </template>
               <el-table-column prop="date"
                                label="序号"
                                align="center"
@@ -348,7 +389,7 @@
                   <span v-else>
                     <router-link target="_blank"
                                  v-if="scope.row.toTeamId"
-                                 :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
+                                 :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link>
                   </span>
                 </template>
               </el-table-column>
@@ -367,13 +408,21 @@
              style="width: 50%">
           <!-- 其他 -->
           <el-table :data="QTQKteam"
+                    size="mini"
                     :header-cell-style="{
-    'color': '#303133',
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
                     border>
             <el-table-column label="租借期满归队球员"
                              align="center">
+              <template slot="header"
+                        slot-scope="scope">
+                <span style="color:rgb(248, 51, 71);font-size: 18px;">
+                  租借期满归队球员
+                </span>
+              </template>
               <el-table-column prop="date"
                                label="序号"
                                align="center"

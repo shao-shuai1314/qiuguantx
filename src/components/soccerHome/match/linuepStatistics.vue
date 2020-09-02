@@ -10,8 +10,9 @@
           <el-table-column prop="date"
                            width="100%"
                            label="主场球员统计">
-            <template slot="header">
-              <div class="linue-header">
+            <template slot="header" slot-scope="scope">
+              <div class="linue-header"
+                   style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>主场球员统计</b>
               </div>
             </template>
@@ -36,7 +37,7 @@
                              width="70px"
                              align="center">
               <template slot-scope="scope">
-                <router-link style="width:100%;height:100%;display:block;"
+                <router-link style="width:100%;height:100%;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
                              target="_blank"
                              :to="{name:'playerDetails',params:{playerID:scope.row.playerID}}">{{scope.row.player_name}}</router-link>
               </template>
@@ -84,6 +85,9 @@
                              width="40px"
                              label-class-name="expectedValue_label-class-name"
                              align="center">
+                              <template slot-scope="scope" slot="header">
+                <span style="font-size:6px">身价(万欧元)</span>
+              </template>
             </el-table-column>
             <el-table-column prop="fromteamName"
                              label="上家俱乐部"
@@ -108,8 +112,9 @@
           <el-table-column prop="date"
                            width="100%"
                            label="客场球员统计">
-            <template slot="header">
-              <div class="linue-header">
+            <template slot="header" slot-scope="scope">
+              <div class="linue-header"
+                   style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>客场球员统计</b>
               </div>
             </template>
@@ -132,7 +137,7 @@
                              width="70px"
                              align="center">
               <template slot-scope="scope">
-                <router-link style="width:100%;height:100%;display:block;"
+                <router-link  style="width:100%;height:100%;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
                              target="_blank"
                              :to="{name:'playerDetails',params:{playerID:scope.row.playerID}}">{{scope.row.player_name}}</router-link>
               </template>
@@ -209,8 +214,9 @@
           <el-table-column prop="date"
                            width="100%"
                            label="伤停">
-            <template slot="header">
-              <div class="linue-header">
+            <template slot="header" slot-scope="scope">
+              <div class="linue-header"
+                   style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>主队伤停统计</b>
               </div>
             </template>
@@ -242,8 +248,9 @@
           <el-table-column prop="date"
                            width="100%"
                            label="伤停">
-            <template slot="header">
-              <div class="linue-header">
+            <template slot="header" slot-scope="scope">
+              <div class="linue-header"
+                   style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>客队伤停统计</b>
               </div>
             </template>
@@ -313,6 +320,9 @@ export default {
 }
 .linuep_box .cell {
   height: 100%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 .linuep_box .cell span {
   padding: 6px 0;
