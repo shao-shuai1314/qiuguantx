@@ -51,7 +51,8 @@
                   v-if="currentPage1 == 1">{{index+currentPage1}}</span>
             <span style="margin-right:20px"
                   v-else>{{index+currentPage1*10-9}}</span>
-            <el-image :src="`http://qiuguantx.com/${item.img}`"></el-image>
+            <el-image :fit="none"
+                      :src="`http://qiuguantx.com/${item.img}`"></el-image>
             <div class="tit">
               <h3>
                 <p v-html="item.title"></p>
@@ -87,7 +88,7 @@
              v-for="(item,index) in results.slice(0,4)"
              :key="index">
           <div class="imgs">
-             <el-image :src="`http://qiuguantx.com/${item.img}`"></el-image>
+            <el-image :src="`http://qiuguantx.com/${item.img}`"></el-image>
           </div>
           <p>
             <router-link target="_blank"
@@ -242,8 +243,8 @@ export default {
           margin: 0 0 0 20px;
         }
         .el-image {
-          width: 150px;
-          height: 114px;
+          width: 120px;
+          height: 100px;
         }
         .tit {
           width: 720px;

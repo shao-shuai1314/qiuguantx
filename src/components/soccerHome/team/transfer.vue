@@ -1,18 +1,28 @@
 <template>
   <div>
     <!-- 时间赛选 -->
-    <div style="margin:10px;text-align: right"
+    <div style="margin:10px;height:70px"
          class="">
-      <el-select v-model="timeListVe"
-                 size="mini"
-                 @change="OnTime"
-                 placeholder="请选择">
-        <el-option v-for="item in timeList"
-                   :key="item.value"
-                   :label="item.label"
-                   :value="item.value">
-        </el-option>
-      </el-select>
+      <div>
+        <el-select v-model="timeListVe"
+                   size="mini"
+                   @change="OnTime"
+                   placeholder="请选择">
+          <el-option v-for="item in timeList"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
+
+      <div style="width:100px;display:flex;justify-content:space-between;height:20px;margin-top:10px"
+           class="">
+        <el-tag :type="succ == 1?'success':'info'"
+                @click="onxia">夏季</el-tag>
+        <el-tag :type="succ == 2?'success':'info'"
+                @click="ondong">冬季</el-tag>
+      </div>
     </div>
 
     <div style="width:100%">
@@ -39,7 +49,7 @@
                 </span>
               </template>
 
-             <el-table-column prop="date"
+              <el-table-column prop="date"
                                label="序号"
                                align="center"
                                width="50">
@@ -476,11 +486,8 @@
 
           </el-table>
         </div>
-
       </div>
-
     </div>
-
   </div>
 </template>
 <script >
@@ -490,14 +497,15 @@ export default {
     return {
       // 时间
       timeList: [],
-      timeListVe: new Date().getFullYear(),
+      timeListVe: `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
       // 转入球员
       ZRteam: [],
       ZJteam: [],
       ZJQMteam: [],
       ZCteam: [],
       WZteam: [],
-      QTQKteam: []
+      QTQKteam: [],
+      succ:8
     };
   },
   created () {
@@ -507,8 +515,8 @@ export default {
     let ii = 0
     for (let i = 2015; i <= new Date().getFullYear(); i++) {
       this.timeList[ii] = {}
-      this.timeList[ii].value = i
-      this.timeList[ii].label = i
+      this.timeList[ii].value = `${i}-${i + 1}`
+      this.timeList[ii].label = `${i}-${i + 1}`
       ii++
     }
   },
@@ -564,7 +572,7 @@ export default {
       // this.onOut_list(res.data.out_list)
 
 
-      this.OnTime(new Date().getFullYear())
+      this.OnTime(`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`)
 
 
     },
@@ -611,12 +619,27 @@ export default {
 
     // 时间点击
     OnTime (v) {
+      // return new Date(item.matchtime).getTime() >= this.timelist[v].start && new Date(item.matchtime).getTime() < this.timelist[v].end
+      // console.log(new Date(`${v.slice(0, 4)}-7-1`).getTime())
+      // console.log(new Date(`${v.slice(5)}-6-30`).getTime(), 111)
+      // console.log(`${v.slice(0, 4)}-7-1`)
+      // console.log(`${v.slice(5)}-6-30`)
+      // console.log(this.into_list)
+
       let into_list = this.into_list.filter(item => {
-        return item.transferTime.slice(0, 4) == v
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${v.slice(0, 4)}-7-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${v.slice(5)}-6-30`).getTime()
       })
+
       let out_list = this.out_list.filter(item => {
-        return item.transferTime.slice(0, 4) == v
+        // return item.transferTime.slice(0, 4) == v
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${v.slice(0, 4)}-7-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${v.slice(5)}-6-30`).getTime()
       })
+      // let into_list = this.into_list.filter(item => {
+      //   return item.transferTime.slice(0, 4) == v
+      // })
+      // let out_list = this.out_list.filter(item => {
+      //   return item.transferTime.slice(0, 4) == v
+      // })
       this.onInto_list(into_list)
 
       this.onOut_list(out_list)
@@ -626,7 +649,54 @@ export default {
       this.$refs.multipleSelection1.clearSort()
       this.$refs.multipleSelection2.clearSort()
       this.$refs.multipleSelection3.clearSort()
+
+      // 颜色
+      this.succ = 8
     },
+    onxia () {
+      // console.log(this.timeListVe)
+      // console.log(new Date(`${this.timeListVe.slice(0, 4)}-7-1`).getTime())
+      // console.log(new Date(`${this.timeListVe.slice(0, 4)}-11-30`).getTime())
+      // console.log(new Date(`${this.timeListVe.slice(5)}-2-2`).getTime())
+      // console.log(new Date(`${this.timeListVe.slice(5)}-6-30`).getTime())
+
+      let into_list = this.into_list.filter(item => {
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-7-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(0, 4)}-11-30`).getTime() || new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(5)}-2-2`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-6-30`).getTime()
+      })
+      let out_list = this.out_list.filter(item => {
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-7-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(0, 4)}-11-30`).getTime() || new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(5)}-2-2`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-6-30`).getTime()
+      })
+      this.onInto_list(into_list)
+      this.onOut_list(out_list)
+      this.sortChange1('1')
+      this.$refs.multipleSelection.clearSort()
+      this.$refs.multipleSelection1.clearSort()
+      this.$refs.multipleSelection2.clearSort()
+      this.$refs.multipleSelection3.clearSort()
+      
+
+      // 颜色
+      this.succ = 1
+    },
+    ondong () {
+      let into_list = this.into_list.filter(item => {
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-12-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-2-2`).getTime() 
+      })
+      let out_list = this.out_list.filter(item => {
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-12-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-2-2`).getTime() 
+      })
+      // console.log(this.timeListVe)
+      this.onInto_list(into_list)
+      this.onOut_list(out_list)
+      this.sortChange1('1')
+      this.$refs.multipleSelection.clearSort()
+      this.$refs.multipleSelection1.clearSort()
+      this.$refs.multipleSelection2.clearSort()
+      this.$refs.multipleSelection3.clearSort()
+
+      // 颜色
+      this.succ = 2
+    }
 
   },
 }

@@ -75,6 +75,12 @@ import playerDetails from '@/components/soccerHome/playerDetails/playerDetails'
 import register from '@/components/user/register'
 import login from '@/components/user/user'
 
+import myhome from '@/components/user/my/myHome'
+import userinfo from '@/components/user/my/userinfo'
+
+
+
+
 
 // 底部站点声明
 import footerhome from '@/components/footer/footerHome'
@@ -93,17 +99,6 @@ const router = new Router({
   // mode: 'history',
 
   routes: [
-
-    {
-      path: '/writeNews',
-      name: 'writeNews',
-      component: writeNews,
-      meta: {
-        title: '管理员新闻页'
-      }
-    },
-
-
 
     {
       path: '/users',
@@ -131,10 +126,10 @@ const router = new Router({
             title: '球冠首页',
           }
         }, {
-          path: '/zucai',
+          path: '/cp',
           component: lotteryTicket,
           meta: {
-            title: '球冠足彩'
+            title: '球冠彩票中心'
           }
         },
         // 足球数据
@@ -437,6 +432,31 @@ const router = new Router({
                   title: '法律声明',
                 }
               }, ]
+            },
+
+
+            // 用户
+            {
+              path: '/user',
+              component: myhome,
+              redirect: "userinfo",
+              children: [{
+                path: 'userinfo',
+                name:'userinfo',
+                component: userinfo,
+                meta: {
+                  title: '个人信息',
+                }
+              }, {
+                path: 'writeNews',
+                name: 'writeNews',
+                component: writeNews,
+                meta: {
+                  title: '管理员新闻页'
+                }
+              },
+            
+            ]
             }
 
           ]
@@ -484,9 +504,9 @@ router.beforeEach((to, from, next) => {
   // // // 获取token
   // const tokenStr = localStorage.getItem('token')
   // if (!tokenStr) return next('/user')
-  // if (to.meta.title) {
-  //   document.title = to.meta.title
-  // }
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
   // next()
   let timestamp = localStorage.getItem("timestamp");
   //  当前时间

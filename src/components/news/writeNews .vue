@@ -1,6 +1,6 @@
 <template>
   <div class="write_news">
-    <div class="gWidth write_news">
+    <div class=" write_news">
       <h2>新闻发布</h2>
 
       <div class="write_tou">
@@ -159,6 +159,7 @@ export default {
 
 <style lang = 'less' >
 .write_news {
+  width: 900px;
   background: #fff;
   height: 100%;
 }

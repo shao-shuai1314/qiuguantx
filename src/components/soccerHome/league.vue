@@ -109,9 +109,9 @@
                              placeholder="res.data[0].name_cn"
                              @change="OnItemOddsList">
                     <el-option v-for="item in OddsList"
-                               :key="item.companyID"
+                               :key="item.europecompanyId"
                                :label="item.name_cn"
-                               :value="item.companyID">
+                               :value="item.europecompanyId">
                     </el-option>
                   </el-select>
 
@@ -944,7 +944,7 @@ export default {
         }
       })
       this.OddsList = this.OddsList0;
-      this.OddsValue = this.OddsList[0].companyID
+      this.OddsValue = this.OddsList[0].europecompanyId
 
       // this.OnRadioOdds(1)
 

@@ -43,14 +43,14 @@
           <div class="SignIn_box"
                @click="ONuserinfo"
                v-else>
-            <!-- <router-link > -->
+            <router-link target="_blank" :to="{name:'userinfo'}">
             <el-image style="width:40px;border-radius:50px" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-image>
-            <!-- </router-link> -->
+            </router-link>
             <span style="margin-left:10px;font-size:14px">{{username}}</span>
             <div class="SignIn_bh">
-              <router-link target="_blank" v-if="is_editor"
-                           :to="{name:'writeNews'}">
-                发文章
+              <router-link target="_blank"
+                           :to="{name:'userinfo'}">
+                个人主页
               </router-link>
               <p style="width:50px;cursor:pointer" @click="Onoff">退出</p>
 
@@ -176,7 +176,7 @@ export default {
       is_editor: '',
       menulist: [
         { authName: "首页", id: 1, order: 1, path: "/index" },
-        { authName: "足彩", id: 21, order: 1, path: "/zucai" },
+        { authName: "彩票中心", id: 21, order: 1, path: "/cp" },
         { authName: "足球中心", id: 18, order: 4, path: "/soccer" },
         { authName: "新闻", id: 20, order: 1, path: "/news" },
         { authName: "视频", id: 14, order: 3, path: "/video" },
