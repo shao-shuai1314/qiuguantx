@@ -117,8 +117,10 @@
               <span class="xs_jl">
                 <router-link v-if="item.coachID!='未知'"
                              target="_blank"
+                             style="display:flex;align-items:center;justify-content:center"
                              :to="{name:'playerDetails',params:{playerID:item.coachID}}">
-                  ({{item.coachName}})</router-link>
+                  (
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">{{item.coachName}}</span>)</router-link>
                 <span v-else>({{item.coachName}})</span>
               </span>
 
@@ -321,8 +323,10 @@
               <span class="xs_jl">
                 <router-link v-if="item.coachID!='未知'"
                              target="_blank"
+                             style="display:flex;align-items:center;justify-content:center"
                              :to="{name:'playerDetails',params:{playerID:item.coachID}}">
-                  ({{item.coachName}})</router-link>
+                  (
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">{{item.coachName}}</span>)</router-link>
                 <span v-else>({{item.coachName}})</span>
               </span>
 
@@ -459,22 +463,24 @@
               </router-link>
             </td>
             <td>{{item.matchtime.replace('T',' ')}}</td>
-            <td class="borderL"  v-if="item.matchState == -1">
+            <td class="borderL"
+                v-if="item.matchState == -1">
               <router-link target="_blank"
                            :style="{'color': (item.hometeamID ===homeTeamID ? item.colors:''),'font-weight':(item.hometeamID ===homeTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
             </td>
-            <td  class="borderL"  v-else>
+            <td class="borderL"
+                v-else>
               <router-link target="_blank"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
             </td>
-            <td  v-if="item.matchState == -1">
+            <td v-if="item.matchState == -1">
               <router-link target="_blank"
                            :to="{name:'history',params:{scheduleID:item.scheduleID}}">
                 {{item.homeScore}}-{{item.guestScore}}
               </router-link>
             </td>
-            <td  v-else>
+            <td v-else>
               <router-link target="_blank"
                            :to="{name:'history',params:{scheduleID:item.scheduleID}}">
                 vs
@@ -540,22 +546,24 @@
               </router-link>
             </td>
             <td>{{item.matchtime.replace('T',' ')}}</td>
-            <td class="borderL"  v-if="item.matchState == -1">
+            <td class="borderL"
+                v-if="item.matchState == -1">
               <router-link target="_blank"
                            :style="{'color': (item.hometeamID ===homeTeamID ? item.colors:''),'font-weight':(item.hometeamID ===homeTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
             </td>
-            <td  class="borderL"  v-else>
+            <td class="borderL"
+                v-else>
               <router-link target="_blank"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
             </td>
-            <td  v-if="item.matchState == -1">
+            <td v-if="item.matchState == -1">
               <router-link target="_blank"
                            :to="{name:'history',params:{scheduleID:item.scheduleID}}">
                 {{item.homeScore}}-{{item.guestScore}}
               </router-link>
             </td>
-            <td  v-else>
+            <td v-else>
               <router-link target="_blank"
                            :to="{name:'history',params:{scheduleID:item.scheduleID}}">
                 vs
@@ -696,10 +704,17 @@
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
 
               <!-- 主队教练 -->
-              <router-link v-if="item.homeCoachID!='未知'"
+              <!-- <router-link v-if="item.homeCoachID!='未知'"
                            target="_blank"
                            :to="{name:'playerDetails',params:{playerID:item.homeCoachID}}">
-                ({{item.homeCoachName}})</router-link>
+                ({{item.homeCoachName}})</router-link> -->
+
+              <router-link v-if="item.homeCoachID!='未知'"
+                           target="_blank"
+                           style="display:flex;align-items:center;justify-content:center"
+                           :to="{name:'playerDetails',params:{playerID:item.homeCoachID}}">
+                (
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">{{item.homeCoachName}}</span>)</router-link>
               <span v-else>({{item.homeCoachName}})</span>
 
             </td>
@@ -709,10 +724,18 @@
               <router-link target="_blank"
                            :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
               <!-- 主队教练 -->
-              <router-link v-if="item.homeCoachID!='未知'"
+              <!-- <router-link v-if="item.homeCoachID!='未知'"
                            target="_blank"
                            :to="{name:'playerDetails',params:{playerID:item.homeCoachID}}">
-                ({{item.homeCoachName}})</router-link>
+                ({{item.homeCoachName}})</router-link> -->
+
+              <router-link v-if="item.homeCoachID!='未知'"
+                           target="_blank"
+                           style="display:flex;align-items:center;justify-content:center"
+                           :to="{name:'playerDetails',params:{playerID:item.homeCoachID}}">
+                (
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">{{item.homeCoachName}}</span>)</router-link>
+
               <span v-else>({{item.homeCoachName}})</span>
             </td>
 
@@ -732,10 +755,17 @@
                            :style="{'color': (item.guestteamID ===homeTeamID ? item.colors:''),'font-weight':(item.guestteamID ===homeTeamID ?'900':'')}"
                            :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
               <!-- 客队教练 -->
-              <router-link v-if="item.guestCoachID!='未知'"
+              <!-- <router-link v-if="item.guestCoachID!='未知'"
                            target="_blank"
                            :to="{name:'playerDetails',params:{playerID:item.guestCoachID}}">
-                ({{item.guestCoachName}})</router-link>
+                ({{item.guestCoachName}})</router-link> -->
+
+              <router-link v-if="item.guestCoachID!='未知'"
+                           target="_blank"
+                           style="display:flex;align-items:center;justify-content:center"
+                           :to="{name:'playerDetails',params:{playerID:item.guestCoachID}}">
+                (
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">{{item.guestCoachName}}</span>)</router-link>
               <span v-else>({{item.guestCoachName}})</span>
             </td>
             <td v-else>

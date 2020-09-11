@@ -212,17 +212,17 @@ export default {
         this.isTrue = false
       }
 
-      console.log(res.data)
+      // console.log(res.data)
     },
     onOptions (v) {
       this.tableData = this.tableDatas[v].match_list
     },
     onOptions_s (v) {
-      console.log(v)
       if (v == 3) {
         this.tableData = this.tableDatas[0].match_list
         this.act = true
         this.weekday = ''
+        this.checked = false
         return
       }
       this.act = false
@@ -236,13 +236,11 @@ export default {
     // 选择
     handleClick (tab, event) {
       this.onDataList(0, tab.name)
-
       this.value_s = '',
         this.weekday = ''
     },
     // 显示已停售比赛
     onchecked (v) {
-      console.log(v)
       if (v) {
         this.tableData = this.tableDatas[0].match_list.filter(item => {
           return item.matchState == 0

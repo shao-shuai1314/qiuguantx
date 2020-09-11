@@ -14,10 +14,10 @@
                   <b>位置：</b>{{headerData.place[0].place}}</dd>
                 <dd v-if="placeLen">
                   <span v-if="headerData.kind == 1">
-                     <b>号码：</b>
-                  <span v-if="headerData.place[0].number">{{headerData.place[0].number}}号</span>
+                    <b>号码：</b>
+                    <span v-if="headerData.place[0].number">{{headerData.place[0].number}}号</span>
                   </span>
-                 
+
                 </dd>
                 <dd v-if="placeLen">
                   <span v-if="headerData.kind == 1">
@@ -476,10 +476,12 @@ export default {
     //  球员基本信息
     async dataList1 () {
       const res = await this.$http.get('teamInfo/player/' + this.scheduleID);
-      var birthday = new Date(res.data.birthday.replace(/-/g, "\/"));
-      var d = new Date();
-      var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
-      this.age = age
+      if (res.data.birthday) {
+        var birthday = new Date(res.data.birthday.replace(/-/g, "\/"));
+        var d = new Date();
+        var age = d.getFullYear() - birthday.getFullYear() - ((d.getMonth() < birthday.getMonth() || d.getMonth() == birthday.getMonth() && d.getDate() < birthday.getDate()) ? 1 : 0);
+        this.age = age
+      }
       this.headerData = res.data
       this.placeLen = res.data.place.length
     },

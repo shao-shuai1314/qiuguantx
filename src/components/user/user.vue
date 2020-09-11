@@ -281,25 +281,29 @@ export default {
             password: this.ruleForm.pass,
             code: this.ruleForm.code
           });
-          const { data: res } = await this.$http.request({
-            url: '/user/register/',
-            method: 'POST',
-            data: formData,
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          try {
+            const { data: res } = await this.$http.request({
+              url: '/user/register/',
+              method: 'POST',
+              data: formData,
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+              }
+
+            })
+            if (res.status == 400) {
+              return this.$message.error(res.msg)
+            } else {
+              this.$message.success('登录成功')
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("username", res.data.username);
+              localStorage.setItem("user_id", res.data.user_id);
+              window.history.back();
             }
-          })
-          if (res.status == 400) {
-            // console.log(1234)
-            // this.msg = res.msg
-            return this.$message.error(res.msg)
-          } else {
-            this.$message.success('登录成功')
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("username", res.data.username);
-            localStorage.setItem("user_id", res.data.user_id);
-            window.history.back();
+          } catch (error) {
+            return this.$message.error('验证码过期')
           }
+
 
         } else {
           console.log('error submit!!');
@@ -337,7 +341,7 @@ export default {
 
             // console.log( res.data.token.split('.')[1])
             window.history.back();
-           
+
           }
         } else {
           console.log('error submit!!');

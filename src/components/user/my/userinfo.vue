@@ -35,7 +35,7 @@
       <dd>
         <div>
           <b>注册时间</b>
-          <span>{{userinfoL.date_joined.slice(0,10)}}</span>
+          <span v-if="userinfoL.date_joined">{{userinfoL.date_joined.slice(0,10)}}</span>
           <el-link :underline="false" type="primary">查看最近登录</el-link>
         </div>
         <el-divider></el-divider>
@@ -67,7 +67,7 @@ export default {
       if (!this.$getMyConfig.getConfig()) {
         const { data: res } = await this.$http.get(`/user/userinfo/`);
         this.userinfoL = res.data
-        console.log(res)
+        // console.log(res)s
       }
     },
   }

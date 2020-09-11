@@ -43,8 +43,10 @@
           <div class="SignIn_box"
                @click="ONuserinfo"
                v-else>
-            <router-link target="_blank" :to="{name:'userinfo'}">
-            <el-image style="width:40px;border-radius:50px" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-image>
+            <router-link target="_blank"
+                         :to="{name:'userinfo'}">
+              <el-image style="width:40px;border-radius:50px"
+                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-image>
             </router-link>
             <span style="margin-left:10px;font-size:14px">{{username}}</span>
             <div class="SignIn_bh">
@@ -52,7 +54,8 @@
                            :to="{name:'userinfo'}">
                 个人主页
               </router-link>
-              <p style="width:50px;cursor:pointer" @click="Onoff">退出</p>
+              <p style="width:50px;cursor:pointer"
+                 @click="Onoff">退出</p>
 
             </div>
           </div>
@@ -84,10 +87,12 @@
                   <router-link to="/app">球冠App下载</router-link>
                 </p>
                 <p>
-                  <router-link target="_blank" :to="{path:'/aboutus'}">关于我们</router-link>
+                  <router-link target="_blank"
+                               :to="{path:'/aboutus'}">关于我们</router-link>
                 </p>
                 <p>
-                  <router-link target="_blank" :to="{path:'/contract'}">法律声明</router-link>
+                  <router-link target="_blank"
+                               :to="{path:'/contract'}">法律声明</router-link>
                 </p>
               </div>
               <div>
@@ -199,9 +204,9 @@ export default {
         this.is_editor = res.data.is_editor
       }
     },
-    Onoff(){
+    Onoff () {
       this.showTX = false
-         localStorage.removeItem('token');
+      localStorage.removeItem('token');
     }
   }
 }
@@ -281,10 +286,10 @@ export default {
         border: 1px solid #eee;
         font-size: 14px;
         display: none;
-        a &:hover{
+        a &:hover {
           color: #007aff;
         }
-         span &:hover{
+        span &:hover {
           color: #007aff;
         }
         span {

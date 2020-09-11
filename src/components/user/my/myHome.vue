@@ -3,43 +3,38 @@
     <el-card>
       <div class="my-box">
         <div class="card1">
-          <el-menu default-active="router_s"
+          <el-menu :default-active="router_s"
                    unique-opened
                    router
                    class="el-menu-vertical-demo"
                    @open="handleOpen"
                    @close="handleClose">
-
             <el-submenu v-for="(item,index) in list"
                         :key="index"
                         :index="item.index">
               <template slot="title">
-                <!-- <i class="el-icon-location"></i> -->
                 <span>{{item.name}}</span>
               </template>
               <el-menu-item-group>
                 <el-menu-item :index="ii.index"
-                                  v-for="(ii,is) in item.list"
-                                  :key="is" >{{ii.name}}</el-menu-item>
+                              v-for="(ii,is) in item.list"
+                              :key="is">{{ii.name}}</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>
         </div>
-
         <el-card class="card2">
           <router-view />
         </el-card>
       </div>
-
     </el-card>
-
   </div>
 </template>
 <script >
 export default {
   data () {
     return {
-      router_s:'',
+      router_s: '',
       list: [
         {
           name: '个人信息',
@@ -61,13 +56,13 @@ export default {
             },
             {
               name: '我的笔记',
-              index: '2-3'
+              index: 'note'
             }, {
               name: '我的收藏',
-              index: '2-5'
+              index: 'collect'
             }, {
-              name: '内容购买',
-              index: '2-6'
+              name: '我的购买',
+              index: 'buy'
             },
           ]
         },
@@ -77,11 +72,11 @@ export default {
           list: [
             {
               name: '我的钱包',
-              index: '3-3'
+              index: 'goldpay'
             },
             {
               name: '充值',
-              index: '3-3'
+              index: 'money'
             },
             {
               name: '提款',
@@ -107,24 +102,28 @@ export default {
 
     };
   },
-  async created(){
+  watch () {
+
+  },
+  async created () {
     // console.log(this.$route.name)
     this.router_s = this.$route.name
+    console.log(this.router_s)
     if (!this.$getMyConfig.getConfig()) {
-        const { data: res } = await this.$http.get(`/user/userinfo/`);
-        if(res.data.is_editor){
-          this.list[1].list.push({ name: '新闻发布',index: 'writeNews'})
-        }
+      const { data: res } = await this.$http.get(`/user/userinfo/`);
+      if (res.data.is_editor) {
+        this.list[1].list.push({ name: '新闻发布', index: 'writeNews' })
       }
+    }
   },
   methods: {
     handleOpen (key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath);
     },
-    
+
   }
 }
 </script>

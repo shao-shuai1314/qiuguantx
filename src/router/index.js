@@ -78,6 +78,17 @@ import login from '@/components/user/user'
 import myhome from '@/components/user/my/myHome'
 import userinfo from '@/components/user/my/userinfo'
 
+import goldpay from '@/components/user/my/goldpay'
+import money from '@/components/user/my/money'
+import note from '@/components/user/my/note'
+import buy from '@/components/user/my/buy'
+import collect from '@/components/user/my/collect'
+
+
+
+
+
+
 
 
 
@@ -441,22 +452,57 @@ const router = new Router({
               component: myhome,
               redirect: "userinfo",
               children: [{
-                path: 'userinfo',
-                name:'userinfo',
-                component: userinfo,
-                meta: {
-                  title: '个人信息',
-                }
-              }, {
-                path: 'writeNews',
-                name: 'writeNews',
-                component: writeNews,
-                meta: {
-                  title: '管理员新闻页'
-                }
-              },
-            
-            ]
+                  path: 'userinfo',
+                  name: 'userinfo',
+                  component: userinfo,
+                  meta: {
+                    title: '个人中心-个人信息',
+                  }
+                }, {
+                  path: 'writeNews',
+                  name: 'writeNews',
+                  component: writeNews,
+                  meta: {
+                    title: '个人中心-管理员新闻页'
+                  }
+                }, {
+                  path: 'goldpay',
+                  name: 'goldpay',
+                  component: goldpay,
+                  meta: {
+                    title: '个人中心-球冠币-我的钱包'
+                  }
+                }, {
+                  path: 'money',
+                  name: 'money',
+                  component: money,
+                  meta: {
+                    title: '个人中心-球冠币-我的钱包-充值中心'
+                  }
+                }, {
+                  path: 'note',
+                  name: 'note',
+                  component: note,
+                  meta: {
+                    title: '个人中心-我的笔记'
+                  }
+                }, {
+                  path: 'buy',
+                  name: 'buy',
+                  component: buy,
+                  meta: {
+                    title: '个人中心-我的购买'
+                  }
+                }, {
+                  path: 'collect',
+                  name: 'collect',
+                  component: collect,
+                  meta: {
+                    title: '个人中心-我的收藏'
+                  }
+                },
+
+              ]
             }
 
           ]
@@ -498,12 +544,11 @@ const router = new Router({
   ]
 })
 
+
 // 挂载导航守卫
 router.beforeEach((to, from, next) => {
   if (to.path === '/user') return next();
   // // // 获取token
-  // const tokenStr = localStorage.getItem('token')
-  // if (!tokenStr) return next('/user')
   if (to.meta.title) {
     document.title = to.meta.title
   }
@@ -515,9 +560,6 @@ router.beforeEach((to, from, next) => {
     localStorage.removeItem('token');
   }
   next()
-  // if(this.$getMyConfig.getConfig()){
-  //   console.log('导航守卫')
-  // }
 })
 
 export default router

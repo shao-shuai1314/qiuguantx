@@ -51,7 +51,7 @@
                   v-if="currentPage1 == 1">{{index+currentPage1}}</span>
             <span style="margin-right:20px"
                   v-else>{{index+currentPage1*10-9}}</span>
-            <el-image :fit="none"
+            <el-image fit="fill"
                       :src="`http://qiuguantx.com/${item.img}`"></el-image>
             <div class="tit">
               <h3>

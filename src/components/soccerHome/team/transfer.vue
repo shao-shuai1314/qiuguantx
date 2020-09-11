@@ -714,4 +714,7 @@ a {
   display: flex;
   justify-content: space-between;
 }
+.el-tag{
+  cursor: pointer;
+}
 </style>
