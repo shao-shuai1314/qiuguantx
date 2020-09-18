@@ -100,7 +100,7 @@
             <div>
               <router-link target="_blank"
                            :to="{name:'history',params:{scheduleID:scope.row.scheduleId}}">
-                <span v-if="scope.row.matchState">
+                <span v-if="scope.row.matchState == -1">
                   <span>{{scope.row.homeScore}}-{{scope.row.guestScore}}</span>
                 </span>
                 <span v-else>VS</span>

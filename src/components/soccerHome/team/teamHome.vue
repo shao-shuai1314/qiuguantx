@@ -19,26 +19,38 @@
               <p>
                 <span>球队所在地区：</span>{{headerList.area}}</p>
               <p>
-                <span>容纳：</span>{{headerList.capacity}}人</p>
-              <p>
-                <span>官方网站：</span>
-                <a target="_blank"
-                   :href="headerList.URL">进入官网</a>
-              </p>
-              <!-- <p>
-                <span>邮箱：</span>wwwwwwwwwwwwwwwwww</p> -->
-              <p>
-                <span>球场：</span>{{headerList.gymnasium}}</p>
-              <p>
-                <span>
-                  教练：
-                </span>
-                <router-link target="_blank"
-                             v-if='headerList.drillMasterID'
-                             :to="{name:'playerDetails',params:{playerID:headerList.drillMasterID}}">{{headerList.drillMaster}}</router-link>
-              </p>
-              <p>
-                <span>联系地址：</span>{{headerList.address}}</p>
+                <i v-if="headerList.venuesData !== undefined && headerList.venuesData.capacity">
+                  <span>容纳：</span>{{headerList.venuesData.capacity}}人
+                </i>
+                <i v-else>
+                  <span>容纳：</span>{{headerList.capacity}}人
+                </i>
+                <p>
+
+                  <p>
+                    <span>官方网站：</span>
+                    <a target="_blank"
+                       :href="headerList.URL">进入官网</a>
+                  </p>
+                  <p>
+                    <i v-if="headerList.venuesData !== undefined && headerList.venuesData.venuesName">
+                      <span>球场：</span>{{headerList.venuesData.venuesName}}
+                    </i>
+                    <i v-else>
+                      <span>球场：</span>{{headerList.gymnasium}}
+                    </i>
+
+                  </p>
+                  <p>
+                    <span>
+                      教练：
+                    </span>
+                    <router-link target="_blank"
+                                 v-if='headerList.drillMasterID'
+                                 :to="{name:'playerDetails',params:{playerID:headerList.drillMasterID}}">{{headerList.drillMaster}}</router-link>
+                  </p>
+                  <p>
+                    <span>联系地址：</span>{{headerList.address}}</p>
 
             </div>
           </div>
@@ -56,13 +68,13 @@
         <!-- <el-tab-pane label="教练战绩"
                      name="coachResults"></el-tab-pane> -->
         <el-tab-pane label="球队赛程"
-                     name="teamSchedule"></el-tab-pane>
+                     name="schedule"></el-tab-pane>
         <el-tab-pane label="球员转会"
                      name="transfer"></el-tab-pane>
         <el-tab-pane label="地理位置"
                      name="place"></el-tab-pane>
-        <!-- <el-tab-pane label="历年排名"
-                     name="place"></el-tab-pane> -->
+        <el-tab-pane label="历年战绩"
+                     name="combat_gains"></el-tab-pane>
         <el-tab-pane label="历年球路"
                      name="OverTheYears_qiulu"></el-tab-pane>
       </el-tabs>
@@ -95,7 +107,7 @@ export default {
   created () {
 
     this.scheduleID = this.$route.params.teamID
-    // console.log(this.$route.name)
+    // console.log(this.$route, 33333333)
     this.OnHeaderG()
     // 判断初始选项卡位置
     if (this.$route.name) return this.activeName = this.$route.name
@@ -112,11 +124,15 @@ export default {
       if (res.status !== 200) return console.log('对阵头部信息取失败');
       // console.log(res.data)
       this.headerList = res.data
+      sessionStorage.setItem("latitude_longitude", JSON.stringify([res.data.venuesData.latitude, res.data.venuesData.longitude]));
     }
   }
 }
 </script>
 <style lang = 'less' scoped >
+i {
+  font-style: normal;
+}
 /* 选项卡 */
 .el-tabs {
   background: #fff;
@@ -164,7 +180,7 @@ export default {
       font-size: 14px;
       color: #90a3b6;
       font-weight: 600;
-      margin: 10px 50px;
+      margin: 10px 40px;
     }
     span {
       color: #000;

@@ -22,8 +22,8 @@
           <span class="fr"
                 style="display:flex;align-items:center;color: #f00;margin-right:10px">
             说明：
-            <el-image src="../../static/sj.png"></el-image>表示主场
-            <el-image src="../../static/yuan.png"></el-image>表示客场
+            <el-image src="/static/sj.png"></el-image>表示主场
+            <el-image src="/static/yuan.png"></el-image>表示客场
           </span>
         </td>
       </tr>
@@ -39,10 +39,10 @@
           <span v-else
                 class="he_sp">
             <span v-if="item.hometeamID == items.teamID">
-              <el-image src="../../static/sj.png"></el-image>
+              <el-image src="/static/sj.png"></el-image>
             </span>
             <span v-else-if="item.hometeamID != teamID">
-              <el-image src="../../static/yuan.png"></el-image>
+              <el-image src="/static/yuan.png"></el-image>
             </span>
           </span>
 
@@ -122,11 +122,11 @@
                 <span v-if="item.result">
                   <span class="zk_span zhuchang"
                         v-if="item.hometeamID == items.teamID">
-                    <el-image src="../../static/sj.png"></el-image>
+                    <el-image src="/static/sj.png"></el-image>
                   </span>
                   <span class="zk_span kechang"
                         v-else>
-                    <el-image src="../../static/yuan.png"></el-image>
+                    <el-image src="/static/yuan.png"></el-image>
                   </span>
                 </span>
                 <span class="zk_span"

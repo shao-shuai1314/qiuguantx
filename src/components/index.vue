@@ -11,16 +11,20 @@
                        trigger="click"
                        height="262px">
             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner1.jpg"></el-image>  
+              <el-image style="height:100%"
+                        src="/static/banner1.jpg"></el-image>
             </el-carousel-item>
             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner3.jpg"></el-image>  
+              <el-image style="height:100%"
+                        src="/static/banner3.jpg"></el-image>
             </el-carousel-item>
             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner4.jpg"></el-image>  
+              <el-image style="height:100%"
+                        src="/static/banner4.jpg"></el-image>
             </el-carousel-item>
-             <el-carousel-item>
-              <el-image style="height:100%"  src="../../static/banner6.png"></el-image>  
+            <el-carousel-item>
+              <el-image style="height:100%"
+                        src="/static/banner6.png"></el-image>
             </el-carousel-item>
           </el-carousel>
           <!-- 推荐新闻 -->
@@ -46,12 +50,15 @@
                :key="indexs">
             <h2 v-if="typeof items === 'number' && !isNaN(items)"
                 style="margin-bottom:-10px;">
-              {{stys[items]}}   <router-link :to="{name:'news'}" style="font-size:14px">更多>></router-link>
+              {{stys[items]}}
+              <router-link :to="{name:'news'}"
+                           style="font-size:14px">更多>></router-link>
             </h2>
             <div v-if="Array.isArray(items)">
               <p v-for="(it,i) in items.slice(0,2)"
                  :key="i">
-                <router-link :to="{name:'newdetail',params:{recordId:it.recordId}}"  target="_blank">
+                <router-link :to="{name:'newdetail',params:{recordId:it.recordId}}"
+                             target="_blank">
                   {{it.title}}
                 </router-link>
               </p>
@@ -73,7 +80,8 @@
             <router-link target="_blank"
                          :to="{name:'newdetail',params:{recordId:item.recordId}}">
               <span>{{index+1}}</span>
-              <el-image style="margin-left:10px" :src="`http://qiuguantx.com/${item.img}`"></el-image>
+              <el-image style="margin-left:10px"
+                        :src="`http://qiuguantx.com/${item.img}`"></el-image>
               <div class="tit">
                 <h3>
                   <p class="tit_p">{{item.title}}</p>
@@ -127,7 +135,7 @@
       <div class="league_s">
         <h2 style="font-weight: normal;height:30px;padding-left:10px;color:#E84B5B;padding-top:20px">
           <!-- <el-image style="width:200px" src="../../static/rm.gif"></el-image>           -->
-          积分榜 
+          积分榜
         </h2>
         <el-divider></el-divider>
 
@@ -182,7 +190,7 @@
                            align="center"
                            width="40"
                            label="积分">
-                           <template slot-scope="scope">
+            <template slot-scope="scope">
               <div style="color:#e74c5b;">{{scope.row.score}}</div>
             </template>
           </el-table-column>
@@ -239,7 +247,7 @@ export default {
       // 去标签
       res.results.forEach(item => {
         item.content_s = item.content.replace(regex, "")
-         item.img = this.imgString(item.content)
+        item.img = this.imgString(item.content)
       });
       this.results = res.results
     },
@@ -280,7 +288,7 @@ export default {
       this.league(tab.name)
     }
 
-  }, 
+  },
 }
 </script>
 <style lang = 'less' scoped >
@@ -538,7 +546,6 @@ a {
     width: 250px;
     margin-left: 10px;
     margin-top: -20px;
-    
   }
   .el-table {
     width: 250px;

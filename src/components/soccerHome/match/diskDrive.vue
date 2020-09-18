@@ -37,10 +37,10 @@
             <span v-else
                   class="he_sp">
               <span v-if="item.hometeamID == hometeamID">
-                <el-image src="../../static/sj.png"></el-image>
+                <el-image src="/static/sj.png"></el-image>
               </span>
               <span v-else-if="item.hometeamID != hometeamID">
-                <el-image src="../../static/yuan.png"></el-image>
+                <el-image src="/static/yuan.png"></el-image>
               </span>
             </span>
           </router-link>
@@ -85,8 +85,9 @@
         </td>
         <td :colspan="homeSchedule.length"
             class="zk_td">
-              <div class="zk_box" >
-            <div class="zk_div" :style="{'width':this.tdLengthZ+'px'}">
+          <div class="zk_box">
+            <div class="zk_div"
+                 :style="{'width':this.tdLengthZ+'px'}">
               <p class="zk_p"
                  :class="item.num == 0?'zk_p0':''"
                  :style="{'margin-top':item.num == 2?'-40px':''}"
@@ -96,11 +97,11 @@
                 <span v-if="item.matchState == '-1'">
                   <span class="zk_span zhuchang"
                         v-if="item.hometeamID == hometeamID">
-                    <el-image src="../../static/sj.png"></el-image>
+                    <el-image src="/static/sj.png"></el-image>
                   </span>
                   <span class="zk_span kechang"
                         v-else>
-                    <el-image src="../../static/yuan.png"></el-image>
+                    <el-image src="/static/yuan.png"></el-image>
                   </span>
                 </span>
                 <span class="zk_span"
@@ -108,7 +109,7 @@
               </p>
             </div>
           </div>
-          
+
           <div id="main"
                style="height:130px;"></div>
         </td>
@@ -153,10 +154,10 @@
             <span v-else
                   class="he_sp">
               <span v-if="item.hometeamID == guestteamID">
-                <el-image src="../../static/sj.png"></el-image>
+                <el-image src="/static/sj.png"></el-image>
               </span>
               <span v-else-if="item.hometeamID != guestteamID">
-                <el-image src="../../static/yuan.png"></el-image>
+                <el-image src="/static/yuan.png"></el-image>
               </span>
             </span>
           </router-link>
@@ -210,11 +211,11 @@
                 <span v-if="item.matchState  == '-1'">
                   <span class="zk_span zhuchang"
                         v-if="item.hometeamID == guestteamID">
-                    <el-image src="../../static/sj.png"></el-image>
+                    <el-image src="/static/sj.png"></el-image>
                   </span>
                   <span class="zk_span kechang"
                         v-else>
-                    <el-image src="../../static/yuan.png"></el-image>
+                    <el-image src="/static/yuan.png"></el-image>
                   </span>
                 </span>
                 <span class="zk_span"
@@ -264,10 +265,10 @@
           <span v-else
                 class="he_sp">
             <span v-if="item.hometeamID == hometeamID">
-              <el-image src="../../static/sj.png"></el-image>
+              <el-image src="/static/sj.png"></el-image>
             </span>
             <span v-else-if="item.hometeamID != hometeamID">
-              <el-image src="../../static/yuan.png"></el-image>
+              <el-image src="/static/yuan.png"></el-image>
             </span>
           </span>
 
@@ -343,11 +344,11 @@
                 <span v-if="item.result">
                   <span class="zk_span zhuchang"
                         v-if="item.hometeamID == hometeamID">
-                    <el-image src="../../static/sj.png"></el-image>
+                    <el-image src="/static/sj.png"></el-image>
                   </span>
                   <span class="zk_span kechang"
                         v-else>
-                    <el-image src="../../static/yuan.png"></el-image>
+                    <el-image src="/static/yuan.png"></el-image>
                   </span>
                 </span>
                 <span class="zk_span"
@@ -398,10 +399,10 @@
           <span v-else
                 class="he_sp">
             <span v-if="item.hometeamID == guestteamID">
-              <el-image src="../../static/sj.png"></el-image>
+              <el-image src="/static/sj.png"></el-image>
             </span>
             <span v-else-if="item.hometeamID != guestteamID">
-              <el-image src="../../static/yuan.png"></el-image>
+              <el-image src="/static/yuan.png"></el-image>
             </span>
           </span>
 
@@ -471,11 +472,11 @@
                 <span v-if="item.result">
                   <span class="zk_span zhuchang"
                         v-if="item.hometeamID == guestteamID">
-                    <el-image src="../../static/sj.png"></el-image>
+                    <el-image src="/static/sj.png"></el-image>
                   </span>
                   <span class="zk_span kechang"
                         v-else>
-                    <el-image src="../../static/yuan.png"></el-image>
+                    <el-image src="/static/yuan.png"></el-image>
                   </span>
                 </span>
                 <span class="zk_span"
@@ -826,10 +827,10 @@ export default {
         if (e.data.url) {
 
           window.open(`http://qiuguantx.com/#/soccer/team/player/${e.data.url}`)
-          window.isCancel=true;
+          window.isCancel = true;
         }
         // console.log(`http://192.168.3.51:8080/#/soccer/team/playerDetails/${e.data.url}`)
-        
+
 
       })
     }
@@ -984,5 +985,4 @@ a {
     display: block;
   }
 }
-
 </style>

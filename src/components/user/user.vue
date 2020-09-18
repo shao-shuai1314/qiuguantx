@@ -298,6 +298,7 @@ export default {
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("username", res.data.username);
               localStorage.setItem("user_id", res.data.user_id);
+              sessionStorage.setItem("user_g", JSON.stringify(res));
               window.history.back();
             }
           } catch (error) {
@@ -337,6 +338,7 @@ export default {
             localStorage.setItem("username", res.data.username);
             localStorage.setItem("user_id", res.data.user_id);
             localStorage.setItem("timestamp", res.data.timestamp);
+            sessionStorage.setItem("user_g", JSON.stringify(res));
 
 
             // console.log( res.data.token.split('.')[1])

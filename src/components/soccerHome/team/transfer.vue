@@ -39,6 +39,7 @@
        'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
+                    stripe
                     border>
             <el-table-column label=""
                              align="center">
@@ -116,6 +117,7 @@
        'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
+                    stripe
                     border>
             <el-table-column label="转出球员"
                              align="center">
@@ -195,6 +197,7 @@
        'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
+                    stripe
                     border>
             <el-table-column label="租借球员"
                              @sort-change="sortChange2"
@@ -272,6 +275,7 @@
        'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
+                    stripe
                     @sort-change="sortChange4"
                     border>
             <el-table-column label="外租球员"
@@ -350,6 +354,7 @@
        'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
+                    stripe
                     border>
             <el-table-column label="租借期满归队球员"
                              align="center">
@@ -424,6 +429,7 @@
        'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px'
 }"
+                    stripe
                     border>
             <el-table-column label="租借期满归队球员"
                              align="center">
@@ -505,7 +511,7 @@ export default {
       ZCteam: [],
       WZteam: [],
       QTQKteam: [],
-      succ:8
+      succ: 8
     };
   },
   created () {
@@ -673,17 +679,17 @@ export default {
       this.$refs.multipleSelection1.clearSort()
       this.$refs.multipleSelection2.clearSort()
       this.$refs.multipleSelection3.clearSort()
-      
+
 
       // 颜色
       this.succ = 1
     },
     ondong () {
       let into_list = this.into_list.filter(item => {
-        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-12-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-2-2`).getTime() 
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-12-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-2-2`).getTime()
       })
       let out_list = this.out_list.filter(item => {
-        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-12-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-2-2`).getTime() 
+        return new Date(`${item.transferTime}`).getTime() >= new Date(`${this.timeListVe.slice(0, 4)}-12-1`).getTime() && new Date(`${item.transferTime}`).getTime() < new Date(`${this.timeListVe.slice(5)}-2-2`).getTime()
       })
       // console.log(this.timeListVe)
       this.onInto_list(into_list)
@@ -714,7 +720,7 @@ a {
   display: flex;
   justify-content: space-between;
 }
-.el-tag{
+.el-tag {
   cursor: pointer;
 }
 </style>

@@ -34,6 +34,11 @@ import teamTotalScoreSubpage from '@/components/soccerHome/teamTotalScoreSubpage
 // 球路盘路
 import qiulu from '@/components/soccerHome/qiulu'
 import panlu from '@/components/soccerHome/panlu'
+// 联赛详细介绍
+import present from '@/components/soccerHome/present'
+import coachProfile from '@/components/soccerHome/coachProfile'
+
+
 
 
 // 比赛信息
@@ -61,9 +66,11 @@ import teamHome from '@/components/soccerHome/team/teamHome'
 import information from '@/components/soccerHome/team/information'
 import coachResults from '@/components/soccerHome/team/coachResults'
 import transfer from '@/components/soccerHome/team/transfer'
-import teamSchedule from '@/components/soccerHome/team/teamSchedule'
+import schedule from '@/components/soccerHome/team/teamSchedule'
 import lineup from '@/components/soccerHome/team/lineup'
 import place from '@/components/soccerHome/team/place'
+import combat_gains from '@/components/soccerHome/team/combat_gains'
+
 import OverTheYears_qiulu from '@/components/soccerHome/team/OverTheYears_qiulu'
 
 
@@ -107,7 +114,7 @@ import contract from '@/components/footer/contract'
 Vue.use(Router)
 
 const router = new Router({
-  // mode: 'history',
+  mode: 'history',
 
   routes: [
 
@@ -129,9 +136,9 @@ const router = new Router({
     {
       path: '/',
       component: home,
-      redirect: "/index",
+      redirect: "/",
       children: [{
-          path: '/index',
+          path: '/',
           component: index,
           meta: {
             title: '球冠首页',
@@ -228,6 +235,22 @@ const router = new Router({
               component: panlu,
               meta: {
                 title: '赛季盘路'
+              }
+            },
+            {
+              path: '/soccer/league/present/:sclassID',
+              name: 'present',
+              component: present,
+              meta: {
+                title: '联赛详细介绍'
+              }
+            },
+            {
+              path: '/soccer/league/coachProfile/:sclassID',
+              name: 'coachProfile',
+              component: coachProfile,
+              meta: {
+                title: '联赛教练简表'
               }
             },
             // 比赛数据
@@ -389,9 +412,9 @@ const router = new Router({
                   }
                 },
                 {
-                  path: '/soccer/team/teamSchedule/:teamID',
-                  component: teamSchedule,
-                  name: "teamSchedule",
+                  path: '/soccer/team/schedule/:teamID',
+                  component: schedule,
+                  name: "schedule",
                   meta: {
                     title: '球队赛程'
                   }
@@ -402,6 +425,14 @@ const router = new Router({
                   name: "place",
                   meta: {
                     title: '地理位置'
+                  }
+                },
+                {
+                  path: '/soccer/team/combat_gains/:teamID',
+                  component: combat_gains,
+                  name: "combat_gains",
+                  meta: {
+                    title: '历年战绩'
                   }
                 },
                 {

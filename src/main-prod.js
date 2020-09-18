@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
+
+Vue.prototype.$store = store; //引入配置文件
 
 // 全局css
 import './css/style.css';
@@ -22,8 +25,9 @@ Vue.component('Subnavigation', Subnavigation);
 
 
 // Storage判断
-import getMyConfig  from '@/js/Storage.js'
-Vue.prototype.$getMyConfig = getMyConfig;//引入配置文件
+import getMyConfig from '@/js/Storage.js'
+Vue.prototype.$getMyConfig = getMyConfig; //引入配置文件
+
 
 
 
@@ -33,7 +37,7 @@ Vue.prototype.$getMyConfig = getMyConfig;//引入配置文件
 import axios from 'axios'
 axios.defaults.baseURL = 'http://qiuguantx.com:8080/'
 // http request拦截器 添加一个请求拦截器
-axios.interceptors.request.use(function (config) { 
+axios.interceptors.request.use(function (config) {
   // 这里的config包含每次请求的内容
   let token = window.localStorage.getItem('token')
   if (token) {
@@ -48,8 +52,8 @@ axios.interceptors.request.use(function (config) {
 })
 
 // http: //192.168.3.6:8888/
-  // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-  Vue.prototype.$http = axios
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+Vue.prototype.$http = axios
 
 
 
@@ -78,6 +82,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

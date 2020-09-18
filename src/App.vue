@@ -1,6 +1,8 @@
 <template>
   <div id="app"
        :key="Key">
+    <!-- {{$store.state.userInfo.is_editor}}
+    <button @click="getuserinfo">123</button> -->
     <router-view/>
   </div>
 
@@ -14,6 +16,12 @@ export default {
       Key: ''
     };
   },
+  methods: {
+    // getuserinfo () {
+    //   this.$store.dispatch('agetUserInfo')
+    // }
+  }
+
   // watch: {
   //   $route: function (newUrl, oldUrl) {
   //     this.Key = new Date().getTime();

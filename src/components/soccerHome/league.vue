@@ -4,10 +4,9 @@
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/soccer' }">足球中心</el-breadcrumb-item>
       <el-breadcrumb-item>赛事积分榜</el-breadcrumb-item>
-
     </el-breadcrumb>
     <!-- 左边 -->
-    <navigation :datas=[sclassName,sclass_rule,seasonListValue]></navigation>
+    <navigation :datas=[sclassName,sclass_rule,seasonListValue,seasonList,sclass_pic]></navigation>
     <!-- 右边数据积分榜 -->
     <el-card class="league_box_right fr">
       <div class="top">
@@ -429,9 +428,14 @@
                            :to="{name:'information',params:{teamID:item.teamID}}">"{{item.teamName}}"</router-link>{{item.cause}}</p>
           </div>
           <div v-if="violationsLists">{{violationsLists}}</div>
-
         </div>
+      </div>
 
+      <div class="js_ls">
+        <h2>
+          <b>联赛介绍</b>
+        </h2>
+        <p v-html="sclass_rule"></p>
       </div>
 
     </el-card>
@@ -446,6 +450,8 @@ export default {
   },
   data () {
     return {
+      // 队徽
+      sclass_pic: '',
       // 赛事比分数据
       // 赛事
       sclassName: '',
@@ -584,6 +590,12 @@ export default {
       this.sclassName = res.data.sclass_data.sclassName
       // 赛季时间数组
       this.seasonList = res.data.sclass_data.seasonList
+      // 时间数组存储、
+      sessionStorage.setItem('seasonList', JSON.stringify(res.data.sclass_data.seasonList))
+      // 联赛对标存储
+      this.sclass_pic = res.data.sclass_data.sclass_pic
+      sessionStorage.setItem('sclass_pic', res.data.sclass_data.sclass_pic)
+
       // 赛程数组
       this.match_list = res.data.match_list
       // 联赛杯赛
@@ -716,10 +728,6 @@ export default {
           this.violationsList = [...Object.values(this.leagues_data.koufen)]
         }
 
-
-
-
-
         // 获取赔率id
         // 获取赔率id
         this.peilv()
@@ -797,9 +805,7 @@ export default {
         } catch (err) {
         }
 
-
       } else {
-
         // 是否分组
         if (round_ej.groupnum) {
           this.groupList = this.A_Z.slice(0, round_ej.groupnum)
@@ -854,10 +860,7 @@ export default {
           this.LeagueList[i].color = 'red'
         }
       }
-
-
     },
-
 
     // 赛程数据
     onMatchList (list, round) {
@@ -1098,7 +1101,7 @@ export default {
           }
         }
         tr {
-          height: 30px;
+          height: 26px;
           font-size: 14px;
           &:nth-child(2n) {
             background: #f7f7f7;
@@ -1180,7 +1183,7 @@ export default {
     }
     .table_NeiRong {
       tr {
-        height: 30px;
+        height: 26px;
         font-size: 14px;
       }
       .table_NeiRong_one {
@@ -1223,5 +1226,18 @@ export default {
   .el-select--mini {
     margin: 0 !important;
   }
+}
+
+.js_ls {
+  h2 {
+    text-align: center;
+    padding: 10px;
+  }
+  padding: 10px;
+  text-indent: 28px;
+  line-height: 26px;
+  font-size: 14px;
+  border: 1px solid #3680d8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 </style>

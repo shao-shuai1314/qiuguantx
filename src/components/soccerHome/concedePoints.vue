@@ -137,7 +137,9 @@ export default {
     };
   },
   created () {
-    this.datas = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('sclass_rule'), sessionStorage.getItem('matchSeason')]
+    var temp = sessionStorage.getItem("seasonList")
+    let seasonList = JSON.parse(temp);
+    this.datas = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('sclass_rule'), sessionStorage.getItem('matchSeason'), seasonList, sessionStorage.getItem('sclass_pic')]
     this.sclassID = this.$route.params.sclassID
     this.matchSeason = sessionStorage.getItem('matchSeason')
     this.tableDataList('all');

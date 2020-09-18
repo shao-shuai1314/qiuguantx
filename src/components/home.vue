@@ -8,7 +8,7 @@
           <!-- 左边logo -->
           <div class="Header_left">
             <router-link :to="{ path: '/' }">
-              <el-image src="../../static/logo.png"></el-image>
+              <el-image src="/static/logo.png"></el-image>
             </router-link>
           </div>
           <!-- 导航栏 -->
@@ -36,6 +36,14 @@
                          size="mini"
                          round>
                 登录
+              </el-button>
+            </router-link>
+            或
+            <router-link :to="{path:'/users'}">
+              <el-button type="info"
+                         size="mini"
+                         round>
+                注册
               </el-button>
             </router-link>
           </div>
@@ -72,10 +80,20 @@
         </keep-alive>
       </el-main>
       <!-- 返回顶部 -->
-      <el-backtop>
+      <!-- <el-backtop>
         <i style=" border-radius: 50%;color:#409eff"
            class="el-icon-caret-top"></i>
-      </el-backtop>
+      </el-backtop> -->
+      <template>
+        <el-backtop 　
+                    　:right='40'
+                    　:bottom='100'
+                    　:visibility-height='400'>
+          <div>
+            <i class='el-icon-caret-top'></i>
+          </div>
+        </el-backtop>
+      </template>
       <!-- 底部 -->
       <el-footer height="190px">
         <div class="gWidth">
@@ -84,7 +102,7 @@
             <div class="footer_xbox">
               <div>
                 <p>
-                  <router-link to="/app">球冠App下载</router-link>
+                  <router-link to="">北京野马尘埃文化发展有限公司</router-link>
                 </p>
                 <p>
                   <router-link target="_blank"
@@ -103,7 +121,7 @@
                   <router-link to="">举报邮箱：yemachenaiwenhua@163.com</router-link>
                 </p>
                 <p>
-                  <router-link to="">侵权投诉</router-link>
+                  <router-link to="">地址：北京市西城区三里河二区11号3号楼252室</router-link>
                 </p>
               </div>
               <div>
@@ -134,6 +152,7 @@
 
 <script>
 export default {
+
   created () {
     // console.log(this.$getMyConfig.getConfig(),111)
     // console.log(this.$route.fullPath)
@@ -144,7 +163,7 @@ export default {
       this.act = ""
     }
     const tokenStr = localStorage.getItem('token')
-    if (!tokenStr) {
+    if (!this.$getMyConfig.getConfig() && !tokenStr) {
       this.showTX = false
     } else {
       this.showTX = true
@@ -180,10 +199,10 @@ export default {
       user: '',
       is_editor: '',
       menulist: [
-        { authName: "首页", id: 1, order: 1, path: "/index" },
+        { authName: "首页", id: 1, order: 1, path: "/" },
         { authName: "彩票中心", id: 21, order: 1, path: "/cp" },
         { authName: "足球中心", id: 18, order: 4, path: "/soccer" },
-        { authName: "新闻", id: 20, order: 1, path: "/news" },
+        { authName: "资讯", id: 20, order: 1, path: "/news" },
         { authName: "视频", id: 14, order: 3, path: "/video" },
         { authName: "APP", id: 13, order: 2, path: "/app" },
 

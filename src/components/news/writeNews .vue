@@ -69,7 +69,7 @@ export default {
       inputGjz: '',
       inputTitle: '',
       state1: '',
-      sclassIdList: [ {
+      sclassIdList: [{
         sclassId: '',
         sclassName: '其他'
       }],
@@ -85,10 +85,17 @@ export default {
       }, {
         value: '新浪体育',
         label: '新浪体育'
-      },{
+      }, {
         value: '今日头条',
         label: '今日头条'
+      }, {
+        value: '腾讯新闻',
+        label: '腾讯新闻'
+      }, {
+        value: '雪缘园',
+        label: '雪缘园'
       }],
+
     }
   },
   computed: {
@@ -96,7 +103,7 @@ export default {
       return this.$refs.myQuillEditor.quill;
     },
   },
-  created(){
+  created () {
     this.rx_sclass()
   },
   methods: {
@@ -114,7 +121,8 @@ export default {
         reprinted: this.state1,
         publicTime: this.dateval
       });
-      if (!this.$getMyConfig.getConfig()) {
+      const tokenStr = localStorage.getItem('token')
+      if (!this.$getMyConfig.getConfig() && tokenStr) {
         console.log(formData)
         if (this.inputTitle != '' && this.content != '' && this.state1 != '' && this.dateval != '') {
           const { data: res } = await this.$http.request({
@@ -144,10 +152,10 @@ export default {
     },
 
 
-    async rx_sclass(){
+    async rx_sclass () {
       const { data: res } = await this.$http.get(`rx_sclass`);
       this.rx_sclass = res
-      res.forEach(item=>{
+      res.forEach(item => {
         this.sclassIdList.unshift(item)
       })
     }

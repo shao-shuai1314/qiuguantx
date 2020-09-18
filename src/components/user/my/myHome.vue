@@ -23,7 +23,8 @@
             </el-submenu>
           </el-menu>
         </div>
-        <el-card class="card2">
+        <el-card class="card2"
+                 v-if="isTRUE_s">
           <router-view />
         </el-card>
       </div>
@@ -34,6 +35,7 @@
 export default {
   data () {
     return {
+      isTRUE_s: false,
       router_s: '',
       list: [
         {
@@ -102,26 +104,39 @@ export default {
 
     };
   },
-  watch () {
-
+  watch: {
+    '$route' (to, from) {
+      if (to.name !== from.name) {
+        this.$router.go(0);
+      }
+    },
   },
   async created () {
-    // console.log(this.$route.name)
+    // console.log('shuaxin ')
     this.router_s = this.$route.name
-    console.log(this.router_s)
-    if (!this.$getMyConfig.getConfig()) {
+    const tokenStr = localStorage.getItem('token')
+    if (!this.$getMyConfig.getConfig() && tokenStr) {
       const { data: res } = await this.$http.get(`/user/userinfo/`);
       if (res.data.is_editor) {
         this.list[1].list.push({ name: '新闻发布', index: 'writeNews' })
       }
+      sessionStorage.setItem("user_g", JSON.stringify(res));
+      if (sessionStorage.getItem("user_g")) {
+        this.isTRUE_s = true
+      } else {
+        this.isTRUE_s = false
+      }
+    } else {
+      return this.$message.error('登录过期请重新登录')
     }
+
   },
   methods: {
     handleOpen (key, keyPath) {
       // console.log(key, keyPath);
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
 
   }

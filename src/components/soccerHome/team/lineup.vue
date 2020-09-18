@@ -9,7 +9,7 @@
     'background-color': 'rgb(131, 162, 202)',
     'font-size':'14px',
 }"
-              stripe
+              :row-class-name="tabRowClassName"
               style="width: 1160px">
       <el-table-column prop="number"
                        align="center"
@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column prop="country"
                        align="center"
-                       width="80"
+                       width="100"
                        label="国籍">
       </el-table-column>
       <el-table-column align="center"
@@ -109,13 +109,23 @@ export default {
 
       this.dataList = res.data
       sessionStorage.setItem("lineupList", JSON.stringify(res.data));
-
-
     },
+    tabRowClassName ({ row, rowIndex }) {
+      let index = rowIndex + 1;
+      if (index % 2 == 0) {
+        return 'warning-row'
+      }
+    }
   }
 }
 </script>
 <style lang = 'less'  >
+.lineup_boxss .el-table .warning-row {
+  background: rgba(160, 189, 226, 0.2) !important;
+}
+.lineup_boxss .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: rgba(160, 189, 226, 0.5);
+}
 .lineup_boxss a {
   display: block;
   width: 100%;
@@ -125,12 +135,12 @@ export default {
   }
 }
 .lineup_boxss .el-table--mini td,
-.el-table--mini th {
+.lineup_boxss .el-table--mini th {
   padding: 0 !important;
 }
 .lineup_boxss .el-table .cell {
   height: 100%;
-  line-height: 50px !important;
+  line-height: 36px !important;
 }
 .lineup_boxss .cell span {
   display: block;
