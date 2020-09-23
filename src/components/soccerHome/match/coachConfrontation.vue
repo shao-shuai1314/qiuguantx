@@ -11,7 +11,8 @@
       <el-table-column prop="date"
                        align="center"
                        width="">
-        <template slot="header" slot-scope="scope">
+        <template slot="header"
+                  slot-scope="scope">
           <div class="tableData-header">
             <b>{{TeamNameInfo[0]}} &nbsp; &nbsp; &nbsp; &nbsp;VS&nbsp; &nbsp; &nbsp; &nbsp; {{TeamNameInfo[2]}}</b>
           </div>
@@ -19,13 +20,20 @@
         <el-table-column prop="date"
                          align="center"
                          width="">
-          <template slot="header" slot-scope="scope">
+          <template slot="header"
+                    slot-scope="scope">
             <div class="tableData-xheader">
               <b>{{TeamNameInfo[0]}} ： {{CoachNameInfo[0]}}</b>
               <b>
-                <span>{{Win}}胜</span>
-                <span>{{flat}}平</span>
-                <span>{{load}}负</span>
+                <span>{{Win}}胜 </span>
+                <span>{{flat}}平 </span>
+                <span>{{load}}负 </span>
+                <span style="margin-left:20px">
+                  <span>其中主场，</span>
+                  <span>{{s}}胜，</span>
+                  <span>{{p}}平，</span>
+                  <span>{{f}}负</span>
+                </span>
               </b>
               <b>{{TeamNameInfo[2]}} ： {{CoachNameInfo[2]}}</b>
             </div>
@@ -109,11 +117,18 @@ export default {
       CoachNameInfo: [],
       Win: 0,
       flat: 0,
-      load: 0
+      load: 0,
+      s: '',
+      p: '',
+      f: ''
     };
   },
   created () {
     this.onDataList()
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  教练对阵`
   },
   methods: {
     async onDataList () {
@@ -122,7 +137,21 @@ export default {
       this.CoachNameInfo = sessionStorage.getItem('CoachName').split(',')
       // 添加颜色
       if (res.data.match_list) {
+        let s = [], p = [], f = []
         res.data.match_list.forEach(item => {
+          // 主场胜平负、
+          if (this.CoachNameInfo[1] == item.homeCoachId) {
+            if (item.homeScore > item.guestScore) {
+              s.push(item)
+            } else if (item.homeScore < item.guestScore) {
+              f.push(item)
+            } else {
+              p.push(item)
+            }
+          }
+          this.s = s.length
+          this.p = p.length
+          this.f = f.length
           item.matchtime = item.matchtime.replace('T', ' ')
           if (item.homeCoachId == this.CoachNameInfo[1]) {
             if (item.homeScore > item.guestScore) {
@@ -142,6 +171,7 @@ export default {
             }
           }
         })
+        // console.log(res.data.match_list)
 
 
         // 胜平负

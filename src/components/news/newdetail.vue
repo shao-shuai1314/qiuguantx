@@ -2,7 +2,7 @@
   <div class="gWidth">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/news' }">新闻</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/news' }">资讯</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="gWidth box_new">
       <h2>{{li.title}}</h2>
@@ -32,7 +32,8 @@ export default {
       const { data: res } = await this.$http.get(`/showJournalism/${this.$route.params.recordId}/`);
       res.content = res.content.slice(res.content.indexOf('</h1>') + 5)
       this.li = res
-      console.log(res.content)
+      document.title = `${this.li.title} -  资讯详情页`
+      // console.log(res.content)
 
     },
 

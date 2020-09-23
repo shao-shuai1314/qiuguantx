@@ -138,6 +138,10 @@ export default {
   created () {
     this.tixtList()
     this.matchState = sessionStorage.getItem('matchState')
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  赛前分析`
   },
   methods: {
     onEditorReady (editor) { // 准备编辑器

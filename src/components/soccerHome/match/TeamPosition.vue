@@ -13,6 +13,12 @@ export default {
       zoom: 13
     }
   },
+  created () {
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  地理位置`
+  },
   methods: {
     async handler ({ BMap, map }) {
       const res = await this.$http.get(`/soccer/matchInfo/${this.$route.params.scheduleID}/teamAddr/`);
@@ -28,7 +34,6 @@ export default {
           } else {
             team_list.push(`<a href='/#/soccer/team/information/${team_info.teamID}' target="_blank">${team_info.name_j}</a>`)
           }
-
         })
 
         var label = new BMap.Label(`${team_list.join('、')}<br/>${item.venues_name}`); // 该坐标点显示的文本信息与显示位置

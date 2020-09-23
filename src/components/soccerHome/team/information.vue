@@ -21,7 +21,7 @@ export default {
       const res = await this.$http.get('teamInfo/' + this.scheduleID + '/introduce/');
       if (res.status !== 200) return console.log('球队简介信息取失败');
       this.dataList = res.data.introduce
-      console.log(this.dataList)
+      // console.log(this.dataList)
 
 
     },

@@ -107,8 +107,8 @@ export default {
   methods: {
     async historyRecord () {
       const res = await this.$http.get(`/teamInfo/${this.$route.params.teamID}/historyRecord/`)
-      this.combat_gains = res.data.data_list.slice(1)
-      console.log(res.data.data_list)
+      this.combat_gains = res.data.data_list
+      // console.log(res.data.data_list)
     },
     tabRowClassName ({ row, rowIndex }) {
       let index = rowIndex + 1;
@@ -117,7 +117,7 @@ export default {
       }
     },
     getmatchSeason (matchSeason, id) {
-      console.log(matchSeason)
+      // console.log(matchSeason)
       sessionStorage.setItem("matchSeason", matchSeason);
 
       let routeData = this.$router.resolve({ name: 'league', params: { sclassID: id } });

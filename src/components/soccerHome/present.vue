@@ -3,6 +3,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/soccer' }">足球中心</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{name:'league',params:{sclassID}}">{{this.datas[2]}}{{this.datas[0]}}</el-breadcrumb-item>
       <el-breadcrumb-item>联赛详细介绍</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 左边 -->
@@ -82,6 +83,11 @@
                            label="俱乐部身价(万欧)"
                            sortable
                            width="134">
+            <template slot-scope="scope">
+              <div v-if="scope.row.teamValues">
+                {{scope.row.teamValues.toFixed(2)}}
+              </div>
+            </template>
           </el-table-column>
           <el-table-column align="center"
                            prop="venuesName"
@@ -110,7 +116,8 @@ export default {
     return {
       datas: [],
       teamList: [],
-      myDate: new Date()
+      myDate: new Date(),
+      sclassID: this.$route.params.sclassID,
     };
   },
   created () {
@@ -118,6 +125,7 @@ export default {
     let seasonList = JSON.parse(temp);
     this.datas = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('sclass_rule'), sessionStorage.getItem('matchSeason'), seasonList, sessionStorage.getItem('sclass_pic')]
     // console.log(this.$route)
+    document.title = `${this.datas[2]} -  ${this.datas[0]} - 俱乐部简介`
     this.teamList_s()
   },
   methods: {

@@ -127,6 +127,7 @@ export default {
         this.isTRUE_s = false
       }
     } else {
+      this.$router.replace({ name: 'users' })
       return this.$message.error('登录过期请重新登录')
     }
 

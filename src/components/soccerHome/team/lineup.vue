@@ -3,7 +3,7 @@
     <el-table :data="dataList"
               size="mini"
               border
-              :header-cell-style="{
+              :header-cell-style="{ 
     'color': '#303133',
     'border-bottom': '1px rgb(103, 194, 58) solid',
     'background-color': 'rgb(131, 162, 202)',

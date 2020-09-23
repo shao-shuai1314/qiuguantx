@@ -246,6 +246,10 @@ export default {
   },
   created () {
     this.onPanelList()
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  亚盘`
   },
   methods: {
     async onPanelList () {

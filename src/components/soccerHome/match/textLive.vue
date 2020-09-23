@@ -30,12 +30,14 @@
         <li>
           <h3>直播详情</h3>
           <div style="margin-top:40px">
-            <div class="div-a" v-for="(item,index) in tableData" :key="index">
-            <span style="margin-left:10px"
+            <div class="div-a"
+                 v-for="(item,index) in tableData"
+                 :key="index">
+              <span style="margin-left:10px"
                     v-html="item.content"></span>
+            </div>
           </div>
-          </div>
-          
+
         </li>
       </ul>
 
@@ -229,6 +231,10 @@ export default {
   created () {
     this.onDataList()
     this.onPlayerStatisticsList()
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  文字直播`
   },
   methods: {
     async onDataList () {
@@ -443,11 +449,11 @@ export default {
   justify-content: space-between;
 }
 
-.textLive{
+.textLive {
   position: relative;
   height: 900px;
   width: 720px;
-  li{
+  li {
     height: 900px;
     border: 1px solid #eee;
     box-sizing: border-box;
@@ -455,34 +461,32 @@ export default {
     border-radius: 6px;
     margin-right: 10px;
     overflow: hidden;
-     overflow-y: scroll;
-     h3{
-       position: absolute;
-       top: 1px;
-       width: 690px;
-       font-weight: 900;
-       text-align: center;
-       background: #fff;
-       border-radius: 6px;
-       height: 40px;
-       line-height: 40px;
-       border-bottom: 1px solid rgb(103, 194, 58);
-     }
-     p{
-       font-size: 14px;
-     }
-     span{
-       font-size: 14px;
-     }
-     .div-a{
-       height: 60px;
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       border-bottom: 1px solid #eee;
-     }
-    
+    overflow-y: scroll;
+    h3 {
+      position: absolute;
+      top: 1px;
+      width: 690px;
+      font-weight: 900;
+      text-align: center;
+      background: #fff;
+      border-radius: 6px;
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid rgb(103, 194, 58);
+    }
+    p {
+      font-size: 14px;
+    }
+    span {
+      font-size: 14px;
+    }
+    .div-a {
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px solid #eee;
+    }
   }
-
 }
 </style>

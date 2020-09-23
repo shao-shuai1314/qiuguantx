@@ -11,14 +11,16 @@
       <el-table-column prop="date"
                        align="center"
                        width="">
-        <template slot="header"  slot-scope="scope">
+        <template slot="header"
+                  slot-scope="scope">
           <div class="tableData-header">
             <b>{{TeamNameInfo[0]}} &nbsp; &nbsp; &nbsp; &nbsp;VS&nbsp; &nbsp; &nbsp; &nbsp; {{TeamNameInfo[2]}}</b>
           </div>
         </template>
         <el-table-column prop="date"
                          width="">
-          <template slot="header"  slot-scope="scope">
+          <template slot="header"
+                    slot-scope="scope">
             <div class="tableData-xheader">
               <b>{{TeamNameInfo[0]}}</b>
             </div>
@@ -81,7 +83,8 @@
               style="width: 100%">
       <el-table-column prop="date"
                        width="">
-        <template slot="header"  slot-scope="scope">
+        <template slot="header"
+                  slot-scope="scope">
           <div class="tableData-xheader">
             <b>{{TeamNameInfo[2]}}</b>
           </div>
@@ -147,6 +150,10 @@ export default {
   },
   created () {
     this.onDataList()
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  球员转会`
   },
   methods: {
     async onDataList () {

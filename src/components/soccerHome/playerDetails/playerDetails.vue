@@ -1,5 +1,5 @@
 <template>
-  <div class="gWidth">
+  <div class="gWidth player_box_ss">
     <div class="left_box fl">
       <el-card>
         <div class="player_header">
@@ -70,14 +70,20 @@
           <h6>现效力球队</h6>
         </el-divider>
         <div>
-          <el-table :data="headerData.place"
-                    :header-cell-style="{'color': '#303133','font-size':'14px'}"
+          <el-table size="mini"
+                    :header-cell-style="{
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px'
+}"
+                    :row-class-name="tabRowClassName"
+                    :data="headerData.place"
                     style="width: 100%">
             <el-table-column prop="toTeamName"
                              align="center"
                              label="现效力球队">
               <template slot="header">
-                <div class="linue-header">
+                <div style="color:rgb(248, 51, 71);font-size: 18px;">
                   <b>现效力球队</b>
                 </div>
               </template>
@@ -112,14 +118,20 @@
           </el-divider>
           <!-- 教练履历 -->
           <el-table :data="coachTransfer"
+                    :row-class-name="tabRowClassName"
+                    size="mini"
                     v-if="coachTransfer.length"
-                    :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                    :header-cell-style="{
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px'
+}"
                     style="width: 100%">
             <el-table-column prop="toTeamName"
                              align="center"
                              label="教练履历">
               <template slot="header">
-                <div class="linue-header">
+                <div style="color:rgb(248, 51, 71);font-size: 18px;">
                   <b>教练履历</b>
                 </div>
               </template>
@@ -130,7 +142,10 @@
                 <template slot-scope="scope">
                   <p class="zh_p">
                     <span>
-                      <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
+                      <div class="image_div">
+                        <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
+                      </div>
+
                       <router-link target="_blank"
                                    v-if="scope.row.toTeamId"
                                    :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
@@ -160,14 +175,20 @@
           </el-table>
           <!-- 球员转会 -->
           <el-table :data="playerTransfer"
+                    size="mini"
                     v-if="playerTransfer.length"
-                    :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                    :row-class-name="tabRowClassName"
+                    :header-cell-style="{
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px'
+}"
                     style="width: 100%">
             <el-table-column prop="toTeamName"
                              align="center"
                              label="球员转会">
               <template slot="header">
-                <div class="linue-header">
+                <div style="color:rgb(248, 51, 71);font-size: 18px;">
                   <b>球员转会</b>
                 </div>
               </template>
@@ -181,8 +202,10 @@
                                label="转会详细"
                                align="center">
                 <template slot-scope="scope">
-                  <p class="zh_p">
-                    <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.fromTeamImg"></el-image>
+                  <div class="zh_p">
+                    <div class="image_div">
+                      <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.fromTeamImg"></el-image>
+                    </div>
                     <router-link target="_blank"
                                  v-if="scope.row.fromTeamId"
                                  :to="{name:'information',params:{teamID:scope.row.fromTeamId}}">{{scope.row.fromTeamName}}</router-link> &nbsp;&nbsp;&nbsp;
@@ -190,15 +213,17 @@
                     <router-link target="_blank"
                                  v-if="scope.row.toTeamId"
                                  :to="{name:'information',params:{teamID:scope.row.toTeamId}}">{{scope.row.toTeamName}}</router-link>
-                    <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
-                  </p>
+                    <div class="image_div">
+                      <el-image :src="'http://qiuguantx.com/img/team/'+scope.row.toTeamImg"></el-image>
+                    </div>
+                  </div>
                 </template>
               </el-table-column>
               <el-table-column prop="endTime"
                                align="center"
                                label="转会类型">
                 <template slot-scope="scope">
-                  <span>{{transferType[scope.row.transferType]}}
+                  <span style="display:flex">{{transferType[scope.row.transferType]}}
                     <span v-if="scope.row.money">({{scope.row.money}}万欧元)</span>
                   </span>
                 </template>
@@ -229,14 +254,20 @@
             </div>
             <!-- 球员 -->
             <el-table :data="playerTj"
+                      size="mini"
                       v-if="playerTj.length"
-                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                      :row-class-name="tabRowClassName"
+                      :header-cell-style="{
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px'
+}"
                       style="width: 100%">
               <el-table-column align="center"
                                label="">
                 <template slot="header"
                           slot-scope="scope">
-                  <div class="linue-header">
+                  <div style="color:rgb(248, 51, 71);font-size: 18px;">
                     <b>球员信息统计</b>
                   </div>
                 </template>
@@ -265,7 +296,7 @@
                                  align="center"
                                  width="40">
                 </el-table-column>
-                <el-table-column prop="place"
+                <el-table-column prop="first"
                                  label="首发"
                                  align="center"
                                  width="40">
@@ -304,14 +335,20 @@
             </el-table>
             <!-- 教练 -->
             <el-table :data="coachTj"
+                      size="mini"
                       v-if="coachTj.length"
-                      :header-cell-style="{'color': '#303133','font-size':'14px'}"
+                      :row-class-name="tabRowClassName"
+                      :header-cell-style="{
+    'color': '#000',
+       'background-color': 'rgb(131, 162, 202)',
+    'font-size':'14px'
+}"
                       style="width: 100%">
               <el-table-column align="center"
                                label="">
                 <template slot="header"
                           slot-scope="scope">
-                  <div class="linue-header">
+                  <div style="color:rgb(248, 51, 71);font-size: 18px;">
                     <b>教练信息统计</b>
                   </div>
                 </template>
@@ -519,11 +556,51 @@ export default {
         this.typeClor = 0
       }
 
+    },
+
+    tabRowClassName ({ row, rowIndex }) {
+      let index = rowIndex + 1;
+      if (index % 2 == 0) {
+        return 'warning-row'
+      }
     }
 
   }
 }
 </script>
+<style lang = 'less'  >
+.player_box_ss .el-table .warning-row {
+  background: rgba(160, 189, 226, 0.2) !important;
+}
+.player_box_ss .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: rgba(160, 189, 226, 0.5);
+}
+.player_box_ss a {
+  display: block;
+  /* width: 100%; */
+  /* height: 100%; */
+  &:hover {
+    color: #409eff;
+  }
+}
+.player_box_ss .el-table--mini td,
+.player_box_ss .el-table--mini th {
+  padding: 0 !important;
+}
+.player_box_ss .el-table .cell {
+  height: 100%;
+  line-height: 36px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.player_box_ss .cell span {
+  display: block;
+}
+.player_box_ss .el-table--border {
+  overflow: hidden !important;
+}
+</style>
 <style lang = 'less' scoped >
 .el-card {
   margin-bottom: 10px;
@@ -617,12 +694,6 @@ export default {
       display: flex;
       align-items: center;
     }
-    .el-image {
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      overflow: hidden;
-    }
   }
 }
 /* 右边内容 */
@@ -671,6 +742,16 @@ a {
   .el-tag {
     cursor: pointer;
     margin-right: 10px;
+  }
+}
+
+.image_div {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  .el-image {
+    width: 20px;
   }
 }
 </style>

@@ -2,11 +2,11 @@
   <div class="gWidth news_box">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>新闻</el-breadcrumb-item>
+      <el-breadcrumb-item>资讯</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="news_left fl">
       <h2 style="font-weight: normal;margin-left:10px;display: flex;justify-content: space-between;">
-        <span>五大联赛新闻</span>
+        <span>五大联赛资讯</span>
         <div class="dates">
           <el-date-picker v-model="dateval"
                           @change='ondate'

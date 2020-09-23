@@ -342,8 +342,7 @@
                 <router-link target="_blank"
                              v-if="item.playerID"
                              :to="{name:'playerDetails',params:{playerID:item.playerID}}">
-                             {{guestNumber[item.playerID]}}
-                  {{homeNumber[item.playerID]}} {{item.playerName}}
+                  {{guestNumber[item.playerID]}} {{homeNumber[item.playerID]}} {{item.playerName}}
                 </router-link>
                 <svg class="icon"
                      v-if="item.kind == 11"
@@ -392,8 +391,7 @@
                 <router-link target="_blank"
                              v-if="item.playerID"
                              :to="{name:'playerDetails',params:{playerID:item.playerID}}">
-                             {{homeNumber[item.playerID]}}
-                  {{guestNumber[item.playerID]}} {{item.playerName}}</router-link>
+                  {{homeNumber[item.playerID]}} {{guestNumber[item.playerID]}} {{item.playerName}}</router-link>
                 <svg class="icon"
                      v-if="item.kind == 11"
                      aria-hidden="true">
@@ -521,6 +519,10 @@ export default {
   },
   created () {
     this.onPlayerStatisticsList()
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  技术统计`
   },
 
 

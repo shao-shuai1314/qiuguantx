@@ -77,6 +77,8 @@
                      name="combat_gains"></el-tab-pane>
         <el-tab-pane label="历年球路"
                      name="OverTheYears_qiulu"></el-tab-pane>
+        <!-- <el-tab-pane label="伤停名单"
+                     name="schedule_sss"></el-tab-pane> -->
       </el-tabs>
       <!-- 路由占位符 -->
       <keep-alive>
@@ -102,6 +104,9 @@ export default {
       if (to.params.teamID !== from.params.teamID) {
         this.$router.go(0);
       }
+      if (to.name !== from.name) {
+        document.title = `${this.headerList.name_j} -  球冠天下`
+      }
     }
   },
   created () {
@@ -121,9 +126,10 @@ export default {
     //  头部公用接口
     async OnHeaderG () {
       const res = await this.$http.get('teamInfo/' + this.scheduleID + '/');
-      if (res.status !== 200) return console.log('对阵头部信息取失败');
       // console.log(res.data)
       this.headerList = res.data
+      sessionStorage.setItem("name_j", res.data.name_j);
+      document.title = `${res.data.name_j} -  球冠天下`
       sessionStorage.setItem("latitude_longitude", JSON.stringify([res.data.venuesData.latitude, res.data.venuesData.longitude]));
     }
   }

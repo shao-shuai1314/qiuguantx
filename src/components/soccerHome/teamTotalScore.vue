@@ -3,6 +3,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/soccer' }">足球中心</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{name:'league',params:{sclassID}}">{{this.datas[2]}}{{this.datas[0]}}</el-breadcrumb-item>
       <el-breadcrumb-item>大小球统计</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 左边 -->
@@ -127,6 +128,7 @@ export default {
     this.sclassID = this.$route.params.sclassID
     this.matchSeason = sessionStorage.getItem('matchSeason')
     this.tableDataList('all');
+    document.title = `${this.matchSeason} - ${this.datas[0]} -  大小球统计`
   },
   methods: {
     handleClick (tab, event) {

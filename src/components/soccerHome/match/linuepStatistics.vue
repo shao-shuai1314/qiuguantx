@@ -10,7 +10,8 @@
           <el-table-column prop="date"
                            width="100%"
                            label="主场球员统计">
-            <template slot="header" slot-scope="scope">
+            <template slot="header"
+                      slot-scope="scope">
               <div class="linue-header"
                    style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>主场球员统计</b>
@@ -85,7 +86,8 @@
                              width="40px"
                              label-class-name="expectedValue_label-class-name"
                              align="center">
-                              <template slot-scope="scope" slot="header">
+              <template slot-scope="scope"
+                        slot="header">
                 <span style="font-size:6px">身价(万欧元)</span>
               </template>
             </el-table-column>
@@ -112,7 +114,8 @@
           <el-table-column prop="date"
                            width="100%"
                            label="客场球员统计">
-            <template slot="header" slot-scope="scope">
+            <template slot="header"
+                      slot-scope="scope">
               <div class="linue-header"
                    style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>客场球员统计</b>
@@ -137,7 +140,7 @@
                              width="70px"
                              align="center">
               <template slot-scope="scope">
-                <router-link  style="width:100%;height:100%;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                <router-link style="width:100%;height:100%;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
                              target="_blank"
                              :to="{name:'playerDetails',params:{playerID:scope.row.playerID}}">{{scope.row.player_name}}</router-link>
               </template>
@@ -214,7 +217,8 @@
           <el-table-column prop="date"
                            width="100%"
                            label="伤停">
-            <template slot="header" slot-scope="scope">
+            <template slot="header"
+                      slot-scope="scope">
               <div class="linue-header"
                    style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>主队伤停统计</b>
@@ -248,7 +252,8 @@
           <el-table-column prop="date"
                            width="100%"
                            label="伤停">
-            <template slot="header" slot-scope="scope">
+            <template slot="header"
+                      slot-scope="scope">
               <div class="linue-header"
                    style="color:rgb(248, 51, 71);font-size: 18px;">
                 <b>客队伤停统计</b>
@@ -286,6 +291,11 @@ export default {
   },
   created () {
     this.linuepStatistics()
+
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  伤停统计`
 
   },
   methods: {

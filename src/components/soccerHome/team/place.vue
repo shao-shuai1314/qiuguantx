@@ -17,7 +17,7 @@ export default {
     async handler ({ BMap, map }) {
       var temp = sessionStorage.getItem("latitude_longitude")
       let latitude_longitude = JSON.parse(temp);
-      console.log(latitude_longitude)
+      // console.log(latitude_longitude)
       var point = new BMap.Point(latitude_longitude[1], latitude_longitude[0])
       var marker = new BMap.Marker(point)
       marker.setAnimation(BMAP_ANIMATION_BOUNCE);

@@ -7,9 +7,12 @@
     <div class="user_box">
       <!-- 返回上一页 -->
       <div>
-        <el-link type="primary"
+        <!-- <el-link type="primary"
                  @click="ONsy">
-          &lt; 返回上一页</el-link>
+          &lt; 返回上一页</el-link> -->
+        <el-link type="primary"
+                 href="/">返回首页
+        </el-link>
       </div>
 
       <!-- logo -->
@@ -269,9 +272,9 @@ export default {
   },
   methods: {
     // 返回上一页
-    ONsy () {
-      window.history.back();
-    },
+    // ONsy () {
+    //   window.history.back();
+    // },
     // 注册
     submitForm1 (formName) {
       this.$refs[formName].validate(async valid => {
@@ -298,8 +301,9 @@ export default {
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("username", res.data.username);
               localStorage.setItem("user_id", res.data.user_id);
-              sessionStorage.setItem("user_g", JSON.stringify(res));
-              window.history.back();
+              localStorage.setItem("user_g", JSON.stringify(res));
+              // window.history.back();
+              this.$router.replace({ name: 'index' })
             }
           } catch (error) {
             return this.$message.error('验证码过期')
@@ -338,11 +342,12 @@ export default {
             localStorage.setItem("username", res.data.username);
             localStorage.setItem("user_id", res.data.user_id);
             localStorage.setItem("timestamp", res.data.timestamp);
-            sessionStorage.setItem("user_g", JSON.stringify(res));
+            localStorage.setItem("user_g", JSON.stringify(res));
 
 
             // console.log( res.data.token.split('.')[1])
-            window.history.back();
+            // window.history.back();
+            this.$router.replace({ name: 'index' })
 
           }
         } else {

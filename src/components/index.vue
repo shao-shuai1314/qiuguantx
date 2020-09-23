@@ -1,5 +1,6 @@
 <template>
   <div class="index_box gWidth">
+
     <div class="index_left fl">
       <!-- 第一板块 -->
       <div class="Part1">
@@ -80,8 +81,12 @@
             <router-link target="_blank"
                          :to="{name:'newdetail',params:{recordId:item.recordId}}">
               <span>{{index+1}}</span>
-              <el-image style="margin-left:10px"
-                        :src="`http://qiuguantx.com/${item.img}`"></el-image>
+              <div class="img_div">
+                <el-image style="margin-left:10px"
+                          fit="fill"
+                          :src="`http://qiuguantx.com/${item.img}`"></el-image>
+              </div>
+
               <div class="tit">
                 <h3>
                   <p class="tit_p">{{item.title}}</p>
@@ -230,6 +235,9 @@ export default {
     this.jk(11)
     this.league(36)
   },
+  // mounted () {
+  //   document.title = ''
+  // },
   methods: {
     imgString (str) {
       var data = '';
@@ -417,10 +425,16 @@ a {
           width: 10px;
           margin: 0 10px 0 30px;
         }
-        .el-image {
-          width: 150px;
-          height: 114px;
+        .img_div {
+          /* width: 120px;
+          height: 110px;
+          overflow: hidden; */
+          .el-image {
+            width: 120px;
+            height: 114px;
+          }
         }
+
         .tit {
           width: 720px;
           margin: 0 10px;

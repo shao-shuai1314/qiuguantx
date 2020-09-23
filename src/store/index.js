@@ -6,12 +6,18 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    userInfo: []
+    userInfo: {}
+  },
+  //getters可以认为是store的计算属性
+  getters: {
+    userInfo_ss(state) {
+      return state.userInfo
+    }
   },
   mutations: {
     getUserInfo(state, list) {
-      state.userInfo.push(list)
-      // Vue.set(state.userInfo, "list", list)
+      // state.userInfo.push(list)
+      Vue.set(state, "userInfo", list)
     }
   },
   actions: {

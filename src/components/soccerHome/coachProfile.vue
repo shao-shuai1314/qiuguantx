@@ -3,7 +3,8 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/soccer' }">足球中心</el-breadcrumb-item>
-      <el-breadcrumb-item>联赛教练简表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{name:'league',params:{sclassID}}">{{this.datas[2]}}{{this.datas[0]}}</el-breadcrumb-item>
+      <el-breadcrumb-item>教练简表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 左边 -->
     <navigation :datas=[...datas]></navigation>
@@ -43,6 +44,7 @@
                            width="">
             <template slot-scope="scope">
               <router-link target="_blank"
+                           v-if="scope.row.coachId"
                            :to="{name:'playerDetails',params:{playerID:scope.row.coachId}}">{{scope.row.coachName}}</router-link>
             </template>
           </el-table-column>
@@ -54,7 +56,7 @@
           </el-table-column>
           <el-table-column align="center"
                            prop="teamName"
-                           label="执教球队"
+                           label="球队"
                            width="">
           </el-table-column>
           <el-table-column align="center"
@@ -91,7 +93,8 @@ export default {
     return {
       datas: [],
       coachList: [],
-      myDate: new Date()
+      myDate: new Date(),
+      sclassID: this.$route.params.sclassID,
     };
   },
   created () {
@@ -99,6 +102,7 @@ export default {
     let seasonList = JSON.parse(temp);
     this.datas = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('sclass_rule'), sessionStorage.getItem('matchSeason'), seasonList, sessionStorage.getItem('sclass_pic')]
     // console.log(this.$route)
+    document.title = `${this.datas[2]} -  ${this.datas[0]} - 教练简表`
     this.coachList_s()
   },
   methods: {
@@ -141,7 +145,7 @@ export default {
 
 
       this.coachList = res.data.data_list
-      console.log(res.data)
+      // console.log(res.data)
     },
     tabRowClassName ({ row, rowIndex }) {
       let index = rowIndex + 1;

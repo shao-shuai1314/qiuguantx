@@ -570,6 +570,10 @@ export default {
       this.homeTeamName = res.data.matchInfo.homeTeamName
       this.guestTeamName = res.data.matchInfo.guestTeamName
 
+      // 标题
+      let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+      document.title = `${this.homeTeamName} vs ${this.guestTeamName} - ${datas_ss[1]}${datas_ss[0]} -  球路盘路`
+
 
 
 
@@ -826,12 +830,9 @@ export default {
       echarts_name.on("click", function (e) {
         if (e.data.url) {
 
-          window.open(`http://qiuguantx.com/#/soccer/team/player/${e.data.url}`)
+          window.open(`http://qiuguantx.com/soccer/team/player/${e.data.url}`)
           window.isCancel = true;
         }
-        // console.log(`http://192.168.3.51:8080/#/soccer/team/playerDetails/${e.data.url}`)
-
-
       })
     }
 

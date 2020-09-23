@@ -176,8 +176,8 @@ export default {
   methods: {
     async OnListG (page) {
       const res = await this.$http.get('teamInfo/' + this.scheduleID + '/schedule/', { params: { page } });
-      console.log(res.data.dataObj.teamSchedule)
-      console.log(this.$route.params.teamID)
+      // console.log(res.data.dataObj.teamSchedule)
+      // console.log(this.$route.params.teamID)
       this.teamID = this.$route.params.teamID
       // var color_s = ['rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)', 'rgba(110,106,89,0.5)', 'rgba(170,76,29,0.5)', 'rgba(190,76,89,0.5)', 'rgba(100,76,89,0.5)', 'rgba(180,16,89,0.5)']
       let color_list = {}

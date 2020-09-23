@@ -121,6 +121,7 @@ const router = new Router({
     {
       path: '/users',
       component: login,
+      name: 'users',
       meta: {
         title: '球冠登录',
         keepAlive: false
@@ -139,9 +140,10 @@ const router = new Router({
       redirect: "/",
       children: [{
           path: '/',
+          name: 'index',
           component: index,
           meta: {
-            title: '球冠首页',
+            title: '球冠首页 - 专业的足球数据服务平台',
           }
         }, {
           path: '/cp',
@@ -545,7 +547,7 @@ const router = new Router({
           name: 'newdetail',
           component: newdetail,
           meta: {
-            title: '球冠新闻详情页'
+            title: '球冠资讯情页'
           }
         },
 
@@ -554,7 +556,7 @@ const router = new Router({
           component: news,
           name: 'news',
           meta: {
-            title: '球冠新闻'
+            title: '球冠资讯'
           }
         }, {
           path: '/video',
@@ -587,9 +589,15 @@ router.beforeEach((to, from, next) => {
   let timestamp = localStorage.getItem("timestamp");
   //  当前时间
   var newTimestamp = `${Date.parse(new Date())}`.slice(0, 10)
+  // console.log(timestamp)
   if (newTimestamp >= timestamp) {
     localStorage.removeItem('token');
   }
+  // if (localStorage.getItem('token')) {
+  //   localStorage.setItem("showTX", true);
+  // } else {
+  //   localStorage.setItem("showTX", false);
+  // }
   next()
 })
 

@@ -10,6 +10,7 @@
             <router-link :to="{ path: '/' }">
               <el-image src="/static/logo.png"></el-image>
             </router-link>
+            <!-- <p>北京野马尘埃文化发展有限公司</p> -->
           </div>
           <!-- 导航栏 -->
           <el-menu :default-active="fullPath"
@@ -27,9 +28,28 @@
             </el-menu-item>
           </el-menu>
 
+          <div class="SignIn_box"
+               v-if="showTX">
+            <router-link target="_blank"
+                         :to="{name:'userinfo'}">
+              <el-image style="width:40px;border-radius:50px"
+                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-image>
+            </router-link>
+            <span style="margin-left:10px;font-size:14px">{{username}}</span>
+            <div class="SignIn_bh">
+              <router-link target="_blank"
+                           :to="{name:'userinfo'}">
+                个人主页
+              </router-link>
+              <p style="width:50px;cursor:pointer"
+                 @click="Onoff">退出</p>
+
+            </div>
+          </div>
+
           <!-- 注册 -->
           <div class="SignIn_box"
-               v-if="!showTX">
+               v-else>
             欢迎访问球冠，请先&nbsp;&nbsp;&nbsp;&nbsp;
             <router-link :to="{path:'/users'}">
               <el-button type="info"
@@ -48,26 +68,6 @@
             </router-link>
           </div>
 
-          <div class="SignIn_box"
-               @click="ONuserinfo"
-               v-else>
-            <router-link target="_blank"
-                         :to="{name:'userinfo'}">
-              <el-image style="width:40px;border-radius:50px"
-                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-image>
-            </router-link>
-            <span style="margin-left:10px;font-size:14px">{{username}}</span>
-            <div class="SignIn_bh">
-              <router-link target="_blank"
-                           :to="{name:'userinfo'}">
-                个人主页
-              </router-link>
-              <p style="width:50px;cursor:pointer"
-                 @click="Onoff">退出</p>
-
-            </div>
-          </div>
-
         </div>
       </el-header>
       <!-- 内容 -->
@@ -80,20 +80,13 @@
         </keep-alive>
       </el-main>
       <!-- 返回顶部 -->
-      <!-- <el-backtop>
-        <i style=" border-radius: 50%;color:#409eff"
-           class="el-icon-caret-top"></i>
-      </el-backtop> -->
-      <template>
-        <el-backtop 　
-                    　:right='40'
-                    　:bottom='100'
-                    　:visibility-height='400'>
-          <div>
-            <i class='el-icon-caret-top'></i>
-          </div>
-        </el-backtop>
-      </template>
+      <!-- backTop 回顶部的方法 -->
+      <el-button v-if="btnFlag"
+                 @click="backTop"
+                 class="backTop"
+                 icon="el-icon-caret-top"
+                 circle></el-button>
+
       <!-- 底部 -->
       <el-footer height="190px">
         <div class="gWidth">
@@ -163,16 +156,24 @@ export default {
       this.act = ""
     }
     const tokenStr = localStorage.getItem('token')
-    if (!this.$getMyConfig.getConfig() && !tokenStr) {
-      this.showTX = false
-    } else {
-      this.showTX = true
+    if (!this.$getMyConfig.getConfig() && tokenStr) {
       this.username = localStorage.getItem('username')
       this.user_id = localStorage.getItem('user_id')
-      // this.ONuserinfo()
+      this.showTX = true
+    } else {
+      this.showTX = false
     }
 
   },
+  // 返回顶部
+  mounted () {
+    window.addEventListener('scroll', this.scrollToTop)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.scrollToTop)
+  },
+
+
   updated () {
     this.fullPath = this.$route.fullPath
   },
@@ -184,26 +185,28 @@ export default {
       } else {
         this.act = ""
       }
-      //  if (to.fullPath.substring(0, 5) == '/news') {
-      //   this.act = "act"
-      // } else {
-      //   this.act = ""
-      // }
       this.fullPath = to.path
-    }
+
+      // let showTX = localStorage.getItem('showTX')
+      // this.showTX = showTX
+      // console.log(to, from)
+      // console.log(this.showTX)
+    },
+
   },
   data () {
     return {
+      btnFlag: false,
       showTX: false,
       username: '',
       user: '',
-      is_editor: '',
+      // is_editor: '',
       menulist: [
         { authName: "首页", id: 1, order: 1, path: "/" },
         { authName: "彩票中心", id: 21, order: 1, path: "/cp" },
         { authName: "足球中心", id: 18, order: 4, path: "/soccer" },
         { authName: "资讯", id: 20, order: 1, path: "/news" },
-        { authName: "视频", id: 14, order: 3, path: "/video" },
+        // { authName: "视频", id: 14, order: 3, path: "/video" },
         { authName: "APP", id: 13, order: 2, path: "/app" },
 
       ],
@@ -217,15 +220,39 @@ export default {
     handleSelect (key, keyPath) {
       // console.log(key, keyPath);
     },
-    async ONuserinfo () {
-      if (!this.$getMyConfig.getConfig()) {
-        const { data: res } = await this.$http.get(`/user/userinfo/`);
-        this.is_editor = res.data.is_editor
-      }
-    },
+    // async ONuserinfo () {
+    //   const tokenStr = localStorage.getItem('token')
+    //   if (!this.$getMyConfig.getConfig() && tokenStr) {
+    //     const { data: res } = await this.$http.get(`/user/userinfo/`);
+    //     this.is_editor = res.data.is_editor
+    //   }
+    // },
     Onoff () {
       this.showTX = false
       localStorage.removeItem('token');
+    },
+    // 点击图片回到顶部方法，加计时器是为了过渡顺滑
+    backTop () {
+      const that = this
+      let timer = setInterval(() => {
+        let ispeed = Math.floor(-that.scrollTop / 5)
+        document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed
+        if (that.scrollTop === 0) {
+          clearInterval(timer)
+        }
+      }, 16)
+    },
+
+    // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
+    scrollToTop () {
+      const that = this
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      that.scrollTop = scrollTop
+      if (that.scrollTop > 60) {
+        that.btnFlag = true
+      } else {
+        that.btnFlag = false
+      }
     }
   }
 }
@@ -255,11 +282,17 @@ export default {
     justify-content: space-between;
     // logo
     .Header_left {
-      height: 70px;
-      width: 108px;
+      // height: 100%;
+      width: 300px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      p {
+        margin-top: 10px;
+      }
       a {
-        display: inline-block;
-        height: 70px;
+        // height: 100%;
         width: 100px;
         display: flex;
         align-items: center;
@@ -380,5 +413,20 @@ export default {
       }
     }
   }
+}
+
+.backTop {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 100px;
+  right: 80px;
+  font-size: 16px;
+  color: #007aff;
 }
 </style>

@@ -14,7 +14,8 @@
       <el-table-column align="center"
                        prop="level"
                        min-width="138">
-        <template slot="header"  slot-scope="scope">
+        <template slot="header"
+                  slot-scope="scope">
           <el-dropdown trigger="click"
                        @command="handleCommand"
                        size="mini">
@@ -40,7 +41,8 @@
 
       <el-table-column align="center"
                        label="最新指数">
-        <template slot="header" slot-scope="scope">
+        <template slot="header"
+                  slot-scope="scope">
           <span>最新指数</span>
           <span class="actv"
                 @click="Oncz">{{czval}}</span>
@@ -510,6 +512,10 @@ export default {
   },
   created () {
     this.europeOddsList();
+    // 标题
+    let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+    var temp_ss = sessionStorage.getItem("TeamName").split(",")
+    document.title = `${temp_ss[0]} vs ${temp_ss[2]} - ${datas_ss[1]}${datas_ss[0]} -  欧赔`
   },
   mounted () {
     // 滚动条的获取

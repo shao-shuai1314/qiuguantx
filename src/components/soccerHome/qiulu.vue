@@ -2,6 +2,13 @@
   <!-- 球路-->
   <div class="qiululist"
        style="overflow:auto">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/soccer' }">足球中心</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{name:'league',params:{sclassID}}">{{matchSeason}}{{sclassName}}</el-breadcrumb-item>
+
+      <el-breadcrumb-item>球路汇总图</el-breadcrumb-item>
+    </el-breadcrumb>
     <!-- <div v-if="!dataLists.length">暂没数据</div> -->
     <table cellspacing="0"
            cellpadding="0"
@@ -17,7 +24,17 @@
           <h2 style="font-weight: 600;padding:10px 0">{{matchSeason}}赛季
             <span style="color: #fff">({{items.teamName}})</span>球路走势图</h2>
           <span style="margin-right:-170px">
-            排名:{{items.rank}} &nbsp;&nbsp;&nbsp;&nbsp; 总分:{{items.allScore}} &nbsp;&nbsp;&nbsp;&nbsp;比赛次数:{{items.allCount}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;进球:{{items.totalHomeScore}}&nbsp;&nbsp;&nbsp;&nbsp; 失球:{{items.totalGutstScore}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{items.win_score}}胜&nbsp;&nbsp;&nbsp; {{items.flat_score}}平&nbsp;&nbsp;&nbsp; {{items.fail_score}}负 </span>
+            排名:{{items.rank}}
+            <i style="margin-left:20px"></i>
+            {{items.win_score}}胜&nbsp;&nbsp;&nbsp; {{items.flat_score}}平&nbsp;&nbsp;&nbsp; {{items.fail_score}}负
+            <i style="margin-left:20px"></i>
+            总分:{{items.allScore}}
+            <i style="margin-left:20px"></i>
+            比赛次数:{{items.allCount}}
+            <i style="margin-left:20px"></i>
+            进球:{{items.totalHomeScore}}
+            <i style="margin-left:20px"></i>
+            失球:{{items.totalGutstScore}} </span>
           <span class="fr"
                 style="display:flex;align-items:center;color: #f00;margin-right:10px">
             说明：
@@ -165,6 +182,8 @@ export default {
 
       // 时间
       matchSeason: '',
+      sclassID: this.$route.params.sclassID,
+      sclassName: ''
 
 
     };
@@ -176,6 +195,7 @@ export default {
   },
   mounted () {
     this.OnListG()
+    // document.title = `${this.datas[0]} - ${this.datas[0]} -  大小球统计`
 
     window.addEventListener('scroll', this.menu)
   },
@@ -199,7 +219,6 @@ export default {
       }
       obj.matchSeason = sessionStorage.getItem('matchSeason')
       const res = await this.$http.get(`/soccer/sclass/${this.$route.params.sclassID}/qiulu/`, { params: obj });
-      if (res.status !== 200) return console.log('球队阵容信息取失败');
       // 对照参数
       // this.teamID = res.data[0].teamID
       // this.TeamName = res.data[0].teamName
@@ -246,7 +265,12 @@ export default {
 
       // 时间
       this.matchSeason = sessionStorage.getItem('matchSeason')
-      console.log(this.dataLists)
+      this.sclassName = sessionStorage.getItem('sclassName')
+
+      document.title = `${this.matchSeason} - ${this.sclassName} -  盘路走势`
+
+      // console.log(this.matchSeason)
+      // console.log(this.dataLists)
 
     },
 

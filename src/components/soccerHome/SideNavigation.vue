@@ -14,7 +14,6 @@
       </li>
       <li>
         <router-link v-if="sclassID"
-                     target="_blank"
                      :to="{name:'headCoach',params:{sclassID}}">· 赛季主教练</router-link>
       </li>
       <li>
@@ -23,7 +22,7 @@
       </li>
       <li>
         <router-link v-if="sclassID"
-                     :to="{name:'present',params:{sclassID}}">· 联赛详细介绍</router-link>
+                     :to="{name:'present',params:{sclassID}}">· 联赛介绍</router-link>
       </li>
       <!-- <li>
         <router-link v-if="sclassID"
@@ -89,16 +88,12 @@ export default {
   props: ["datas"],
   mounted () {
     this.sclassID = this.$route.params.sclassID;
-
-
-
+    // console.log(sessionStorage.getItem('matchSeason'), 1234)
   },
   methods: {
     getmatchSeason (matchSeason) {
       // console.log(matchSeason)
       sessionStorage.setItem("matchSeason", matchSeason);
-      // let routeData = this.$router.resolve({ name: 'league', params: { sclassID: this.sclassID } });
-      // window.open(routeData.href, '_blank');
       this.$router.go(0);
       this.$router.push({
         name: 'league',

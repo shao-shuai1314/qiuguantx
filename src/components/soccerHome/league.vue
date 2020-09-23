@@ -3,7 +3,8 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/soccer' }">足球中心</el-breadcrumb-item>
-      <el-breadcrumb-item>赛事积分榜</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{name:'league',params:{sclassID}}">{{matchSeason_ss}}{{sclassName}}</el-breadcrumb-item>
+      <el-breadcrumb-item>积分榜</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 左边 -->
     <navigation :datas=[sclassName,sclass_rule,seasonListValue,seasonList,sclass_pic]></navigation>
@@ -450,6 +451,7 @@ export default {
   },
   data () {
     return {
+      matchSeason_ss: '',
       // 队徽
       sclass_pic: '',
       // 赛事比分数据
@@ -536,7 +538,8 @@ export default {
       oddsLists: [],
       // 判断字段
       zd_stype: {},
-      violationsLists: ''
+      violationsLists: '',
+      sclassID: this.$route.params.sclassID
     };
   },
 
@@ -561,6 +564,9 @@ export default {
     this.OnOddsList()
 
   },
+  // mounted () {
+  //   document.title = ''
+  // },
   computed: {
     myfilter () {
       return function (index) {
@@ -588,6 +594,8 @@ export default {
       this.sclass_rule = res.data.sclass_data.sclass_rule
       // 联赛标题
       this.sclassName = res.data.sclass_data.sclassName
+      this.matchSeason_ss = sessionStorage.getItem('matchSeason')
+      document.title = `${this.matchSeason_ss} -  ${this.sclassName} - 积分榜`
       // 赛季时间数组
       this.seasonList = res.data.sclass_data.seasonList
       // 时间数组存储、

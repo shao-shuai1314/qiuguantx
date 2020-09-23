@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     userinfo () {
+      // this.$store.dispatch('agetUserInfo')
       if (sessionStorage.getItem("user_g")) {
         var temp = sessionStorage.getItem("user_g")
         let user_g = JSON.parse(temp);

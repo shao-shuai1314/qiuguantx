@@ -49,23 +49,23 @@
                class="table1">
           <tr align="center"
               class="tr_tit">
-            <td width="8%">
+            <td width="10%">
               <b>联赛</b>
             </td>
             <td>
               <b>时间</b>
             </td>
-            <td width="12%"
+            <td width="13%"
                 class="borderL">
               <b>主队</b>
             </td>
-            <td width="6%">
+            <td width="5%">
               <b>比分</b>
             </td>
-            <td width="12%">
+            <td width="13%">
               <b>客队</b>
             </td>
-            <td width="6%"
+            <td width="4%"
                 class="borderL borderR">
               <b>半场</b>
             </td>
@@ -108,30 +108,31 @@
               <router-link target="_blank"
                            :to="{name:'league',params:{sclassID:item.sclassID}}">
                 {{item.sclassName}}
-                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.round}}</span>
               </router-link>
             </td>
 
-            <td :style="{'background':item.coachID!='未知'?item.Coachcolors:''}">
-              {{item.matchtime.replace('T',' ')}}
+            <td class="td_j_time"
+                :style="{'background':item.Coachcolors?item.Coachcolors:''}">
+              <span class="td_times">{{item.matchtime.replace('T',' ').slice(0,10)}}
+                <span>{{item.matchtime.replace('T',' ').slice(11)}}</span>
+              </span>
+              <!-- {{item.matchtime.replace('T',' ')}} -->
               <span class="xs_jl">
                 <span v-if="item.hometeamID == homeTeamID">
                   <router-link v-if="item.homeCoachId"
                                target="_blank"
-                               style="display:flex;align-items:center;justify-content:center"
                                :to="{name:'playerDetails',params:{playerID:item.homeCoachId}}">
 
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.homeCoachName}})</span>
+                    <span>({{item.homeCoachName}})</span>
                   </router-link>
                   <span v-else>(未知)</span>
                 </span>
                 <span v-else>
                   <router-link v-if="item.guestCoachId"
                                target="_blank"
-                               style="display:flex;align-items:center;justify-content:center"
                                :to="{name:'playerDetails',params:{playerID:item.guestCoachId}}">
-
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.guestCoachName}})</span>
+                    <span>({{item.guestCoachName}})</span>
                   </router-link>
                   <span v-else>(未知)</span>
                 </span>
@@ -172,7 +173,14 @@
                            :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
             </td>
 
-            <td class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
+            <td class="borderL borderR">
+              <span v-if="item.matchState == -1">
+                {{item.homeHalfScore}}-{{item.guestHalfScore}}
+              </span>
+              <span v-else>
+                -
+              </span>
+            </td>
             <td v-if="myfilter(OddsList.homescheduleList1,item.scheduleID)">
               {{myfilter(OddsList.homescheduleList1,item.scheduleID).firstUpOdds}}
             </td>
@@ -270,23 +278,23 @@
                class="table1">
           <tr align="center"
               class="tr_tit">
-            <td width="8%">
+            <td width="10%">
               <b>联赛</b>
             </td>
             <td>
               <b>时间</b>
             </td>
-            <td width="12%"
+            <td width="13%"
                 class="borderL">
               <b>主队</b>
             </td>
-            <td width="6%">
+            <td width="5%">
               <b>比分</b>
             </td>
-            <td width="12%">
+            <td width="13%">
               <b>客队</b>
             </td>
-            <td width="6%"
+            <td width="4%"
                 class="borderL borderR">
               <b>半场</b>
             </td>
@@ -329,29 +337,28 @@
               <router-link target="_blank"
                            :to="{name:'league',params:{sclassID:item.sclassID}}">
                 {{item.sclassName}}
-                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.round}}</span>
               </router-link>
             </td>
-            <td :style="{'background':item.coachID!='未知'?item.Coachcolors:''}">
-              {{item.matchtime.replace('T',' ')}}
+            <td class="td_j_time"
+                :style="{'background':item.Coachcolors?item.Coachcolors:''}">
+              <span class="td_times">{{item.matchtime.replace('T',' ').slice(0,10)}}
+                <span>{{item.matchtime.replace('T',' ').slice(11)}}</span>
+              </span>
               <span class="xs_jl">
                 <span v-if="item.hometeamID == guestTeamID">
                   <router-link v-if="item.homeCoachId"
                                target="_blank"
-                               style="display:flex;align-items:center;justify-content:center"
                                :to="{name:'playerDetails',params:{playerID:item.homeCoachId}}">
-
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.homeCoachName}})</span>
+                    <span>({{item.homeCoachName}})</span>
                   </router-link>
                   <span v-else>(未知)</span>
                 </span>
                 <span v-else>
                   <router-link v-if="item.guestCoachId"
                                target="_blank"
-                               style="display:flex;align-items:center;justify-content:center"
                                :to="{name:'playerDetails',params:{playerID:item.guestCoachId}}">
-
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.guestCoachName}})</span>
+                    <span>({{item.guestCoachName}})</span>
                   </router-link>
                   <span v-else>(未知)</span>
                 </span>
@@ -393,7 +400,15 @@
                            :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
             </td>
 
-            <td class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
+            <td class="borderL borderR">
+              <!-- {{item.homeHalfScore}}-{{item.guestHalfScore}} -->
+              <span v-if="item.matchState == -1">
+                {{item.homeHalfScore}}-{{item.guestHalfScore}}
+              </span>
+              <span v-else>
+                -
+              </span>
+            </td>
             <td v-if="myfilter(OddsList.guestscheduleList1,item.scheduleID)">
               {{myfilter(OddsList.guestscheduleList1,item.scheduleID).firstUpOdds}}
             </td>
@@ -487,10 +502,13 @@
               <router-link target="_blank"
                            :to="{name:'league',params:{sclassID:item.sclassID}}">
                 {{item.sclassName}}
-                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.round}}</span>
               </router-link>
             </td>
-            <td>{{item.matchtime.replace('T',' ')}}</td>
+            <!-- <td>{{item.matchtime.replace('T',' ')}}</td> -->
+            <td class="td_times">{{item.matchtime.replace('T',' ').slice(0,10)}}
+              <span>{{item.matchtime.replace('T',' ').slice(11)}}</span>
+            </td>
             <td class="borderL"
                 v-if="item.matchState == -1">
               <router-link target="_blank"
@@ -526,7 +544,7 @@
             <td v-if="item.matchState == -1"
                 class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
             <td v-else
-                class="borderL borderR">vs</td>
+                class="borderL borderR">-</td>
 
           </tr>
 
@@ -573,10 +591,13 @@
               <router-link target="_blank"
                            :to="{name:'league',params:{sclassID:item.sclassID}}">
                 {{item.sclassName}}
-                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}{{item.grouping}}</span>
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.round}}</span>
               </router-link>
             </td>
-            <td>{{item.matchtime.replace('T',' ')}}</td>
+            <!-- <td>{{item.matchtime.replace('T',' ')}}</td> -->
+            <td class="td_times">{{item.matchtime.replace('T',' ').slice(0,10)}}
+              <span>{{item.matchtime.replace('T',' ').slice(11)}}</span>
+            </td>
             <td class="borderL"
                 v-if="item.matchState == -1">
               <router-link target="_blank"
@@ -612,7 +633,7 @@
             <td v-if="item.matchState == -1"
                 class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
             <td v-else
-                class="borderL borderR">vs</td>
+                class="borderL borderR">-</td>
           </tr>
 
         </table>
@@ -666,7 +687,7 @@
                class="table1">
           <tr align="center"
               class="tr_tit">
-            <td width="8%">
+            <td width="10%">
               <b>联赛</b>
             </td>
             <td>
@@ -675,13 +696,13 @@
             <td class="borderL">
               <b>主队</b>
             </td>
-            <td width="6%">
+            <td width="4%">
               <b>比分</b>
             </td>
             <td>
               <b>客队</b>
             </td>
-            <td width="6%"
+            <td width="4%"
                 class="borderL borderR">
               <b>半场</b>
             </td>
@@ -724,57 +745,46 @@
               <router-link target="_blank"
                            :to="{name:'league',params:{sclassID:item.sclassID}}">
                 {{item.sclassName}}
-                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.subsclassName}}{{item.round}}</span>
+                <span style="padding: 0 2px;font-size: 10px;color: #aaa7a7;display: inline-block;">{{item.round}}</span>
               </router-link>
             </td>
-            <td>{{item.matchtime.replace('T',' ')}}</td>
+            <td class="td_times">{{item.matchtime.replace('T',' ').slice(0,10)}}
+              <span>{{item.matchtime.replace('T',' ').slice(11)}}</span>
+            </td>
 
             <td class="borderL"
-                v-if="item.matchState">
+                v-if="item.matchState == -1">
               <!-- 主队名字 -->
-              <router-link target="_blank"
-                           :style="{'color': (item.hometeamID ===homeTeamID ? item.colors:''),'font-weight':(item.hometeamID ===homeTeamID ?'900':'')}"
-                           :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
-
-              <!-- 主队教练 -->
-              <!-- <router-link v-if="item.homeCoachID!='未知'"
-                           target="_blank"
-                           :to="{name:'playerDetails',params:{playerID:item.homeCoachID}}">
-                ({{item.homeCoachName}})</router-link> -->
-
               <router-link v-if="item.homeCoachId"
                            target="_blank"
-                           style="display:flex;align-items:center;justify-content:center"
                            :to="{name:'playerDetails',params:{playerID:item.homeCoachId}}">
-
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.homeCoachName}})</span>
+                <span class="span_Coach">({{item.homeCoachName}})</span>
               </router-link>
-              <span v-else><br>(未知)</span>
-
+              <span v-else
+                    class="span_Coach">(未知)</span>
+              <router-link target="_blank"
+                           :style="{'color': (item.hometeamID ===homeTeamID ? item.colors:''),'font-weight':(item.hometeamID ===homeTeamID ?'900':'')}"
+                           :to="{name:'information',params:{teamID:item.hometeamID}}">
+                <span class="a_Coach">{{item.hometeamName}}</span>
+              </router-link>
             </td>
             <td class="borderL"
                 v-else>
               <!-- 主队名字 -->
-              <router-link target="_blank"
-                           :to="{name:'information',params:{teamID:item.hometeamID}}">{{item.hometeamName}}</router-link>
-              <!-- 主队教练 -->
-              <!-- <router-link v-if="item.homeCoachID!='未知'"
-                           target="_blank"
-                           :to="{name:'playerDetails',params:{playerID:item.homeCoachID}}">
-                ({{item.homeCoachName}})</router-link> -->
-
               <router-link v-if="item.homeCoachId"
                            target="_blank"
-                           style="display:flex;align-items:center;justify-content:center"
                            :to="{name:'playerDetails',params:{playerID:item.homeCoachId}}">
-
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.homeCoachName}})</span>
+                <span class="span_Coach">({{item.homeCoachName}})</span>
               </router-link>
-
-              <span v-else><br>(未知)</span>
+              <span v-else
+                    class="span_Coach">(未知)</span>
+              <router-link target="_blank"
+                           :to="{name:'information',params:{teamID:item.hometeamID}}">
+                <span class="a_Coach">{{item.hometeamName}}</span>
+              </router-link>
             </td>
 
-            <td v-if="item.matchState">
+            <td v-if="item.matchState == -1">
               <router-link target="_blank"
                            :to="{name:'history',params:{scheduleID:item.scheduleID}}">
                 {{item.homeScore}}-{{item.guestScore}}
@@ -785,37 +795,43 @@
                            :to="{name:'history',params:{scheduleID:item.scheduleID}}">vs</router-link>
             </td>
 
-            <td v-if="item.matchState">
+            <td v-if="item.matchState == -1">
               <router-link target="_blank"
                            :style="{'color': (item.guestteamID ===homeTeamID ? item.colors:''),'font-weight':(item.guestteamID ===homeTeamID ?'900':'')}"
-                           :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
-              <!-- 客队教练 -->
-              <!-- <router-link v-if="item.guestCoachID!='未知'"
-                           target="_blank"
-                           :to="{name:'playerDetails',params:{playerID:item.guestCoachID}}">
-                ({{item.guestCoachName}})</router-link> -->
-
+                           :to="{name:'information',params:{teamID:item.guestteamID}}">
+                <span class="a_Coach">{{item.guestteamName}}</span>
+              </router-link>
               <router-link v-if="item.guestCoachId"
                            target="_blank"
-                           style="display:flex;align-items:center;justify-content:center"
                            :to="{name:'playerDetails',params:{playerID:item.guestCoachId}}">
-
-                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:106px;display: inline-block;">({{item.guestCoachName}})</span>
+                <span class="span_Coach">({{item.guestCoachName}})</span>
               </router-link>
-              <span v-else><br>(未知)</span>
+              <span v-else
+                    class="span_Coach">(未知)</span>
             </td>
             <td v-else>
               <router-link target="_blank"
-                           :to="{name:'information',params:{teamID:item.guestteamID}}">{{item.guestteamName}}</router-link>
+                           :to="{name:'information',params:{teamID:item.guestteamID}}">
+                <span class="a_Coach">{{item.guestteamName}}</span>
+              </router-link>
               <!-- 客队教练 -->
               <router-link v-if="item.guestCoachId"
                            target="_blank"
+                           class="span_Coach"
                            :to="{name:'playerDetails',params:{playerID:item.guestCoachId}}">
-                ({{item.guestCoachName}})</router-link>
+                ({{item.guestCoachName}})
+              </router-link>
               <span v-else>(未知)</span>
             </td>
 
-            <td class="borderL borderR">{{item.homeHalfScore}}-{{item.guestHalfScore}}</td>
+            <td class="borderL borderR">
+              <span v-if="item.matchState == -1">
+                {{item.homeHalfScore}}-{{item.guestHalfScore}}
+              </span>
+              <span v-else>
+                -
+              </span>
+            </td>
             <td v-if="myfilter(OddsList.clashscheduleList1,item.scheduleID)">
               {{myfilter(OddsList.clashscheduleList1,item.scheduleID).firstUpOdds}}
             </td>
@@ -1120,7 +1136,7 @@ export default {
         cor[coacList[i].playerId] = Coachcolors[i]
       }
       Zklist.forEach(item => {
-        console.log(cor[item.coachID])
+        // console.log(cor[item.coachID])
         if (item.hometeamID == TeamID) {
           item.Coachcolors = cor[item.homeCoachId]
         } else {
@@ -1178,6 +1194,10 @@ export default {
       // 客场名字id
       this.guestTeamID = res.data.allInfo.guestTeamID;
       this.guestteamName = res.data.allInfo.guestName
+
+      // 标题
+      let datas_ss = [sessionStorage.getItem('sclassName'), sessionStorage.getItem('matchSeason')]
+      document.title = `${this.hometeamName} vs ${this.guestteamName} - ${datas_ss[1]}${datas_ss[0]} -  比赛历史`
       // 友谊赛id
       this.HfriendlMatch = res.data.allInfo.friendlMatch
       // console.log(this.homeTeamID, this.guestTeamID)
@@ -1805,11 +1825,26 @@ a {
   }
 }
 
+.td_j_time {
+  min-width: 180px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 28px;
+  font-size: 12px;
+}
+
 td {
   .xs_jl {
     /* display: none; */
-    position: relative;
-    height: 0;
+    /* position: relative;
+    height: 0; */
+    /* font-size: 12px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* width: 106px; */
+    display: inline-block;
   }
 }
 
@@ -1846,7 +1881,7 @@ td {
       .table1 {
         border: 1px solid #91c1f8;
         box-sizing: border-box;
-        font-size: 12px;
+        font-size: 14px;
         margin-bottom: 10px;
       }
       .el-select {
@@ -1884,7 +1919,7 @@ td {
       .table1 {
         border: 1px solid #91c1f8;
         box-sizing: border-box;
-        font-size: 12px;
+        font-size: 14px;
         margin-bottom: 10px;
         tr {
           width: 100%;
@@ -1921,5 +1956,45 @@ td {
 
 .fsing {
   font-size: 16px;
+}
+.span_Coach {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 80px;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+
+  /* color: #999; */
+  background: #eee;
+}
+
+.a_Coach {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  display: inline-block;
+}
+.td_times {
+  position: relative;
+  span {
+    display: none;
+    position: absolute;
+    background: #eee;
+    line-height: 12px;
+    color: #999;
+    padding: 0 2px;
+    top: -10px;
+    left: 50%;
+    font-size: 10px;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+  }
+  &:hover span {
+    display: block;
+  }
 }
 </style>
